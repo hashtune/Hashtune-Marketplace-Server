@@ -1,0 +1,92 @@
+type Query {
+  """
+  Get all atrworks query
+  """
+  atrworks: [Artwork]
+
+  """
+  Get all users query
+  """
+  users: [User]
+}
+
+"""
+An artwork
+"""
+type Artwork {
+  """
+  id of the artwork
+  """
+  id: ID!
+
+  """
+  title of artwork
+  """
+  title: String
+
+  """
+  user of artwork
+  """
+  user: User
+
+  """
+  id of the user
+  """
+}
+
+"""
+A User
+"""
+type User {
+  """
+  id of the user
+  """
+  id: ID!
+
+  """
+  users fullName
+  """
+  fullName: String
+
+  """
+  list of users artworks
+  """
+  artworks: [Artwork]
+}
+
+type Mutation {
+  """
+  Create artwork
+  """
+  createArtwork(input: CreateArtworkInput): Artwork
+
+  """
+  create user
+  """
+  createUser(input: CreateUserInput): User
+}
+
+"""
+Create Artwork input
+"""
+input CreateArtworkInput {
+  """
+  The Artworks title.
+  """
+  title: String!
+
+  """
+  The users id.
+  """
+  userId: Int!
+}
+
+"""
+Create user input
+"""
+input CreateUserInput {
+  """
+  The users fullName
+  """
+  fullName: String!
+}
