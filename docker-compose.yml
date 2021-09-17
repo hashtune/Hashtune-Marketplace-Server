@@ -1,0 +1,16 @@
+version: '3.8'
+services:
+  # postgresql://hashtune:hashtune@localhost:5439
+  postgres:
+    image: postgres
+    container_name: hashtune
+    restart: always
+    environment:
+      - POSTGRES_USER=hashtune
+      - POSTGRES_PASSWORD=hashtune
+    ports:
+      - '5439:5432'
+    volumes:
+      - postgres:/var/lib/postgresql/data
+volumes:
+  postgres: ~
