@@ -51,7 +51,7 @@ model Artwork {
   kind          ModelKind       @default(artwork)
   id            String          @id @default(cuid())
   artworkType   ArtworkType?
-  handle        String          @db.Citext // TODO Add this for case insensitive searching
+  handle        String          @unique
   title         String
   image         String
   description   String
@@ -107,7 +107,7 @@ model User {
   kind                   ModelKind       @default(user)
   artworkMemberships     ArtworkToUser[]
   fullName               String?
-  handle                 String?         @unique @db.Citext
+  handle                 String?         @unique 
   id                     String          @id @default(cuid())
   email                  String?         @unique
   image                  String?

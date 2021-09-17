@@ -1,34 +1,16 @@
-# Set the version of docker compose to use
-version: '3.9'
-
-# The containers that compose the project
+version: '3.8'
 services:
-  server:
-    container_name: hashtune-server
-    environment:
-      DATABASE_URL: postgresql://root:secret@localhost:5432/hashtune?schema=public
-    build:
-      context: '.'
-      target: base
-    ports:
-      - '4000:4000'
-    depends_on:
-      - db
-    networks:
-      - test_vm
-  db:
-    image: postgres:13
+  # postgresql://hashtune:hashtune@localhost:5439
+  postgres:
+    image: postgres
+    container_name: hashtune
     restart: always
-    container_name: db
-    ports:
-      - '5432:5432'
     environment:
-      POSTGRES_USER: root
-      POSTGRES_PASSWORD: secret
-      POSTGRES_DB: hashtune
-    networks:
-      - test_vm
-networks:
-  test_vm:
-    name: test_vm
-    driver: bridge
+      - POSTGRES_USER=hashtune
+      - POSTGRES_PASSWORD=hashtune
+    ports:
+      - '5439:5432'
+    volumes:
+      - postgres:/var/lib/postgresql/data
+volumes:
+  postgres: ~
