@@ -1,7 +1,7 @@
-import * as path from 'path';
-import * as types from './types';
 import { makeSchema } from 'nexus';
 import * as NexusPrismaScalarTypes from 'nexus-prisma/scalars';
+import * as path from 'path';
+import * as types from './types';
 
 export const schema = makeSchema({
   prettierConfig: path.join(__dirname, '../.prettierrc'),
@@ -15,8 +15,11 @@ export const schema = makeSchema({
     output: true,
   },
   outputs: {
-    schema: path.join(__dirname, '/nexus.ts'),
-    typegen: path.join(__dirname, '/schema.graphql'),
+    schema: path.join(
+      __dirname,
+      '../node_modules/@types/nexus-typegen/index.d.ts'
+    ),
+    typegen: path.join(__dirname, '/generated/schema.graphql'),
   },
   contextType: {
     export: 'Context',

@@ -1,11 +1,8 @@
-import { Context } from '@src/context';
-import { objectType, queryType } from 'nexus';
+import { objectType } from 'nexus';
+import { Context } from '../../context';
 
 export const Artwork = objectType({
   name: 'Artwork',
-  isTypeOf(source) {
-    return 'kind' in source && source.kind === 'artwork';
-  },
   definition(t) {
     // TODO: These fields need to NOT be nullable, but we've made some fields incorrectly
     // in the prisma schema and this needs to be fixed ASAP. THe prisma schema needs an audit

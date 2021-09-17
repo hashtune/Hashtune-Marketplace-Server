@@ -1,5 +1,5 @@
-import { Context } from '@src/context';
-import { booleanArg, nonNull, objectType } from 'nexus';
+import { booleanArg, objectType } from 'nexus';
+import { Context } from '../../context';
 
 // TODO: make it so each query does not have to live in this file
 export const Query = objectType({

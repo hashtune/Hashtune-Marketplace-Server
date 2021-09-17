@@ -1,11 +1,4 @@
-import { prisma } from '.prisma/client';
-import {
-  mutationType,
-  nullable,
-  objectType,
-  queryType,
-  stringArg,
-} from 'nexus';
+import { objectType } from 'nexus';
 //import { User } from 'nexus-prisma';
 // import { ClientError } from '../../typeSources';
 

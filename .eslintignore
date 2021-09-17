@@ -1,6 +1,6 @@
 dist
 node_modules
 coverage
-src/graphql/generated
+graphql/generated/schema.graphql
 .env.development
 .env.test

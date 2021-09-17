@@ -4,7 +4,7 @@
  */
 
 import type * as PrismaClient from '.prisma/client';
-import type { Context } from './context';
+import type { Context } from './../context';
 import type { core } from 'nexus';
 declare global {
   interface NexusGenCustomInputMethods<TypeName extends string> {
@@ -205,7 +205,7 @@ export type NexusGenScalarNames = keyof NexusGenScalars;
 
 export type NexusGenUnionNames = never;
 
-export type NexusGenObjectsUsingAbstractStrategyIsTypeOf = 'Artwork';
+export type NexusGenObjectsUsingAbstractStrategyIsTypeOf = never;
 
 export type NexusGenAbstractsUsingStrategyResolveType = never;
 
