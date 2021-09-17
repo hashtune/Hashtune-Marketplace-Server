@@ -59,6 +59,7 @@
     "add": "^2.0.6",
     "apollo-graphql": "^0.9.3",
     "apollo-server": "^3.0.2",
+    "apollo-server-express": "^3.3.0",
     "dotenv-cli": "^4.0.0",
     "dotenv-safe": "^8.2.0",
     "graphql": "^15.5.3",

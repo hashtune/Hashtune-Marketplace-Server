@@ -16,12 +16,10 @@ async function main() {
   });
   await apollo.start();
   apollo.applyMiddleware({ app });
-  // This doesn't log for some reason
-  server.listen({ port: PORT }),
-    () => {
-      process.stdout.write(
-        ` 🚀  Server ready at http://localhost:${PORT}${apollo.graphqlPath}graphql`
-      );
-    };
+  server.listen({ port: PORT }, () => {
+    process.stdout.write(
+      ` 🚀  Server ready at http://localhost:${PORT}${apollo.graphqlPath}graphql`
+    );
+  });
 }
 main();
