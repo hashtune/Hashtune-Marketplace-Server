@@ -9,7 +9,7 @@ export const Artwork = objectType({
     // because it is restricting us in the graphql layer already
     t.id('id');
     t.string('kind');
-    t.nullable.string('type');
+    t.string('artworkType');
     t.string('handle');
     t.string('description');
     // TODO: Handle null and int return types

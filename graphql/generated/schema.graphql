@@ -129,12 +129,12 @@ export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars;
 export interface NexusGenFieldTypes {
   Artwork: {
     // field return type
+    artworkType: string; // String!
     description: string; // String!
     handle: string; // String!
     id: string; // ID!
     kind: string; // String!
     owner: NexusGenRootTypes['User'] | null; // User
-    type: string | null; // String
   };
   ClientError: {
     // field return type
@@ -161,12 +161,12 @@ export interface NexusGenFieldTypes {
 export interface NexusGenFieldTypeNames {
   Artwork: {
     // field return type name
+    artworkType: 'String';
     description: 'String';
     handle: 'String';
     id: 'ID';
     kind: 'String';
     owner: 'User';
-    type: 'String';
   };
   ClientError: {
     // field return type name
