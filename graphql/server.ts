@@ -18,7 +18,7 @@ async function main() {
   apollo.applyMiddleware({ app });
   server.listen({ port: PORT }, () => {
     process.stdout.write(
-      ` 🚀  Server ready at http://localhost:${PORT}${apollo.graphqlPath}graphql`
+      ` 🚀  Server ready at http://localhost:${PORT}${apollo.graphqlPath}`
     );
   });
 }

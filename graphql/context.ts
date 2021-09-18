@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client';
-import { prisma } from './../singletons/prisma';
+import { prisma } from '../singletons/prisma';
 
 export type Context = {
   req: any;

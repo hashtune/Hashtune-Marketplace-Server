@@ -1,5 +1,5 @@
-import { Context } from '@src/context';
-import { booleanArg, nonNull, objectType } from 'nexus';
+import { booleanArg, objectType } from 'nexus';
+import { Context } from '../../context';
 
 // TODO: make it so each query does not have to live in this file
 export const Query = objectType({
@@ -14,9 +14,13 @@ export const Query = objectType({
       },
       resolve: async (_, args, ctx: Context) => {
         if (args.auction) {
-          // TODO filter for auctions
-          return ctx.prisma.artwork.findMany({});
+          return ctx.prisma.artwork.findMany({
+            where: {
+              saleType: 'auction',
+            },
+          });
         }
+        // Both sale and non sale
         return ctx.prisma.artwork.findMany({});
       },
     });

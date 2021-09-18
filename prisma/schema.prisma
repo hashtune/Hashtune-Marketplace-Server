@@ -47,29 +47,51 @@ enum Genre {
   stuffonlymeandmyfriendsknow
 }
 
+model User {
+  kind                   ModelKind      @default(user)
+  fullName               String?
+  handle                 String?        @unique
+  id                     String         @id @default(cuid())
+  email                  String?        @unique
+  image                  String?
+  isApprovedCreator      Boolean?
+  coverImage             String?
+  createdAt              DateTime?      @default(now())
+  updatedAt              DateTime?      @updatedAt
+  socialLinks            Json?
+  followers              Follower[]
+  bids                   Bid[]
+  wallets                Wallet[]
+  likes                  Artwork[]      @relation("likedBy")
+  notificationsReceived  Notification[] @relation("notificationToReceiver")
+  notificationsTriggered Notification[] @relation("notificationToUser")
+  owned                  Artwork[]      @relation("currentOwner")
+  created                Artwork[]      @relation("creators")
+}
+
 model Artwork {
-  kind          ModelKind       @default(artwork)
-  id            String          @id @default(cuid())
-  artworkType   ArtworkType?
-  handle        String          @unique
+  kind          ModelKind      @default(artwork)
+  id            String         @id @default(cuid())
+  artworkType   ArtworkType
+  handle        String         @unique
   title         String
   image         String
   description   String
   link          String // Link 
-  media         Json? // Array of objects objects song: [{title: "", media:""}], album: [{title: "", media:""}, {title: "", media: ""}]
-  createdAt     DateTime        @default(now())
-  updatedAt     DateTime        @updatedAt
+  media         Json // Array of objects objects song: [{title: "", media:""}], album: [{title: "", media:""}, {title: "", media: ""}]
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
   genre         Genre[]
-  memberships   ArtworkToUser[]
-  notifications Notification[]
-  saleType      SaleType?
+  saleType      SaleType
   price         BigInt?
   startingPrice BigInt?
-  auctionId     String
-  auctions      Auction[]
-  likedById     String
-  likedBy       User[]          @relation(fields: [likedById], references: [id], name: "likedBy")
+  notifications Notification[]
+  auction      Auction?       
+  currentOwner  User           @relation(name: "currentOwner", fields: [userId], references: [id])
+  creators      User[]         @relation(name: "creators")
+  likedBy       User[]         @relation("likedBy")
 
+  userId String
 }
 
 model Auction {
@@ -89,39 +111,6 @@ model Bid {
   offer     BigInt
   userId    String
   user      User      @relation(fields: [userId], references: [id])
-}
-
-model ArtworkToUser {
-  kind      ModelKind   @default(artworkMembership)
-  id        String      @id @default(cuid())
-  role      ArtworkRole @default(creator)
-  createdAt DateTime    @default(now())
-  updatedAt DateTime    @updatedAt
-  artworkId String
-  artwork   Artwork     @relation(fields: [artworkId], references: [id])
-  userId    String
-  user      User        @relation(fields: [userId], references: [id])
-}
-
-model User {
-  kind                   ModelKind       @default(user)
-  artworkMemberships     ArtworkToUser[]
-  fullName               String?
-  handle                 String?         @unique 
-  id                     String          @id @default(cuid())
-  email                  String?         @unique
-  image                  String?
-  isApprovedCreator      Boolean?
-  coverImage             String?
-  createdAt              DateTime?       @default(now())
-  updatedAt              DateTime?       @updatedAt
-  wallets                Wallet[]
-  likes                  Artwork[]       @relation("likedBy")
-  notificationsReceived  Notification[]  @relation("notificationToReceiver")
-  notificationsTriggered Notification[]  @relation("notificationToUser")
-  followers              Follower[]
-  bids                   Bid[]
-  socialLinks            Json?
 }
 
 model Follower {

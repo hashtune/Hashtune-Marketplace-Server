@@ -4,7 +4,7 @@
  */
 
 import type * as PrismaClient from '.prisma/client';
-import type { Context } from './context';
+import type { Context } from './../context';
 import type { core } from 'nexus';
 declare global {
   interface NexusGenCustomInputMethods<TypeName extends string> {
@@ -129,13 +129,12 @@ export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars;
 export interface NexusGenFieldTypes {
   Artwork: {
     // field return type
+    artworkType: string; // String!
     description: string; // String!
     handle: string; // String!
     id: string; // ID!
     kind: string; // String!
     owner: NexusGenRootTypes['User'] | null; // User
-    price: number | null; // Int
-    type: string | null; // String
   };
   ClientError: {
     // field return type
@@ -147,22 +146,27 @@ export interface NexusGenFieldTypes {
   };
   User: {
     // field return type
-    hiii: string; // String!
+    created: NexusGenRootTypes['Artwork'][]; // [Artwork!]!
+    email: string; // String!
+    followers: NexusGenRootTypes['User'][]; // [User!]!
+    handle: string; // String!
     id: string; // String!
-    test: string; // String!
+    image: string | null; // String
+    isApprovedCreator: boolean | null; // Boolean
+    likes: NexusGenRootTypes['Artwork'][]; // [Artwork!]!
+    owned: NexusGenRootTypes['Artwork'][]; // [Artwork!]!
   };
 }
 
 export interface NexusGenFieldTypeNames {
   Artwork: {
     // field return type name
+    artworkType: 'String';
     description: 'String';
     handle: 'String';
     id: 'ID';
     kind: 'String';
     owner: 'User';
-    price: 'Int';
-    type: 'String';
   };
   ClientError: {
     // field return type name
@@ -174,9 +178,15 @@ export interface NexusGenFieldTypeNames {
   };
   User: {
     // field return type name
-    hiii: 'String';
+    created: 'Artwork';
+    email: 'String';
+    followers: 'User';
+    handle: 'String';
     id: 'String';
-    test: 'String';
+    image: 'String';
+    isApprovedCreator: 'Boolean';
+    likes: 'Artwork';
+    owned: 'Artwork';
   };
 }
 
@@ -205,7 +215,7 @@ export type NexusGenScalarNames = keyof NexusGenScalars;
 
 export type NexusGenUnionNames = never;
 
-export type NexusGenObjectsUsingAbstractStrategyIsTypeOf = 'Artwork';
+export type NexusGenObjectsUsingAbstractStrategyIsTypeOf = never;
 
 export type NexusGenAbstractsUsingStrategyResolveType = never;
 
