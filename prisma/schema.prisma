@@ -81,6 +81,7 @@ model Artwork {
   media         Json // Array of objects objects song: [{title: "", media:""}], album: [{title: "", media:""}, {title: "", media: ""}]
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
+  likes         Int            @default(0)
   genre         Genre[]
   saleType      SaleType
   price         BigInt?

@@ -143,6 +143,7 @@ export interface NexusGenFieldTypes {
   Query: {
     // field return type
     listArtworks: NexusGenRootTypes['Artwork'][]; // [Artwork!]!
+    listTrendyCreators: NexusGenRootTypes['User'][]; // [User!]!
   };
   User: {
     // field return type
@@ -175,6 +176,7 @@ export interface NexusGenFieldTypeNames {
   Query: {
     // field return type name
     listArtworks: 'Artwork';
+    listTrendyCreators: 'User';
   };
   User: {
     // field return type name
