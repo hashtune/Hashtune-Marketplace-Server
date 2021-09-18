@@ -16,9 +16,9 @@
     "lint:fix": "eslint --fix .",
     "prisma:migrate": "dotenv -e .env.local prisma migrate dev",
     "prisma:generate": "dotenv -e .env.local prisma generate",
+    "reflect:nexus:watch": "nodemon --exec 'yarn ts-node graphql/schema' --ext 'ts' --watch '*/graphql/**/*.ts' --ignore 'graphql/generated/schema.graphql'",
     "test:environment:docker": "yarn docker:up && yarn docker:test:run & yarn docker:down",
     "docker:up": "docker-compose up -d --build",
-    "reflect:nexus:watch": "nodemon --exec 'yarn ts-node graphql/schema' --ext 'ts' --watch '*/graphql/**/*.ts' --ignore 'graphql/generated/schema.graphql'",
     "docker:down": "docker compose down"
   },
   "devDependencies": {

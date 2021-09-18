@@ -134,7 +134,6 @@ export interface NexusGenFieldTypes {
     id: string; // ID!
     kind: string; // String!
     owner: NexusGenRootTypes['User'] | null; // User
-    price: number | null; // Int
     type: string | null; // String
   };
   ClientError: {
@@ -147,9 +146,15 @@ export interface NexusGenFieldTypes {
   };
   User: {
     // field return type
-    hiii: string; // String!
+    created: NexusGenRootTypes['Artwork'][]; // [Artwork!]!
+    email: string; // String!
+    followers: NexusGenRootTypes['User'][]; // [User!]!
+    handle: string; // String!
     id: string; // String!
-    test: string; // String!
+    image: string | null; // String
+    isApprovedCreator: boolean | null; // Boolean
+    likes: NexusGenRootTypes['Artwork'][]; // [Artwork!]!
+    owned: NexusGenRootTypes['Artwork'][]; // [Artwork!]!
   };
 }
 
@@ -161,7 +166,6 @@ export interface NexusGenFieldTypeNames {
     id: 'ID';
     kind: 'String';
     owner: 'User';
-    price: 'Int';
     type: 'String';
   };
   ClientError: {
@@ -174,9 +178,15 @@ export interface NexusGenFieldTypeNames {
   };
   User: {
     // field return type name
-    hiii: 'String';
+    created: 'Artwork';
+    email: 'String';
+    followers: 'User';
+    handle: 'String';
     id: 'String';
-    test: 'String';
+    image: 'String';
+    isApprovedCreator: 'Boolean';
+    likes: 'Artwork';
+    owned: 'Artwork';
   };
 }
 

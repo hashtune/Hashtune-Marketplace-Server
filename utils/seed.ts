@@ -1,7 +1,7 @@
 import { prisma } from '../singletons/prisma';
 
 async function main() {
-  const user = await prisma.user.create({
+  const user1 = await prisma.user.create({
     data: {
       fullName: 'user 1',
       email: 'user1@gmail.com',
@@ -9,7 +9,15 @@ async function main() {
       handle: 'user1',
     },
   });
-  const artwork = await prisma.artwork.create({
+  const user2 = await prisma.user.create({
+    data: {
+      fullName: 'user 2',
+      email: 'user2@gmail.com',
+      coverImage: 'urlblahblah',
+      handle: 'user2',
+    },
+  });
+  const artwork1 = await prisma.artwork.create({
     data: {
       artworkType: 'song',
       description: 'song description',
@@ -17,10 +25,25 @@ async function main() {
       image: 'blahblah',
       link: 'blahblah',
       title: 'amazingsongTitle',
+      media: [{ title: 'amazingsongTitle', media: 'lala' }],
+      saleType: 'auction',
       startingPrice: 50,
-      likedById: user.id,
-      auctionId: '1',
-      auctions: {
+      likedBy: {
+        connect: {
+          id: user1.id,
+        },
+      },
+      currentOwner: {
+        connect: {
+          id: user1.id,
+        },
+      },
+      creators: {
+        connect: {
+          id: user1.id,
+        },
+      },
+      auction: {
         create: {
           id: '1',
           currentHigh: 10,
@@ -28,7 +51,44 @@ async function main() {
       },
     },
   });
-  if (!user || !artwork) throw new Error('Failed to seed!');
+  const artwork2 = await prisma.artwork.create({
+    data: {
+      artworkType: 'album',
+      description: 'song description2',
+      handle: 'amazingsong2',
+      image: 'blahblah2',
+      link: 'blahblah2',
+      title: 'amazingsongTitle2',
+      media: [{ title: 'amazingsongTitle2', media: 'lala2' }],
+      saleType: 'fixed',
+      price: 100,
+      likedBy: {
+        connect: {
+          id: user2.id,
+        },
+      },
+      currentOwner: {
+        connect: {
+          id: user2.id,
+        },
+      },
+      creators: {
+        connect: {
+          id: user2.id,
+        },
+      },
+    },
+  });
+  if (!user1 || !artwork1 || !user2 || !artwork2)
+    throw new Error('Failed to seed!');
 }
 
-main();
+main()
+  .then(() => {
+    console.log('seeded successfully');
+    process.exit(0);
+  })
+  .catch(e => {
+    console.log('error seeding', e);
+    process.exit(1);
+  });

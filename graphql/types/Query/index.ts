@@ -14,9 +14,13 @@ export const Query = objectType({
       },
       resolve: async (_, args, ctx: Context) => {
         if (args.auction) {
-          // TODO filter for auctions
-          return ctx.prisma.artwork.findMany({});
+          return ctx.prisma.artwork.findMany({
+            where: {
+              saleType: 'auction',
+            },
+          });
         }
+        // Both sale and non sale
         return ctx.prisma.artwork.findMany({});
       },
     });
