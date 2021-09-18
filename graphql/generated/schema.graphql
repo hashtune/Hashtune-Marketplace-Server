@@ -197,6 +197,7 @@ export interface NexusGenArgTypes {
     listArtworks: {
       // args
       auction?: boolean | null; // Boolean
+      trending?: boolean | null; // Boolean
     };
   };
 }
