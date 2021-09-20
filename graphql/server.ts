@@ -1,11 +1,11 @@
 import { ApolloServer } from 'apollo-server-express';
-import { createServer } from 'http';
 import express from 'express';
+import { createServer } from 'http';
 import { createContext } from './context';
 import { schema } from './schema';
 const { PORT = 5000 } = process.env;
 
-async function main() {
+export async function main() {
   const app = express();
   const server = createServer(app);
   const apollo = new ApolloServer({

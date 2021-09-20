@@ -55,7 +55,7 @@
     "dotenv-safe": "^8.2.0",
     "graphql": "^15.5.3",
     "nexus": "^1.1.0",
-    "nexus-prisma": "^0.33.0",
+    "nexus-prisma": "^0.34.0",
     "yarn": "^1.22.11"
   }
 }
