@@ -21,3 +21,5 @@ Make sure you have .env.local with a DATABASE_URL corresponding to the postgres 
 `http://localhost:5000/graphql` for the playground
 
 ## Testing
+
+`yarn test:watch` to run API integration tests
