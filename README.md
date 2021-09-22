@@ -22,4 +22,6 @@ Make sure you have .env.local with a DATABASE_URL corresponding to the postgres 
 
 ## Testing
 
-`yarn test:watch` to run API integration tests
+`yarn test:watch` to run API integration tests in watch mode while writing them
+
+`yarn test:api` to run API integration tests

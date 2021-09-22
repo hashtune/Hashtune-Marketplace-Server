@@ -3,47 +3,32 @@
  * Do not make changes to this file directly
  */
 
-import type * as PrismaClient from '.prisma/client';
-import type { Context } from './../context';
-import type { core } from 'nexus';
+import type * as PrismaClient from ".prisma/client"
+import type { Context } from "./../context"
+import type { core } from "nexus"
 declare global {
   interface NexusGenCustomInputMethods<TypeName extends string> {
     /**
      * The `BigInt` scalar type represents non-fractional signed whole numeric values.
      * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt
      */
-    bigInt<FieldName extends string>(
-      fieldName: FieldName,
-      opts?: core.CommonInputFieldConfig<TypeName, FieldName>
-    ): void; // "BigInt";
+    bigInt<FieldName extends string>(fieldName: FieldName, opts?: core.CommonInputFieldConfig<TypeName, FieldName>): void // "BigInt";
     /**
      * The `Byte` scalar type represents byte value as a Buffer
      */
-    bytes<FieldName extends string>(
-      fieldName: FieldName,
-      opts?: core.CommonInputFieldConfig<TypeName, FieldName>
-    ): void; // "Bytes";
+    bytes<FieldName extends string>(fieldName: FieldName, opts?: core.CommonInputFieldConfig<TypeName, FieldName>): void // "Bytes";
     /**
      * A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.
      */
-    dateTime<FieldName extends string>(
-      fieldName: FieldName,
-      opts?: core.CommonInputFieldConfig<TypeName, FieldName>
-    ): void; // "DateTime";
+    dateTime<FieldName extends string>(fieldName: FieldName, opts?: core.CommonInputFieldConfig<TypeName, FieldName>): void // "DateTime";
     /**
      * An arbitrary-precision Decimal type
      */
-    decimal<FieldName extends string>(
-      fieldName: FieldName,
-      opts?: core.CommonInputFieldConfig<TypeName, FieldName>
-    ): void; // "Decimal";
+    decimal<FieldName extends string>(fieldName: FieldName, opts?: core.CommonInputFieldConfig<TypeName, FieldName>): void // "Decimal";
     /**
      * The `JSONObject` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
      */
-    json<FieldName extends string>(
-      fieldName: FieldName,
-      opts?: core.CommonInputFieldConfig<TypeName, FieldName>
-    ): void; // "Json";
+    json<FieldName extends string>(fieldName: FieldName, opts?: core.CommonInputFieldConfig<TypeName, FieldName>): void // "Json";
   }
 }
 declare global {
@@ -52,101 +37,86 @@ declare global {
      * The `BigInt` scalar type represents non-fractional signed whole numeric values.
      * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt
      */
-    bigInt<FieldName extends string>(
-      fieldName: FieldName,
-      ...opts: core.ScalarOutSpread<TypeName, FieldName>
-    ): void; // "BigInt";
+    bigInt<FieldName extends string>(fieldName: FieldName, ...opts: core.ScalarOutSpread<TypeName, FieldName>): void // "BigInt";
     /**
      * The `Byte` scalar type represents byte value as a Buffer
      */
-    bytes<FieldName extends string>(
-      fieldName: FieldName,
-      ...opts: core.ScalarOutSpread<TypeName, FieldName>
-    ): void; // "Bytes";
+    bytes<FieldName extends string>(fieldName: FieldName, ...opts: core.ScalarOutSpread<TypeName, FieldName>): void // "Bytes";
     /**
      * A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.
      */
-    dateTime<FieldName extends string>(
-      fieldName: FieldName,
-      ...opts: core.ScalarOutSpread<TypeName, FieldName>
-    ): void; // "DateTime";
+    dateTime<FieldName extends string>(fieldName: FieldName, ...opts: core.ScalarOutSpread<TypeName, FieldName>): void // "DateTime";
     /**
      * An arbitrary-precision Decimal type
      */
-    decimal<FieldName extends string>(
-      fieldName: FieldName,
-      ...opts: core.ScalarOutSpread<TypeName, FieldName>
-    ): void; // "Decimal";
+    decimal<FieldName extends string>(fieldName: FieldName, ...opts: core.ScalarOutSpread<TypeName, FieldName>): void // "Decimal";
     /**
      * The `JSONObject` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
      */
-    json<FieldName extends string>(
-      fieldName: FieldName,
-      ...opts: core.ScalarOutSpread<TypeName, FieldName>
-    ): void; // "Json";
+    json<FieldName extends string>(fieldName: FieldName, ...opts: core.ScalarOutSpread<TypeName, FieldName>): void // "Json";
   }
 }
+
 
 declare global {
   interface NexusGen extends NexusGenTypes {}
 }
 
-export interface NexusGenInputs {}
+export interface NexusGenInputs {
+}
 
-export interface NexusGenEnums {}
+export interface NexusGenEnums {
+}
 
 export interface NexusGenScalars {
-  String: string;
-  Int: number;
-  Float: number;
-  Boolean: boolean;
-  ID: string;
-  BigInt: any;
-  Bytes: any;
-  DateTime: any;
-  Decimal: any;
-  Json: any;
+  String: string
+  Int: number
+  Float: number
+  Boolean: boolean
+  ID: string
+  BigInt: any
+  Bytes: any
+  DateTime: any
+  Decimal: any
+  Json: any
 }
 
 export interface NexusGenObjects {
   Artwork: PrismaClient.Artwork;
-  ClientError: {
-    // root type
+  ClientError: { // root type
     given: string; // String!
-  };
+  }
   Query: {};
   User: PrismaClient.User;
 }
 
-export interface NexusGenInterfaces {}
+export interface NexusGenInterfaces {
+}
 
-export interface NexusGenUnions {}
+export interface NexusGenUnions {
+}
 
-export type NexusGenRootTypes = NexusGenObjects;
+export type NexusGenRootTypes = NexusGenObjects
 
-export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars;
+export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars
 
 export interface NexusGenFieldTypes {
-  Artwork: {
-    // field return type
+  Artwork: { // field return type
     artworkType: string; // String!
     description: string; // String!
     handle: string; // String!
     id: string; // ID!
     kind: string; // String!
     owner: NexusGenRootTypes['User'] | null; // User
-  };
-  ClientError: {
-    // field return type
+  }
+  ClientError: { // field return type
     given: string; // String!
-  };
-  Query: {
-    // field return type
+  }
+  Query: { // field return type
     listArtworks: NexusGenRootTypes['Artwork'][]; // [Artwork!]!
     listTrendyCreators: NexusGenRootTypes['User'][]; // [User!]!
-  };
-  User: {
-    // field return type
+  }
+  User: { // field return type
     created: NexusGenRootTypes['Artwork'][]; // [Artwork!]!
     email: string; // String!
     followers: NexusGenRootTypes['User'][]; // [User!]!
@@ -156,55 +126,52 @@ export interface NexusGenFieldTypes {
     isApprovedCreator: boolean | null; // Boolean
     likes: NexusGenRootTypes['Artwork'][]; // [Artwork!]!
     owned: NexusGenRootTypes['Artwork'][]; // [Artwork!]!
-  };
+  }
 }
 
 export interface NexusGenFieldTypeNames {
-  Artwork: {
-    // field return type name
-    artworkType: 'String';
-    description: 'String';
-    handle: 'String';
-    id: 'ID';
-    kind: 'String';
-    owner: 'User';
-  };
-  ClientError: {
-    // field return type name
-    given: 'String';
-  };
-  Query: {
-    // field return type name
-    listArtworks: 'Artwork';
-    listTrendyCreators: 'User';
-  };
-  User: {
-    // field return type name
-    created: 'Artwork';
-    email: 'String';
-    followers: 'User';
-    handle: 'String';
-    id: 'String';
-    image: 'String';
-    isApprovedCreator: 'Boolean';
-    likes: 'Artwork';
-    owned: 'Artwork';
-  };
+  Artwork: { // field return type name
+    artworkType: 'String'
+    description: 'String'
+    handle: 'String'
+    id: 'ID'
+    kind: 'String'
+    owner: 'User'
+  }
+  ClientError: { // field return type name
+    given: 'String'
+  }
+  Query: { // field return type name
+    listArtworks: 'Artwork'
+    listTrendyCreators: 'User'
+  }
+  User: { // field return type name
+    created: 'Artwork'
+    email: 'String'
+    followers: 'User'
+    handle: 'String'
+    id: 'String'
+    image: 'String'
+    isApprovedCreator: 'Boolean'
+    likes: 'Artwork'
+    owned: 'Artwork'
+  }
 }
 
 export interface NexusGenArgTypes {
   Query: {
-    listArtworks: {
-      // args
+    listArtworks: { // args
       auction?: boolean | null; // Boolean
       trending?: boolean | null; // Boolean
-    };
-  };
+    }
+  }
 }
 
-export interface NexusGenAbstractTypeMembers {}
+export interface NexusGenAbstractTypeMembers {
+}
 
-export interface NexusGenTypeInterfaces {}
+export interface NexusGenTypeInterfaces {
+}
 
 export type NexusGenObjectNames = keyof NexusGenObjects;
 
@@ -224,11 +191,11 @@ export type NexusGenAbstractsUsingStrategyResolveType = never;
 
 export type NexusGenFeaturesConfig = {
   abstractTypeStrategies: {
-    isTypeOf: true;
-    __typename: false;
-    resolveType: false;
-  };
-};
+    isTypeOf: true
+    __typename: false
+    resolveType: false
+  }
+}
 
 export interface NexusGenTypes {
   context: Context;
@@ -246,19 +213,9 @@ export interface NexusGenTypes {
   interfaceNames: NexusGenInterfaceNames;
   scalarNames: NexusGenScalarNames;
   unionNames: NexusGenUnionNames;
-  allInputTypes:
-    | NexusGenTypes['inputNames']
-    | NexusGenTypes['enumNames']
-    | NexusGenTypes['scalarNames'];
-  allOutputTypes:
-    | NexusGenTypes['objectNames']
-    | NexusGenTypes['enumNames']
-    | NexusGenTypes['unionNames']
-    | NexusGenTypes['interfaceNames']
-    | NexusGenTypes['scalarNames'];
-  allNamedTypes:
-    | NexusGenTypes['allInputTypes']
-    | NexusGenTypes['allOutputTypes'];
+  allInputTypes: NexusGenTypes['inputNames'] | NexusGenTypes['enumNames'] | NexusGenTypes['scalarNames'];
+  allOutputTypes: NexusGenTypes['objectNames'] | NexusGenTypes['enumNames'] | NexusGenTypes['unionNames'] | NexusGenTypes['interfaceNames'] | NexusGenTypes['scalarNames'];
+  allNamedTypes: NexusGenTypes['allInputTypes'] | NexusGenTypes['allOutputTypes']
   abstractTypes: NexusGenTypes['interfaceNames'] | NexusGenTypes['unionNames'];
   abstractTypeMembers: NexusGenAbstractTypeMembers;
   objectsUsingAbstractStrategyIsTypeOf: NexusGenObjectsUsingAbstractStrategyIsTypeOf;
@@ -266,17 +223,18 @@ export interface NexusGenTypes {
   features: NexusGenFeaturesConfig;
 }
 
+
 declare global {
-  interface NexusGenPluginTypeConfig<TypeName extends string> {}
-  interface NexusGenPluginInputTypeConfig<TypeName extends string> {}
-  interface NexusGenPluginFieldConfig<
-    TypeName extends string,
-    FieldName extends string
-  > {}
-  interface NexusGenPluginInputFieldConfig<
-    TypeName extends string,
-    FieldName extends string
-  > {}
-  interface NexusGenPluginSchemaConfig {}
-  interface NexusGenPluginArgConfig {}
+  interface NexusGenPluginTypeConfig<TypeName extends string> {
+  }
+  interface NexusGenPluginInputTypeConfig<TypeName extends string> {
+  }
+  interface NexusGenPluginFieldConfig<TypeName extends string, FieldName extends string> {
+  }
+  interface NexusGenPluginInputFieldConfig<TypeName extends string, FieldName extends string> {
+  }
+  interface NexusGenPluginSchemaConfig {
+  }
+  interface NexusGenPluginArgConfig {
+  }
 }
