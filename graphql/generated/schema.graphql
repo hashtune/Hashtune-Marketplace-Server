@@ -108,6 +108,7 @@ export interface NexusGenFieldTypes {
     id: string; // ID!
     kind: string; // String!
     owner: NexusGenRootTypes['User'] | null; // User
+    saleType: string; // String!
   }
   ClientError: { // field return type
     given: string; // String!
@@ -137,6 +138,7 @@ export interface NexusGenFieldTypeNames {
     id: 'ID'
     kind: 'String'
     owner: 'User'
+    saleType: 'String'
   }
   ClientError: { // field return type name
     given: 'String'

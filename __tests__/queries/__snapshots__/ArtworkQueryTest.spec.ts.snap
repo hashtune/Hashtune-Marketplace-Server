@@ -1,13 +1,80 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Test users query should query the users 1`] = `
+exports[`Test users query should query both auctions and fixed 1`] = `
 Object {
   "data": Object {
     "listArtworks": Array [
       Object {
-        "handle": "amazingsong",
+        "saleType": "auction",
+      },
+      Object {
+        "saleType": "fixed",
       },
     ],
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`Test users query should query only auctions  1`] = `
+Object {
+  "data": Object {
+    "listArtworks": Array [
+      Object {
+        "saleType": "auction",
+      },
+    ],
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`Test users query should query the trending users 1`] = `
+Object {
+  "data": Object {
+    "listTrendyCreators": Array [],
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`Test users query should query trending auctions 1`] = `
+Object {
+  "data": Object {
+    "listArtworks": Array [],
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`Test users query should query trending auctions 2`] = `
+Object {
+  "data": Object {
+    "listArtworks": Array [],
   },
   "errors": undefined,
   "extensions": undefined,

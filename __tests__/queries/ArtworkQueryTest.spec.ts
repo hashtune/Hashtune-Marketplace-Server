@@ -2,17 +2,58 @@ import server from '../server';
 
 describe('Test users query', () => {
   const ARTWORK_QUERY = `
-    query Query($listArtworksAuction: Boolean) {
-        listArtworks(auction: $listArtworksAuction) {
-            handle
+    query Query($listArtworksAuction: Boolean, $listArtworksTrending2: Boolean) {
+        listArtworks(auction: $listArtworksAuction, trending: $listArtworksTrending2) {
+            saleType
         }
     }
 `;
 
-  it('should query the users', async () => {
+  const USER_QUERY = `
+    query Query {
+      listTrendyCreators {
+        handle
+      }
+    }
+`;
+
+  it('should query only auctions ', async () => {
     const res = await server.executeOperation({
       query: ARTWORK_QUERY,
       variables: { listArtworksAuction: true },
+    });
+    expect(res).toMatchSnapshot();
+  });
+
+  it('should query both auctions and fixed', async () => {
+    const res = await server.executeOperation({
+      query: ARTWORK_QUERY,
+      variables: { listArtworksAuction: false },
+    });
+    expect(res).toMatchSnapshot();
+  });
+
+  it('should query trending auctions', async () => {
+    const res = await server.executeOperation({
+      query: ARTWORK_QUERY,
+      variables: { listArtworksAuction: true, listArtworksTrending2: true },
+    });
+    expect(res).toMatchSnapshot();
+  });
+
+  // TODO actually return data
+  it('should query trending auctions', async () => {
+    const res = await server.executeOperation({
+      query: ARTWORK_QUERY,
+      variables: { listArtworksAuction: true, listArtworksTrending2: true },
+    });
+    expect(res).toMatchSnapshot();
+  });
+
+  // TODO actually return data
+  it('should query the trending users', async () => {
+    const res = await server.executeOperation({
+      query: USER_QUERY,
     });
     expect(res).toMatchSnapshot();
   });
