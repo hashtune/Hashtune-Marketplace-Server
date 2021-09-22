@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Test users query should query both auctions and fixed 1`] = `
+exports[`Test artwork queries should query both auctions and fixed 1`] = `
 Object {
   "data": Object {
     "listArtworks": Array [
@@ -22,7 +22,7 @@ Object {
 }
 `;
 
-exports[`Test users query should query only auctions  1`] = `
+exports[`Test artwork queries should query only auctions  1`] = `
 Object {
   "data": Object {
     "listArtworks": Array [
@@ -41,22 +41,7 @@ Object {
 }
 `;
 
-exports[`Test users query should query the trending users 1`] = `
-Object {
-  "data": Object {
-    "listTrendyCreators": Array [],
-  },
-  "errors": undefined,
-  "extensions": undefined,
-  "http": Object {
-    "headers": Headers {
-      Symbol(map): Object {},
-    },
-  },
-}
-`;
-
-exports[`Test users query should query trending auctions 1`] = `
+exports[`Test artwork queries should query trending auctions 1`] = `
 Object {
   "data": Object {
     "listArtworks": Array [],
