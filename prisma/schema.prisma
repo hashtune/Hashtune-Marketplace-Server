@@ -52,6 +52,7 @@ model User {
   fullName               String?
   handle                 String?        @unique
   id                     String         @id @default(cuid())
+  bio                    String?
   email                  String?        @unique
   image                  String?
   isApprovedCreator      Boolean?
