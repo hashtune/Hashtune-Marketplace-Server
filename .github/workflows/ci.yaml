@@ -18,4 +18,5 @@ jobs:
           cache: 'yarn'
       - run: yarn docker:up
       - run: yarn
+      - run: yarn seed
       - run: yarn test:api 
