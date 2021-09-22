@@ -147,6 +147,7 @@ export interface NexusGenFieldTypes {
   };
   User: {
     // field return type
+    bio: string | null; // String
     created: NexusGenRootTypes['Artwork'][]; // [Artwork!]!
     email: string; // String!
     followers: NexusGenRootTypes['User'][]; // [User!]!
@@ -180,6 +181,7 @@ export interface NexusGenFieldTypeNames {
   };
   User: {
     // field return type name
+    bio: 'String';
     created: 'Artwork';
     email: 'String';
     followers: 'User';

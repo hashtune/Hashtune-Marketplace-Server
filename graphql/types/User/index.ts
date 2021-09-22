@@ -6,6 +6,7 @@ export const UserType = objectType({
     t.string('id');
     t.string('handle');
     t.string('email');
+    t.nullable.string('bio');
     t.nullable.string('image');
     t.nullable.boolean('isApprovedCreator');
     t.list.field('owned', {
