@@ -5,7 +5,7 @@
   "main": "index.js",
   "repository": "https://github.com/hashtune",
   "author": "Hashtune",
-  "license": "",
+  "license": "UNLICENSED",
   "scripts": {
     "dev": "dotenv -e ./.env.local -- ts-node-dev --no-notify --respawn --transpile-only graphql/server.ts",
     "build": "tsc -p tsconfig.prod.json",
