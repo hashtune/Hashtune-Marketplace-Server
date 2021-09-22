@@ -12,6 +12,7 @@ export const Artwork = objectType({
     t.string('artworkType');
     t.string('handle');
     t.string('description');
+    t.string('saleType');
     // TODO: Handle null and int return types
     // t.nullable.field('price');
     t.nullable.field('owner', {

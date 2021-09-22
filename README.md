@@ -2,7 +2,9 @@
 
 ## Development
 
-Make sure you have .env.local with a DATABASE_URL corresponding to the postgres DB from the docker-compose file.
+Make sure you have `.env.local` with a DATABASE_URL corresponding to the postgres DB from the docker-compose file, and STAGE="development".
+
+Also add a `.env.test` file with a DATABASE_URL corresponding to the postgres DB from the docker-compose file, and STAGE="test".
 
 `yarn` Install dependencies
 
@@ -21,3 +23,7 @@ Make sure you have .env.local with a DATABASE_URL corresponding to the postgres 
 `http://localhost:5000/graphql` for the playground
 
 ## Testing
+
+`yarn test:watch` to run API integration tests in watch mode while writing them
+
+`yarn test:api` to run API integration tests
