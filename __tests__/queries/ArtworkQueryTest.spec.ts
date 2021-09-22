@@ -33,14 +33,6 @@ describe('Test users query', () => {
     expect(res).toMatchSnapshot();
   });
 
-  it('should query trending auctions', async () => {
-    const res = await server.executeOperation({
-      query: ARTWORK_QUERY,
-      variables: { listArtworksAuction: true, listArtworksTrending2: true },
-    });
-    expect(res).toMatchSnapshot();
-  });
-
   // TODO actually return data
   it('should query trending auctions', async () => {
     const res = await server.executeOperation({

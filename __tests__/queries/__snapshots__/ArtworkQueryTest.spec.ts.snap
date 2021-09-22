@@ -70,18 +70,3 @@ Object {
   },
 }
 `;
-
-exports[`Test users query should query trending auctions 2`] = `
-Object {
-  "data": Object {
-    "listArtworks": Array [],
-  },
-  "errors": undefined,
-  "extensions": undefined,
-  "http": Object {
-    "headers": Headers {
-      Symbol(map): Object {},
-    },
-  },
-}
-`;
