@@ -1,6 +1,6 @@
 import server from '../server';
 
-describe('Test users query', () => {
+describe('Test artwork queries', () => {
   const ARTWORK_QUERY = `
     query Query($listArtworksAuction: Boolean, $listArtworksTrending2: Boolean) {
         listArtworks(auction: $listArtworksAuction, trending: $listArtworksTrending2) {
