@@ -6,6 +6,7 @@ async function main() {
       fullName: 'user 1',
       email: 'user1@gmail.com',
       handle: 'user1',
+      bio: "Hey I'm so and so. I've been makign artwork for x amount of years and I'm from blahblah. I love cryptooo..",
     },
   });
   const user2 = await prisma.user.create({
@@ -13,6 +14,7 @@ async function main() {
       fullName: 'user 2',
       email: 'user2@gmail.com',
       handle: 'user2',
+      bio: "Hey I'm so and so. I've been makign artwork for x amount of years and I'm from blahblah. I love cryptooo..",
     },
   });
   const artworkWithReservePrice = await prisma.artwork.create({
