@@ -15,10 +15,9 @@ enum ModelKind {
   artworkMembership
   user
   wallet
-  notification
-  follower
   auction
   bid
+  sale
 }
 
 enum ArtworkRole {
@@ -32,76 +31,74 @@ enum SaleType {
   fixed
 }
 
-enum ArtworkType {
-  song
-  album
-}
-
-enum Genre {
-  rock
-  electronic
-  shoegaze
-  dreampop
-  indierock
-  postrock
-  stuffonlymeandmyfriendsknow
-}
-
 model User {
   kind                   ModelKind      @default(user)
-  fullName               String?
-  handle                 String?        @unique
+  fullName               String
+  handle                 String         @unique
   id                     String         @id @default(cuid())
-  email                  String?        @unique
+  email                  String         @unique
   image                  String?
-  isApprovedCreator      Boolean?
-  coverImage             String?
-  createdAt              DateTime?      @default(now())
-  updatedAt              DateTime?      @updatedAt
+  isApprovedCreator      Boolean        @default(false)
+  createdAt              DateTime       @default(now())
+  updatedAt              DateTime       @updatedAt
   socialLinks            Json?
-  followers              Follower[]
   bids                   Bid[]
+  sales                  Sale[]
   wallets                Wallet[]
-  likes                  Artwork[]      @relation("likedBy")
-  notificationsReceived  Notification[] @relation("notificationToReceiver")
-  notificationsTriggered Notification[] @relation("notificationToUser")
   owned                  Artwork[]      @relation("currentOwner")
-  created                Artwork[]      @relation("creators")
+  featuredOn             Artwork[]      @relation("features")
+  created                Artwork[]      @relation("originalCreator")
 }
 
 model Artwork {
   kind          ModelKind      @default(artwork)
   id            String         @id @default(cuid())
-  artworkType   ArtworkType
   handle        String         @unique
   title         String
   image         String
   description   String
-  link          String // Link 
+  link          String 
   media         Json // Array of objects objects song: [{title: "", media:""}], album: [{title: "", media:""}, {title: "", media: ""}]
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
-  likes         Int            @default(0)
-  genre         Genre[]
   saleType      SaleType
   price         BigInt?
-  startingPrice BigInt?
-  notifications Notification[]
-  auction      Auction?       
+  reservePrice  BigInt?
+  auctions      Auction[]      @relation(name: "auctions")
+  sales         Sale[]         @relation(name: "sales")
+  userId        String
   currentOwner  User           @relation(name: "currentOwner", fields: [userId], references: [id])
-  creators      User[]         @relation(name: "creators")
-  likedBy       User[]         @relation("likedBy")
-
-  userId String
+  features      User[]         @relation(name: "features")
+  creator       User           @relation(name: "originalCreator", fields: [userId], references: [id])
+  listed        Boolean        @default(true)
+  streamCount   Int            @default(0)
 }
 
 model Auction {
-  kind        ModelKind @default(auction)
-  id          String    @id @default(cuid())
-  artworkId   String
-  artwork     Artwork   @relation(fields: [artworkId], references: [id])
-  bid         Bid[]
-  currentHigh BigInt
+  kind              ModelKind @default(auction)
+  id                String    @id @default(cuid())
+  artworkId         String
+  artwork           Artwork   @relation("auctions", fields: [artworkId], references: [id])
+  bids              Bid[]
+  currentHigh       BigInt    @default(0)
+  currentHighBidder String?
+  live              Boolean   @default(false)
+  liveAt            DateTime?
+  isFinalized       Boolean   @default(false)
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+}
+
+model Sale {
+  kind              ModelKind @default(sale)
+  id                String    @id @default(cuid())
+  artworkId         String
+  artwork           Artwork   @relation("sales", fields: [artworkId], references: [id])  
+  price             BigInt     
+  userId            String
+  user              User      @relation(fields: [userId], references: [id]) 
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
 }
 
 model Bid {
@@ -112,36 +109,8 @@ model Bid {
   offer     BigInt
   userId    String
   user      User      @relation(fields: [userId], references: [id])
-}
-
-model Follower {
-  kind      ModelKind @default(follower)
-  id        String    @id @default(cuid())
-  userId    String    @unique
-  user      User      @relation(fields: [userId], references: [id])
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-}
-
-enum NotificationType {
-  like
-  follower
-  sale
-}
-
-model Notification {
-  kind       ModelKind        @default(notification)
-  id         String           @id @default(cuid())
-  seen       Boolean
-  receiverId String
-  receiver   User             @relation(fields: [receiverId], references: [id], name: "notificationToReceiver")
-  userId     String?
-  user       User?            @relation(fields: [userId], references: [id], name: "notificationToUser")
-  type       NotificationType
-  artworkId  String?
-  artwork    Artwork?         @relation(fields: [artworkId], references: [id])
-  createdAt  DateTime         @default(now())
-  updatedAt  DateTime         @updatedAt
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
 }
 
 enum WalletProvider {

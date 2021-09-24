@@ -1,5 +1,5 @@
 -- CreateEnum
-CREATE TYPE "ModelKind" AS ENUM ('artwork', 'artworkMembership', 'user', 'wallet', 'notification', 'follower', 'auction', 'bid');
+CREATE TYPE "ModelKind" AS ENUM ('artwork', 'artworkMembership', 'user', 'wallet', 'auction', 'bid', 'sale');
 
 -- CreateEnum
 CREATE TYPE "ArtworkRole" AS ENUM ('creator', 'feature', 'owner');
@@ -8,29 +8,19 @@ CREATE TYPE "ArtworkRole" AS ENUM ('creator', 'feature', 'owner');
 CREATE TYPE "SaleType" AS ENUM ('auction', 'fixed');
 
 -- CreateEnum
-CREATE TYPE "ArtworkType" AS ENUM ('song', 'album');
-
--- CreateEnum
-CREATE TYPE "Genre" AS ENUM ('rock', 'electronic', 'shoegaze', 'dreampop', 'indierock', 'postrock', 'stuffonlymeandmyfriendsknow');
-
--- CreateEnum
-CREATE TYPE "NotificationType" AS ENUM ('like', 'follower', 'sale');
-
--- CreateEnum
 CREATE TYPE "WalletProvider" AS ENUM ('metamask');
 
 -- CreateTable
 CREATE TABLE "User" (
     "kind" "ModelKind" NOT NULL DEFAULT E'user',
-    "fullName" TEXT,
-    "handle" TEXT,
+    "fullName" TEXT NOT NULL,
+    "handle" TEXT NOT NULL,
     "id" TEXT NOT NULL,
-    "email" TEXT,
+    "email" TEXT NOT NULL,
     "image" TEXT,
-    "isApprovedCreator" BOOLEAN,
-    "coverImage" TEXT,
-    "createdAt" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" TIMESTAMP(3),
+    "isApprovedCreator" BOOLEAN NOT NULL DEFAULT false,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
     "socialLinks" JSONB,
 
     PRIMARY KEY ("id")
@@ -40,7 +30,6 @@ CREATE TABLE "User" (
 CREATE TABLE "Artwork" (
     "kind" "ModelKind" NOT NULL DEFAULT E'artwork',
     "id" TEXT NOT NULL,
-    "artworkType" "ArtworkType" NOT NULL,
     "handle" TEXT NOT NULL,
     "title" TEXT NOT NULL,
     "image" TEXT NOT NULL,
@@ -49,11 +38,11 @@ CREATE TABLE "Artwork" (
     "media" JSONB NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
-    "genre" "Genre"[],
     "saleType" "SaleType" NOT NULL,
     "price" BIGINT,
-    "startingPrice" BIGINT,
+    "reservePrice" BIGINT,
     "userId" TEXT NOT NULL,
+    "listed" BOOLEAN NOT NULL DEFAULT true,
 
     PRIMARY KEY ("id")
 );
@@ -63,7 +52,26 @@ CREATE TABLE "Auction" (
     "kind" "ModelKind" NOT NULL DEFAULT E'auction',
     "id" TEXT NOT NULL,
     "artworkId" TEXT NOT NULL,
-    "currentHigh" BIGINT NOT NULL,
+    "currentHigh" BIGINT NOT NULL DEFAULT 0,
+    "currentHighBidder" TEXT,
+    "live" BOOLEAN NOT NULL DEFAULT false,
+    "liveAt" TIMESTAMP(3),
+    "isFinalized" BOOLEAN NOT NULL DEFAULT false,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Sale" (
+    "kind" "ModelKind" NOT NULL DEFAULT E'sale',
+    "id" TEXT NOT NULL,
+    "artworkId" TEXT NOT NULL,
+    "price" BIGINT NOT NULL,
+    "userId" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
 
     PRIMARY KEY ("id")
 );
@@ -75,30 +83,6 @@ CREATE TABLE "Bid" (
     "auctionId" TEXT NOT NULL,
     "offer" BIGINT NOT NULL,
     "userId" TEXT NOT NULL,
-
-    PRIMARY KEY ("id")
-);
-
--- CreateTable
-CREATE TABLE "Follower" (
-    "kind" "ModelKind" NOT NULL DEFAULT E'follower',
-    "id" TEXT NOT NULL,
-    "userId" TEXT NOT NULL,
-    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" TIMESTAMP(3) NOT NULL,
-
-    PRIMARY KEY ("id")
-);
-
--- CreateTable
-CREATE TABLE "Notification" (
-    "kind" "ModelKind" NOT NULL DEFAULT E'notification',
-    "id" TEXT NOT NULL,
-    "seen" BOOLEAN NOT NULL,
-    "receiverId" TEXT NOT NULL,
-    "userId" TEXT,
-    "type" "NotificationType" NOT NULL,
-    "artworkId" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -119,12 +103,6 @@ CREATE TABLE "Wallet" (
 );
 
 -- CreateTable
-CREATE TABLE "_likedBy" (
-    "A" TEXT NOT NULL,
-    "B" TEXT NOT NULL
-);
-
--- CreateTable
 CREATE TABLE "_creators" (
     "A" TEXT NOT NULL,
     "B" TEXT NOT NULL
@@ -140,19 +118,7 @@ CREATE UNIQUE INDEX "User.email_unique" ON "User"("email");
 CREATE UNIQUE INDEX "Artwork.handle_unique" ON "Artwork"("handle");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Auction_artworkId_unique" ON "Auction"("artworkId");
-
--- CreateIndex
-CREATE UNIQUE INDEX "Follower.userId_unique" ON "Follower"("userId");
-
--- CreateIndex
 CREATE UNIQUE INDEX "Wallet.publicKey_unique" ON "Wallet"("publicKey");
-
--- CreateIndex
-CREATE UNIQUE INDEX "_likedBy_AB_unique" ON "_likedBy"("A", "B");
-
--- CreateIndex
-CREATE INDEX "_likedBy_B_index" ON "_likedBy"("B");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "_creators_AB_unique" ON "_creators"("A", "B");
@@ -167,31 +133,19 @@ ALTER TABLE "Artwork" ADD FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELE
 ALTER TABLE "Auction" ADD FOREIGN KEY ("artworkId") REFERENCES "Artwork"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
+ALTER TABLE "Sale" ADD FOREIGN KEY ("artworkId") REFERENCES "Artwork"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Sale" ADD FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE "Bid" ADD FOREIGN KEY ("auctionId") REFERENCES "Auction"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Bid" ADD FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Follower" ADD FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "Notification" ADD FOREIGN KEY ("receiverId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "Notification" ADD FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE SET NULL ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "Notification" ADD FOREIGN KEY ("artworkId") REFERENCES "Artwork"("id") ON DELETE SET NULL ON UPDATE CASCADE;
-
--- AddForeignKey
 ALTER TABLE "Wallet" ADD FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "_likedBy" ADD FOREIGN KEY ("A") REFERENCES "Artwork"("id") ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "_likedBy" ADD FOREIGN KEY ("B") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "_creators" ADD FOREIGN KEY ("A") REFERENCES "Artwork"("id") ON DELETE CASCADE ON UPDATE CASCADE;
