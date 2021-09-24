@@ -5,7 +5,6 @@ async function main() {
     data: {
       fullName: 'user 1',
       email: 'user1@gmail.com',
-      coverImage: 'urlblahblah',
       handle: 'user1',
       bio: "Hey I'm so and so. I've been makign artwork for x amount of years and I'm from blahblah. I love cryptooo..",
     },
@@ -14,14 +13,12 @@ async function main() {
     data: {
       fullName: 'user 2',
       email: 'user2@gmail.com',
-      coverImage: 'urlblahblah',
       handle: 'user2',
       bio: "Hey I'm so and so. I've been makign artwork for x amount of years and I'm from blahblah. I love cryptooo..",
     },
   });
-  const artwork1 = await prisma.artwork.create({
+  const artworkWithReservePrice = await prisma.artwork.create({
     data: {
-      artworkType: 'song',
       description: 'song description',
       handle: 'amazingsong',
       image: 'blahblah',
@@ -29,10 +26,53 @@ async function main() {
       title: 'amazingsongTitle',
       media: [{ title: 'amazingsongTitle', media: 'lala' }],
       saleType: 'auction',
-      startingPrice: 50,
-      likedBy: {
+      reservePrice: 50,
+      currentOwner: {
         connect: {
           id: user1.id,
+        },
+      },
+      creator: {
+        connect: {
+          id: user1.id,
+        },
+      },
+    },
+  });
+  const artworkWithNoReservePrice = await prisma.artwork.create({
+    data: {
+      description: 'song description',
+      handle: 'hello',
+      image: 'nothing',
+      link: 'blahblah',
+      title: 'amazingsongTitle',
+      media: [{ title: 'amazingsongTitle', media: 'lala' }],
+      saleType: 'auction',
+      currentOwner: {
+        connect: {
+          id: user2.id,
+        },
+      },
+      creator: {
+        connect: {
+          id: user1.id,
+        },
+      },
+    },
+  });
+  const artworkWitReservePriceWithHistory = await prisma.artwork.create({
+    data: {
+      description: 'song description',
+      handle: 'history',
+      image: 'blahblah2',
+      link: 'blahblah',
+      title: 'amazingsongTitle',
+      media: [{ title: 'amazingsongTitle', media: 'lala' }],
+      saleType: 'auction',
+      reservePrice: 50,
+      auctions: {
+        createMany: {
+          data: [{}],
         },
       },
       currentOwner: {
@@ -40,22 +80,27 @@ async function main() {
           id: user1.id,
         },
       },
-      creators: {
+      creator: {
         connect: {
           id: user1.id,
         },
       },
-      auction: {
-        create: {
-          id: '1',
-          currentHigh: 10,
-        },
-      },
+    },
+    include: {
+      auctions: true,
     },
   });
-  const artwork2 = await prisma.artwork.create({
+  await prisma.bid.createMany({
+    data: [
+      {
+        auctionId: artworkWitReservePriceWithHistory!.auctions[0].id,
+        offer: 25,
+        userId: user2.id,
+      },
+    ],
+  });
+  const artworkWithFixedSale = await prisma.artwork.create({
     data: {
-      artworkType: 'album',
       description: 'song description2',
       handle: 'amazingsong2',
       image: 'blahblah2',
@@ -64,24 +109,60 @@ async function main() {
       media: [{ title: 'amazingsongTitle2', media: 'lala2' }],
       saleType: 'fixed',
       price: 100,
-      likedBy: {
-        connect: {
-          id: user2.id,
-        },
-      },
       currentOwner: {
         connect: {
           id: user2.id,
         },
       },
-      creators: {
+      creator: {
         connect: {
           id: user2.id,
         },
       },
     },
   });
-  if (!user1 || !artwork1 || !user2 || !artwork2)
+  const artworkFixedSaleWithHistory = await prisma.artwork.create({
+    data: {
+      description: 'song description',
+      handle: 'fixedwithhistory',
+      image: 'blahblah2',
+      link: 'blahblah',
+      title: 'amazingsongTitle',
+      media: [{ title: 'amazingsongTitle', media: 'lala' }],
+      saleType: 'fixed',
+      price: 100,
+      sales: {
+        createMany: {
+          data: [
+            {
+              price: 100,
+              userId: user2.id,
+            },
+          ],
+        },
+      },
+      currentOwner: {
+        connect: {
+          id: user1.id,
+        },
+      },
+      creator: {
+        connect: {
+          id: user1.id,
+        },
+      },
+    },
+  });
+
+  if (
+    !user1 ||
+    !user2 ||
+    !artworkWithFixedSale ||
+    !artworkWithNoReservePrice ||
+    !artworkWithReservePrice ||
+    !artworkWitReservePriceWithHistory || // should cover non reserved prices as well
+    !artworkFixedSaleWithHistory
+  )
     throw new Error('Failed to seed!');
 }
 

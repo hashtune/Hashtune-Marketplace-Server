@@ -14,7 +14,7 @@ Also add a `.env.test` file with a DATABASE_URL corresponding to the postgres DB
 
 `yarn prisma:generate` Generate the client
 
-`yarn reflect:nexus:watch` It will generate a GraphQL TYPE file node_modules/@types/nexus-typegen/index.d.ts and a GraphQL schema file called schema.graphql. Do NOT edit these.
+`yarn nexus:watch` It will generate a GraphQL TYPE file node_modules/@types/nexus-typegen/index.d.ts and a GraphQL schema file called schema.graphql. Do NOT edit these.
 
 `yarn dev` to start the server on port 5000. Optionally override the port in .env
 
