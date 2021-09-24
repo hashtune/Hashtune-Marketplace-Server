@@ -37,6 +37,7 @@ model User {
   handle                 String         @unique
   id                     String         @id @default(cuid())
   email                  String         @unique
+  bio                    String
   image                  String?
   isApprovedCreator      Boolean        @default(false)
   createdAt              DateTime       @default(now())

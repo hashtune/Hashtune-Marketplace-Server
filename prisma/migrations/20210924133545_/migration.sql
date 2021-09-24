@@ -17,6 +17,7 @@ CREATE TABLE "User" (
     "handle" TEXT NOT NULL,
     "id" TEXT NOT NULL,
     "email" TEXT NOT NULL,
+    "bio" TEXT NOT NULL,
     "image" TEXT,
     "isApprovedCreator" BOOLEAN NOT NULL DEFAULT false,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -43,6 +44,7 @@ CREATE TABLE "Artwork" (
     "reservePrice" BIGINT,
     "userId" TEXT NOT NULL,
     "listed" BOOLEAN NOT NULL DEFAULT true,
+    "streamCount" INTEGER NOT NULL DEFAULT 0,
 
     PRIMARY KEY ("id")
 );
@@ -103,7 +105,7 @@ CREATE TABLE "Wallet" (
 );
 
 -- CreateTable
-CREATE TABLE "_creators" (
+CREATE TABLE "_features" (
     "A" TEXT NOT NULL,
     "B" TEXT NOT NULL
 );
@@ -121,10 +123,13 @@ CREATE UNIQUE INDEX "Artwork.handle_unique" ON "Artwork"("handle");
 CREATE UNIQUE INDEX "Wallet.publicKey_unique" ON "Wallet"("publicKey");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "_creators_AB_unique" ON "_creators"("A", "B");
+CREATE UNIQUE INDEX "_features_AB_unique" ON "_features"("A", "B");
 
 -- CreateIndex
-CREATE INDEX "_creators_B_index" ON "_creators"("B");
+CREATE INDEX "_features_B_index" ON "_features"("B");
+
+-- AddForeignKey
+ALTER TABLE "Artwork" ADD FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Artwork" ADD FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
@@ -148,7 +153,7 @@ ALTER TABLE "Bid" ADD FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE C
 ALTER TABLE "Wallet" ADD FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "_creators" ADD FOREIGN KEY ("A") REFERENCES "Artwork"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "_features" ADD FOREIGN KEY ("A") REFERENCES "Artwork"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "_creators" ADD FOREIGN KEY ("B") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "_features" ADD FOREIGN KEY ("B") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
