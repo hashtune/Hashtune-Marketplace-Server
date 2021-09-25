@@ -4,7 +4,7 @@ import * as path from 'path';
 import * as types from './types';
 
 export const schema = makeSchema({
-  prettierConfig: process.env.STAGE == 'test' ? path.join(__dirname, '../.prettierrc') : undefined,
+  prettierConfig: process.env.STAGE != 'test' ? path.join(__dirname, '../.prettierrc') : undefined,
   types: [types, NexusPrismaScalarTypes],
   features: {
     abstractTypeStrategies: {
