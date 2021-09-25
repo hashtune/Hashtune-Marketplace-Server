@@ -16,6 +16,6 @@ jobs:
           node-version: 14.x
           cache: 'yarn'
       - run: yarn docker:up
-      - run: yarn prisma migrate dev
-      - run: yarn prisma generate
+      - run: npx prisma migrate dev
+      - run: npx prisma generate
       - run: yarn test:api
