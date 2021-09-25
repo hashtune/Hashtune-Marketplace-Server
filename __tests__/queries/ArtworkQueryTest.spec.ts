@@ -24,8 +24,4 @@ describe('Test artwork queries', () => {
     });
     expect(res).toMatchSnapshot();
   });
-
 });
-
-export { };
-
