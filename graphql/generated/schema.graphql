@@ -116,6 +116,7 @@ export interface NexusGenObjects {
     // root type
     given: string; // String!
   };
+  Mutation: {};
   Query: {};
   User: PrismaClient.User;
 }
@@ -159,6 +160,10 @@ export interface NexusGenFieldTypes {
   ClientError: {
     // field return type
     given: string; // String!
+  };
+  Mutation: {
+    // field return type
+    addArtwork: NexusGenRootTypes['Artwork']; // Artwork!
   };
   Query: {
     // field return type
@@ -211,6 +216,10 @@ export interface NexusGenFieldTypeNames {
     // field return type name
     given: 'String';
   };
+  Mutation: {
+    // field return type name
+    addArtwork: 'Artwork';
+  };
   Query: {
     // field return type name
     listArtworks: 'Artwork';
@@ -231,6 +240,22 @@ export interface NexusGenFieldTypeNames {
 }
 
 export interface NexusGenArgTypes {
+  Mutation: {
+    addArtwork: {
+      // args
+      creator: string; // ID!
+      currentOwner: string; // ID!
+      description: string; // String!
+      handle: string; // String!
+      image: string; // String!
+      link: string; // String!
+      media: NexusGenScalars['Json']; // Json!
+      price?: NexusGenScalars['BigInt'] | null; // BigInt
+      reservePrice?: NexusGenScalars['BigInt'] | null; // BigInt
+      saleType: string; // String!
+      title: string; // String!
+    };
+  };
   Query: {
     listArtworks: {
       // args
