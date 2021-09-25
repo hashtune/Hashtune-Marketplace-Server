@@ -1,11 +1,9 @@
 import server from '../server';
 
 describe('Test users query', () => {
-
-
   const USER_QUERY = `
     query Query {
-      listTrendyCreators {
+      listCreators {
         handle
       }
     }
@@ -20,5 +18,4 @@ describe('Test users query', () => {
   });
 });
 
-export { };
-
+export {};

@@ -3,7 +3,14 @@
 exports[`Test users query should query the trending users 1`] = `
 Object {
   "data": Object {
-    "listTrendyCreators": Array [],
+    "listCreators": Array [
+      Object {
+        "handle": "user2",
+      },
+      Object {
+        "handle": "user1",
+      },
+    ],
   },
   "errors": undefined,
   "extensions": undefined,

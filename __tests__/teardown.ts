@@ -1,12 +1,12 @@
-// This file should run after every individual spec file
+import reset from '../utils/reset';
 import server from './server';
 
-export default async function teardown() {
+export default async function teardown(): Promise<void> {
   try {
+    await reset();
     server.stop();
     process.exit(0);
   } catch (e) {
-    console.log('error tearing down tests', e);
-    process.exit(1);
+    throw new Error('Issue tearing down test');
   }
 }
