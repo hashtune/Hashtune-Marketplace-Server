@@ -8,6 +8,15 @@ Object {
         "saleType": "auction",
       },
       Object {
+        "saleType": "auction",
+      },
+      Object {
+        "saleType": "auction",
+      },
+      Object {
+        "saleType": "fixed",
+      },
+      Object {
         "saleType": "fixed",
       },
     ],
@@ -29,22 +38,13 @@ Object {
       Object {
         "saleType": "auction",
       },
+      Object {
+        "saleType": "auction",
+      },
+      Object {
+        "saleType": "auction",
+      },
     ],
-  },
-  "errors": undefined,
-  "extensions": undefined,
-  "http": Object {
-    "headers": Headers {
-      Symbol(map): Object {},
-    },
-  },
-}
-`;
-
-exports[`Test artwork queries should query trending auctions 1`] = `
-Object {
-  "data": Object {
-    "listArtworks": Array [],
   },
   "errors": undefined,
   "extensions": undefined,

@@ -1,6 +1,13 @@
-// This file should run before every individual spec file
+import reset from '../utils/reset';
+import seed from '../utils/seed';
 import server from './server';
 
 export default async function setup(): Promise<void> {
-  await server.start();
+  try {
+    await reset();
+    await seed();
+    await server.start();
+  } catch (e) {
+    throw new Error('Issue setting up test');
+  }
 }
