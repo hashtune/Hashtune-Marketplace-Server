@@ -2,7 +2,7 @@ name: Hashtune's Server Testing CI pipeline
 
 on:
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   test_pull_request:
@@ -17,6 +17,6 @@ jobs:
           node-version: 14.x
           cache: 'yarn'
       - run: yarn docker:up
-      - run: yarn
-      # - run: yarn seed
-      - run: yarn test:api 
+      - run: yarn prisma:migrate
+      - run: yarn prisma:generate
+      - run: yarn test:api
