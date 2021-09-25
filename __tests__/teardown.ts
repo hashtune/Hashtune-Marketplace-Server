@@ -5,7 +5,7 @@ export default async function teardown(): Promise<void> {
   try {
     await reset();
     server.stop();
-    process.exit();
+    process.exit(0);
   } catch (e) {
     throw new Error('Issue tearing down test');
   }
