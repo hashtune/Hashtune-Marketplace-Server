@@ -1,7 +1,6 @@
-import { arg, extendType, idArg, nonNull, stringArg } from 'nexus';
-import { Context } from 'vm';
+import { arg, extendType, nonNull, stringArg } from 'nexus';
+import { Context } from '../../context';
 
-//Not woeking
 export const artworkMutation = extendType({
     type: 'Mutation',
     definition(t) {
@@ -18,12 +17,11 @@ export const artworkMutation = extendType({
                 saleType: nonNull(stringArg()),
                 price: arg({ type: 'BigInt' }),
                 reservePrice: arg({ type: 'BigInt' }),
-                currentOwner: nonNull(idArg()),
-                creator: nonNull(idArg())
+                currentOwner: nonNull(stringArg()),
+                creator: nonNull(stringArg())
             },
             resolve: async (_, args, ctx: Context) => {
                 if (args.saleType == 'auction' && !args.price) {
-                    //TODO fix
                     return ctx.prisma.artwork.create({
                         data: {
                             handle: args.handle,
@@ -35,8 +33,8 @@ export const artworkMutation = extendType({
                             price: args.price,
                             reservePrice: args.reservePrice,
                             description: args.description,
-                            currentOwner: args.currentOwner,
-                            creator: args.creator
+                            currentOwner: { connect: { id: args.currentOwner } },
+                            creator: { connect: { id: args.creator } }
                         }
                     })
                 } else if (args.saleType == 'fixed' && args.price) {
