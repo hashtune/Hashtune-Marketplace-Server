@@ -1,5 +1,23 @@
-import { arg, extendType, nonNull, stringArg } from 'nexus';
+import { extendType, inputObjectType } from 'nexus';
 import { Context } from '../../context';
+
+const InputType = inputObjectType({
+    name: 'CreateArtworkInput',
+    description: 'Artwork input',
+    definition(t) {
+        t.nonNull.string('handle');
+        t.nonNull.string('title');
+        t.nonNull.string('image');
+        t.nonNull.string('description');
+        t.nonNull.string('link');
+        t.nonNull.field('media', { type: 'Json' });
+        t.nonNull.string('saleType');
+        t.field('price', { type: 'BigInt' });
+        t.field('reservePrice', { type: 'BigInt' });
+        t.nonNull.string('currentOwner');
+        t.nonNull.string('creator');
+    }
+})
 
 export const artworkMutation = extendType({
     type: 'Mutation',
@@ -7,20 +25,9 @@ export const artworkMutation = extendType({
         t.field('addArtwork', {
             type: 'Artwork',
             description: 'Add an artwork to the database',
-            args: {
-                handle: nonNull(stringArg()),
-                title: nonNull(stringArg()),
-                image: nonNull(stringArg()),
-                description: nonNull(stringArg()),
-                link: nonNull(stringArg()),
-                media: nonNull(arg({ type: 'Json' })),
-                saleType: nonNull(stringArg()),
-                price: arg({ type: 'BigInt' }),
-                reservePrice: arg({ type: 'BigInt' }),
-                currentOwner: nonNull(stringArg()),
-                creator: nonNull(stringArg())
-            },
+            args: { InputType },
             resolve: async (_, args, ctx: Context) => {
+                args = args.InputType;
                 if (args.saleType == 'auction' && !args.price) {
                     return ctx.prisma.artwork.create({
                         data: {
@@ -39,10 +46,14 @@ export const artworkMutation = extendType({
                     })
                 } else if (args.saleType == 'fixed' && args.price) {
                     // TODO Implement creation of fixed price artword
-                    console.log("fixed")
+                    return {
+                        "message": "Not implemented yet"
+                    }
                 } else {
-                    // TODO Throw erro
-                    console.log("err")
+                    // TODO Throw error
+                    return {
+                        "message": "Mismatched args"
+                    }
                 }
             },
         })
