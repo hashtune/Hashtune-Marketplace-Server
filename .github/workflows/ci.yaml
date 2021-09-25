@@ -1,13 +1,12 @@
 name: Hashtune's Server Testing CI pipeline
 
 on:
-  pull_request:
-    branches: [main]
+  pull_request: {}
 
 jobs:
   test_pull_request:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 7
     env:
       DATABASE_URL: ${{ secrets.DATABASE_URL }}
     steps:
@@ -17,6 +16,6 @@ jobs:
           node-version: 14.x
           cache: 'yarn'
       - run: yarn docker:up
-      - run: yarn prisma:migrate
-      - run: yarn prisma:generate
+      - run: yarn prisma migrate dev
+      - run: yarn prisma generate
       - run: yarn test:api
