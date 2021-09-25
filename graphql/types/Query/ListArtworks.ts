@@ -1,7 +1,7 @@
 import { booleanArg, extendType } from 'nexus';
 import { Context } from '../../context';
 
-export const ArtworkQuery = extendType({
+export const ListArtworks = extendType({
     type: 'Query',
     definition(t) {
         t.list.field('listArtworks', {

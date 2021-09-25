@@ -1,7 +1,7 @@
 import { extendType } from 'nexus';
 import { Context } from '../../context';
 
-export const Query = extendType({
+export const ListUsers = extendType({
     type: 'Query',
     definition(t) {
         t.list.field('listCreators', {

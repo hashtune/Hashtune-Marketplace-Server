@@ -1,2 +1,3 @@
-export * from './artworkQuery'
-export * from './userQuery'
+export * from './ListArtworks'
+export * from './ListUsers'
+
