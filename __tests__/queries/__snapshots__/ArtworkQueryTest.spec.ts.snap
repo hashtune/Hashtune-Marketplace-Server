@@ -17,7 +17,7 @@ Object {
         "saleType": "fixed",
       },
       Object {
-        "saleType": "auction",
+        "saleType": "fixed",
       },
     ],
   },
