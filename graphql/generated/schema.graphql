@@ -243,8 +243,8 @@ export interface NexusGenArgTypes {
   Mutation: {
     addArtwork: {
       // args
-      creator: string; // ID!
-      currentOwner: string; // ID!
+      creator: string; // String!
+      currentOwner: string; // String!
       description: string; // String!
       handle: string; // String!
       image: string; // String!
