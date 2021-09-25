@@ -18,9 +18,11 @@ Also add a `.env.test` file with a DATABASE_URL corresponding to the postgres DB
 
 `yarn dev` to start the server on port 5000. Optionally override the port in .env
 
-`yarn seed` in another window to seed the database with a user and artwork to see some data in the playground below
-
 `http://localhost:5000/graphql` for the playground
+
+`yarn data:seed` to create some seed data (same data used in API tests)
+
+`yarn data:reset` to delete all the seed data createed in the database
 
 ## Testing
 

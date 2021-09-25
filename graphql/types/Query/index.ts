@@ -24,21 +24,16 @@ export const Query = objectType({
         return ctx.prisma.artwork.findMany({});
       },
     });
-    t.list.field('listTrendyCreators', {
+    t.list.field('listCreators', {
       type: 'User',
-      description:
-        'This query accepts a filter for the user type and one for the time range',
+      description: 'Returns all creators where isApprovedCreator is true',
       resolve: async (_, args, ctx: Context) => {
         return await ctx.prisma.user.findMany({
           where: {
             isApprovedCreator: true,
-            created: {
-              some: {
-                createdAt: {
-                  gte: new Date(Date.now() - 1000 * 60 * 60 * 24 * 7),
-                },
-              },
-            },
+          },
+          orderBy: {
+            createdAt: 'desc',
           },
         });
       },

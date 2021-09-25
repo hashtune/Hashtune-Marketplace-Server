@@ -1,12 +1,13 @@
 import { prisma } from '../singletons/prisma';
 
-async function main() {
+export default async function main() {
   const user1 = await prisma.user.create({
     data: {
       fullName: 'user 1',
       email: 'user1@gmail.com',
       handle: 'user1',
       bio: "Hey I'm so and so. I've been makign artwork for x amount of years and I'm from blahblah. I love cryptooo..",
+      isApprovedCreator: true,
     },
   });
   const user2 = await prisma.user.create({
@@ -15,6 +16,7 @@ async function main() {
       email: 'user2@gmail.com',
       handle: 'user2',
       bio: "Hey I'm so and so. I've been makign artwork for x amount of years and I'm from blahblah. I love cryptooo..",
+      isApprovedCreator: true,
     },
   });
   const artworkWithReservePrice = await prisma.artwork.create({
@@ -165,13 +167,3 @@ async function main() {
   )
     throw new Error('Failed to seed!');
 }
-
-main()
-  .then(() => {
-    console.log('seeded successfully');
-    process.exit(0);
-  })
-  .catch(e => {
-    console.log('error seeding', e);
-    process.exit(1);
-  });
