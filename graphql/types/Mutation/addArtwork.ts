@@ -1,4 +1,4 @@
-import { extendType, inputObjectType, nonNull, stringArg } from 'nexus';
+import { extendType, inputObjectType } from 'nexus';
 import { Context } from '../../context';
 
 const InputType = inputObjectType({
@@ -19,7 +19,7 @@ const InputType = inputObjectType({
     }
 });
 
-export const artworkMutation = extendType({
+export const addArtwork = extendType({
     type: 'Mutation',
     definition(t) {
         t.field('addArtwork', {
@@ -58,15 +58,5 @@ export const artworkMutation = extendType({
 
             },
         });
-        t.field('deleteArtwork', {
-            type: 'Artwork',
-            description: 'Delete an artwork from the database. Accepts one id argument.',
-            args: {
-                id: nonNull(stringArg())
-            },
-            resolve: async (_, args, ctx: Context) => {
-                return await ctx.prisma.artwork.delete({ where: { id: args.id } })
-            }
-        })
     }
 });
