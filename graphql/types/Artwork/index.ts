@@ -83,7 +83,6 @@ export const Artwork = objectType({
             creator: true,
           },
         });
-        console.log({ res });
         return res?.creator;
       },
     });
