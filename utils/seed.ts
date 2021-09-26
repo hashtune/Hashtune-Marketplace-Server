@@ -3,6 +3,7 @@ import { prisma } from '../singletons/prisma';
 export default async function main() {
   const user1 = await prisma.user.create({
     data: {
+      id: "cku10kd240000sm0wostud3r8",
       fullName: 'user 1',
       email: 'user1@gmail.com',
       handle: 'user1',
@@ -12,6 +13,7 @@ export default async function main() {
   });
   const user2 = await prisma.user.create({
     data: {
+      id: "cku19ddxf0005ag0w562czjmq",
       fullName: 'user 2',
       email: 'user2@gmail.com',
       handle: 'user2',
