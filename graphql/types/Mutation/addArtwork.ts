@@ -5,6 +5,7 @@ const InputType = inputObjectType({
     name: 'CreateArtworkInput',
     description: 'Artwork input',
     definition(t) {
+        t.string('id');
         t.nonNull.string('handle');
         t.nonNull.string('title');
         t.nonNull.string('image');
@@ -32,6 +33,7 @@ export const addArtwork = extendType({
                 if (creatorData?.isApprovedCreator) {
                     const payload = {
                         data: {
+                            id: args.id,
                             handle: args.handle,
                             title: args.title,
                             image: args.image,
