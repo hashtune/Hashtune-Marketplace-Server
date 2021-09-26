@@ -1,1 +1,2 @@
-export * from './artworkMutation';
+export * from './addArtwork';
+export * from './deleteArtwork';
