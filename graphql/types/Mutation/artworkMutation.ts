@@ -1,4 +1,4 @@
-import { extendType, inputObjectType } from 'nexus';
+import { extendType, inputObjectType, nonNull, stringArg } from 'nexus';
 import { Context } from '../../context';
 
 const InputType = inputObjectType({
@@ -17,7 +17,7 @@ const InputType = inputObjectType({
         t.nonNull.string('currentOwner');
         t.nonNull.string('creator');
     }
-})
+});
 
 export const artworkMutation = extendType({
     type: 'Mutation',
@@ -28,8 +28,9 @@ export const artworkMutation = extendType({
             args: { InputType },
             resolve: async (_, args, ctx: Context) => {
                 args = args.InputType;
-                if (args.saleType == 'auction' && !args.price) {
-                    return ctx.prisma.artwork.create({
+                const creatorData = await ctx.prisma.user.findUnique({ where: { id: args.creator } });
+                if (creatorData?.isApprovedCreator) {
+                    const payload = {
                         data: {
                             handle: args.handle,
                             title: args.title,
@@ -38,24 +39,34 @@ export const artworkMutation = extendType({
                             media: args.media,
                             saleType: args.saleType,
                             price: args.price,
-                            reservePrice: args.reservePrice,
+                            reservePrice: args.reservePrice || null,
                             description: args.description,
                             currentOwner: { connect: { id: args.currentOwner } },
                             creator: { connect: { id: args.creator } }
                         }
-                    })
-                } else if (args.saleType == 'fixed' && args.price) {
-                    // TODO Implement creation of fixed price artword
-                    return {
-                        "message": "Not implemented yet"
+                    }
+                    const isValidAuction = args.saleType == 'auction' && !args.price;
+                    const isValidSale = args.saleType == 'fixed' && args.price && !args.reservePrice;
+                    if (isValidAuction || isValidSale) {
+                        return ctx.prisma.artwork.create(payload)
+                    } else {
+                        throw new Error(`Argument conflict. ${(args.saleType == 'auction' && args.price) ? "Auction doesn't need a price arg" : "Fixed sale requires a price arg and no reservePrice arg"}`)
                     }
                 } else {
-                    // TODO Throw error
-                    return {
-                        "message": "Mismatched args"
-                    }
+                    throw new Error("Not approved or non-existing creator")
                 }
+
             },
+        });
+        t.field('deleteArtwork', {
+            type: 'Artwork',
+            description: 'Delete an artwork from the database. Accepts one id argument.',
+            args: {
+                id: nonNull(stringArg())
+            },
+            resolve: async (_, args, ctx: Context) => {
+                return await ctx.prisma.artwork.delete({ where: { id: args.id } })
+            }
         })
     }
-})
+});
