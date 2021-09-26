@@ -1,0 +1,57 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test artwork mutations should create an artwork 1`] = `
+Object {
+  "data": Object {
+    "addArtwork": Object {
+      "creator": Object {
+        "fullName": "user 1",
+      },
+      "description": "Art",
+      "saleType": "auction",
+      "title": "strstrstr",
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`Test artwork mutations should delete an artork 1`] = `
+Object {
+  "data": Object {
+    "deleteArtwork": Object {
+      "description": "Art",
+      "listed": true,
+      "title": "strstrstr",
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`Test artwork mutations should fail to create an artwork 1`] = `
+Object {
+  "data": null,
+  "errors": Array [
+    [GraphQLError: Argument conflict. Fixed sale requires a price arg and no reservePrice arg],
+  ],
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
