@@ -150,6 +150,8 @@ export interface NexusGenFieldTypes {
     deleteArtwork: NexusGenRootTypes['Artwork']; // Artwork!
   }
   Query: { // field return type
+    findArtwork: NexusGenRootTypes['Artwork'][]; // [Artwork!]!
+    findUser: NexusGenRootTypes['Artwork'][]; // [Artwork!]!
     listArtworks: NexusGenRootTypes['Artwork'][]; // [Artwork!]!
     listCreators: NexusGenRootTypes['User'][]; // [User!]!
   }
@@ -199,6 +201,8 @@ export interface NexusGenFieldTypeNames {
     deleteArtwork: 'Artwork'
   }
   Query: { // field return type name
+    findArtwork: 'Artwork'
+    findUser: 'Artwork'
     listArtworks: 'Artwork'
     listCreators: 'User'
   }
@@ -225,6 +229,12 @@ export interface NexusGenArgTypes {
     }
   }
   Query: {
+    findArtwork: { // args
+      id: string; // String!
+    }
+    findUser: { // args
+      id: string; // String!
+    }
     listArtworks: { // args
       auction?: boolean | null; // Boolean
     }
