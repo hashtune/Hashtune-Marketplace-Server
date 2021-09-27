@@ -25,10 +25,18 @@ describe('Test artwork queries', () => {
     expect(res).toMatchSnapshot();
   });
 
-  it('should query both auctions and fixed', async () => {
+  it('should query only fixed sales ', async () => {
     const res = await server.executeOperation({
       query: ARTWORKS_QUERY,
       variables: { listArtworksAuction: false },
+    });
+    expect(res).toMatchSnapshot();
+  });
+
+  it('should query both auctions and fixed', async () => {
+    const res = await server.executeOperation({
+      query: ARTWORKS_QUERY,
+      variables: { listArtworksAuction: undefined },
     });
     expect(res).toMatchSnapshot();
   });
