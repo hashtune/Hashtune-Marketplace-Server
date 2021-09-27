@@ -37,18 +37,23 @@ Object {
   "data": Object {
     "listArtworks": Array [
       Object {
+        "handle": "amazingsong",
         "saleType": "auction",
       },
       Object {
+        "handle": "hello",
         "saleType": "auction",
       },
       Object {
+        "handle": "history",
         "saleType": "auction",
       },
       Object {
+        "handle": "amazingsong2",
         "saleType": "fixed",
       },
       Object {
+        "handle": "fixedwithhistory",
         "saleType": "fixed",
       },
     ],
@@ -68,12 +73,15 @@ Object {
   "data": Object {
     "listArtworks": Array [
       Object {
+        "handle": "amazingsong",
         "saleType": "auction",
       },
       Object {
+        "handle": "hello",
         "saleType": "auction",
       },
       Object {
+        "handle": "history",
         "saleType": "auction",
       },
     ],
@@ -93,9 +101,11 @@ Object {
   "data": Object {
     "listArtworks": Array [
       Object {
+        "handle": "amazingsong2",
         "saleType": "fixed",
       },
       Object {
+        "handle": "fixedwithhistory",
         "saleType": "fixed",
       },
     ],
