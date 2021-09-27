@@ -4,7 +4,7 @@ import { Context } from '../../context';
 export const FindArtwork = extendType({
     type: 'Query',
     definition(t) {
-        t.list.field('findArtwork', {
+        t.field('findArtwork', {
             type: 'Artwork',
             description:
                 'Find an artwork by id',
@@ -14,7 +14,7 @@ export const FindArtwork = extendType({
                     where: { id: args.id }
                 });
                 if (res) {
-                    return [res];
+                    return res;
                 } else {
                     throw new Error(`Couldn't find an artwork with id '${args.id}'`);
                 }

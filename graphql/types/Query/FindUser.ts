@@ -4,7 +4,7 @@ import { Context } from '../../context';
 export const FindUser = extendType({
     type: 'Query',
     definition(t) {
-        t.list.field('findUser', {
+        t.field('findUser', {
             type: 'Artwork',
             description:
                 'Find an user by id',
@@ -14,7 +14,7 @@ export const FindUser = extendType({
                     where: { id: args.id }
                 });
                 if (res) {
-                    return [res];
+                    return res;
                 } else {
                     throw new Error(`Couldn't find a user with id '${args.id}'`);
                 }
