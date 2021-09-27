@@ -46,6 +46,9 @@ Object {
         "saleType": "auction",
       },
       Object {
+        "saleType": "auction",
+      },
+      Object {
         "saleType": "fixed",
       },
       Object {
@@ -75,6 +78,28 @@ Object {
       },
       Object {
         "saleType": "auction",
+      },
+    ],
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`Test artwork queries should query only fixed sales  1`] = `
+Object {
+  "data": Object {
+    "listArtworks": Array [
+      Object {
+        "saleType": "fixed",
+      },
+      Object {
+        "saleType": "fixed",
       },
     ],
   },
