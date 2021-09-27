@@ -1,7 +1,7 @@
 import server from '../server';
 
 describe('Test artwork queries', () => {
-  const ARTWORK_QUERY = `
+  const ARTWORKS_QUERY = `
     query Query($listArtworksAuction: Boolean) {
         listArtworks(auction: $listArtworksAuction) {
             saleType
@@ -9,9 +9,17 @@ describe('Test artwork queries', () => {
     }
 `;
 
+  const FIND_ARTWORK_QUERY = `
+    query Query($findArtworkId: String!) {
+      findArtwork(id: $findArtworkId) {
+        title
+      }
+    }
+  `
+
   it('should query only auctions ', async () => {
     const res = await server.executeOperation({
-      query: ARTWORK_QUERY,
+      query: ARTWORKS_QUERY,
       variables: { listArtworksAuction: true },
     });
     expect(res).toMatchSnapshot();
@@ -19,8 +27,24 @@ describe('Test artwork queries', () => {
 
   it('should query both auctions and fixed', async () => {
     const res = await server.executeOperation({
-      query: ARTWORK_QUERY,
+      query: ARTWORKS_QUERY,
       variables: { listArtworksAuction: false },
+    });
+    expect(res).toMatchSnapshot();
+  });
+
+  it('should find an artwork by id', async () => {
+    const res = await server.executeOperation({
+      query: FIND_ARTWORK_QUERY,
+      variables: { findArtworkId: "cku1ahnm200109q0wx8p4x2u1" },
+    });
+    expect(res).toMatchSnapshot();
+  });
+
+  it('should not find an artwork by id and throw an error', async () => {
+    const res = await server.executeOperation({
+      query: FIND_ARTWORK_QUERY,
+      variables: { findArtworkId: "abc" },
     });
     expect(res).toMatchSnapshot();
   });
