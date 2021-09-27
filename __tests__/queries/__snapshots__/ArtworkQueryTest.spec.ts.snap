@@ -3,11 +3,9 @@
 exports[`Test artwork queries should find an artwork by id 1`] = `
 Object {
   "data": Object {
-    "findArtwork": Array [
-      Object {
-        "title": "amazingsongTitle",
-      },
-    ],
+    "findArtwork": Object {
+      "title": "amazingsongTitle",
+    },
   },
   "errors": undefined,
   "extensions": undefined,

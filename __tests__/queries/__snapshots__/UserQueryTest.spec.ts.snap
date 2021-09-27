@@ -3,11 +3,9 @@
 exports[`Test users query should find a user by id 1`] = `
 Object {
   "data": Object {
-    "findUser": Array [
-      Object {
-        "handle": "user1",
-      },
-    ],
+    "findUser": Object {
+      "handle": "user1",
+    },
   },
   "errors": undefined,
   "extensions": undefined,

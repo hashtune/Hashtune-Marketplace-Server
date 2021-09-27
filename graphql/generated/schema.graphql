@@ -150,8 +150,8 @@ export interface NexusGenFieldTypes {
     deleteArtwork: NexusGenRootTypes['Artwork']; // Artwork!
   }
   Query: { // field return type
-    findArtwork: NexusGenRootTypes['Artwork'][]; // [Artwork!]!
-    findUser: NexusGenRootTypes['Artwork'][]; // [Artwork!]!
+    findArtwork: NexusGenRootTypes['Artwork']; // Artwork!
+    findUser: NexusGenRootTypes['Artwork']; // Artwork!
     listArtworks: NexusGenRootTypes['Artwork'][]; // [Artwork!]!
     listCreators: NexusGenRootTypes['User'][]; // [User!]!
   }
