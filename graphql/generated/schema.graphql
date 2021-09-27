@@ -125,6 +125,7 @@ export interface NexusGenFieldTypes {
     description: string; // String!
     handle: string; // String!
     id: string; // ID!
+    image: string; // String!
     kind: string; // String!
     latestAuction: NexusGenRootTypes['Auction'] | null; // Auction
     listed: boolean; // Boolean!
@@ -137,6 +138,7 @@ export interface NexusGenFieldTypes {
   Auction: { // field return type
     artworkId: string; // String!
     bids: NexusGenRootTypes['Bid'][]; // [Bid!]!
+    currentHigh: NexusGenScalars['BigInt']; // BigInt!
     id: string; // String!
   }
   Bid: { // field return type
@@ -174,6 +176,7 @@ export interface NexusGenFieldTypeNames {
     description: 'String'
     handle: 'String'
     id: 'ID'
+    image: 'String'
     kind: 'String'
     latestAuction: 'Auction'
     listed: 'Boolean'
@@ -186,6 +189,7 @@ export interface NexusGenFieldTypeNames {
   Auction: { // field return type name
     artworkId: 'String'
     bids: 'Bid'
+    currentHigh: 'BigInt'
     id: 'String'
   }
   Bid: { // field return type name
