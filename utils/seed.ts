@@ -23,6 +23,7 @@ export default async function main() {
   });
   const artworkWithReservePrice = await prisma.artwork.create({
     data: {
+      id: 'cku1ahnm200109q0wx8p4x2u1',
       description: 'song description',
       handle: 'amazingsong',
       image: 'blahblah',
