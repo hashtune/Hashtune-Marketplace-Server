@@ -46,9 +46,6 @@ Object {
         "saleType": "auction",
       },
       Object {
-        "saleType": "auction",
-      },
-      Object {
         "saleType": "fixed",
       },
       Object {
