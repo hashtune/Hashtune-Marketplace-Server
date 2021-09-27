@@ -1,10 +1,19 @@
+import reset from '../../utils/reset';
+import seed from '../../utils/seed';
 import server from '../server';
 
 describe('Test artwork queries', () => {
+
+  beforeAll(async () => {
+    await reset();
+    await seed();
+  })
+
   const ARTWORKS_QUERY = `
     query Query($listArtworksAuction: Boolean) {
         listArtworks(auction: $listArtworksAuction) {
             saleType
+            handle
         }
     }
 `;
