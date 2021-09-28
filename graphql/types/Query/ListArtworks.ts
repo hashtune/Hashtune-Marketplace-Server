@@ -12,13 +12,13 @@ export const ListArtworks = extendType({
                 auction: booleanArg(),
             },
             resolve: async (_, args, ctx: Context) => {
-                if (args.auction == true) {
+                if (args.auction === true) {
                     return ctx.prisma.artwork.findMany({
                         where: {
                             saleType: 'auction',
                         },
                     });
-                } else if (args.auction == false) {
+                } else if (args.auction === false) {
                     return ctx.prisma.artwork.findMany({
                         where: {
                             saleType: 'fixed',
