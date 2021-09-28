@@ -8,6 +8,9 @@ export const Auction = objectType({
     t.field('currentHigh', {
       type: 'BigInt',
     });
+    t.nullable.field('liveAt', {
+      type: 'DateTime'
+    })
     t.string('artworkId');
     t.list.field('bids', {
       type: 'Bid',
