@@ -170,6 +170,7 @@ export interface NexusGenFieldTypes {
     bids: NexusGenRootTypes['Bid'][]; // [Bid!]!
     currentHigh: NexusGenScalars['BigInt']; // BigInt!
     id: string; // String!
+    liveAt: NexusGenScalars['DateTime'] | null; // DateTime
   };
   Bid: {
     // field return type
@@ -230,6 +231,7 @@ export interface NexusGenFieldTypeNames {
     bids: 'Bid';
     currentHigh: 'BigInt';
     id: 'String';
+    liveAt: 'DateTime';
   };
   Bid: {
     // field return type name
