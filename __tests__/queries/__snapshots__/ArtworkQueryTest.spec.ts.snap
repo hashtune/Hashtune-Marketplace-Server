@@ -119,3 +119,27 @@ Object {
   },
 }
 `;
+
+exports[`Test artwork queries should query only fixed sales that are listed  1`] = `
+Object {
+  "data": Object {
+    "listArtworks": Array [
+      Object {
+        "handle": "fixedwithhistory",
+        "saleType": "fixed",
+      },
+      Object {
+        "handle": "amazingsong2",
+        "saleType": "fixed",
+      },
+    ],
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
