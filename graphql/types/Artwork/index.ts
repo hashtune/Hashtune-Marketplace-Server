@@ -67,7 +67,7 @@ export const Artwork = objectType({
         if (artwork.saleType === 'fixed') return false;
         if (!artwork.listed) return false;
         if (artwork.reservePrice && artwork.reservePrice > 0) return false;
-        if (res[0].currentHigh > 0) return false;
+        if (res[0]?.currentHigh > 0) return false;
         return true;
       },
     });
