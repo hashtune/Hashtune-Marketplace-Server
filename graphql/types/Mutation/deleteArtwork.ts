@@ -11,7 +11,13 @@ export const deleteArtwork = extendType({
                 id: nonNull(stringArg())
             },
             resolve: async (_, args, ctx: Context) => {
-                return await ctx.prisma.artwork.delete({ where: { id: args.id } })
+                const artwork = await ctx.prisma.artwork.findUnique({ where: { id: args.id } })
+                if (artwork) {
+                    return await ctx.prisma.artwork.delete({ where: { id: args.id } })
+                } else {
+                    throw new Error(`Couldn't find an artwork with id ${args.id}`)
+                }
+
             }
         })
     }
