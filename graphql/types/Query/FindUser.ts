@@ -5,7 +5,7 @@ export const FindUser = extendType({
     type: 'Query',
     definition(t) {
         t.field('findUser', {
-            type: 'Artwork',
+            type: 'User',
             description:
                 'Find an user by id',
             args: { id: nonNull(stringArg()) },
