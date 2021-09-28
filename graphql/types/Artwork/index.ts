@@ -84,7 +84,13 @@ export const Artwork = objectType({
             creator: true,
           },
         });
-        return res?.creator;
+        if (res?.creator) {
+          return res.creator
+        } else if (res) {
+          throw new Error(`Couldn't find artwork`)
+        } else {
+          throw new Error(`Couldn't find creator`)
+        }
       },
     });
     t.nullable.field('owner', {
