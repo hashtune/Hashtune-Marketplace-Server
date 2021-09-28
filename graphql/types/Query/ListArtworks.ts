@@ -12,15 +12,27 @@ export const ListArtworks = extendType({
                 auction: booleanArg(),
             },
             resolve: async (_, args, ctx: Context) => {
-                if (args.auction) {
+                if (args.auction === true) {
                     return ctx.prisma.artwork.findMany({
                         where: {
                             saleType: 'auction',
                         },
+                        orderBy: {
+                            createdAt: "desc"
+                        },
                     });
+                } else if (args.auction === false) {
+                    return ctx.prisma.artwork.findMany({
+                        where: {
+                            saleType: 'fixed',
+                        },
+                        orderBy: {
+                            createdAt: "desc"
+                        }
+                    });
+                } else {
+                    return ctx.prisma.artwork.findMany({ orderBy: { saleType: "asc" } });
                 }
-                // Both sale and non sale
-                return ctx.prisma.artwork.findMany({});
             },
         });
 
