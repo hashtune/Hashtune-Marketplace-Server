@@ -154,7 +154,7 @@ export interface NexusGenFieldTypes {
   }
   Query: { // field return type
     findArtwork: NexusGenRootTypes['Artwork']; // Artwork!
-    findUser: NexusGenRootTypes['Artwork']; // Artwork!
+    findUser: NexusGenRootTypes['User']; // User!
     listArtworks: NexusGenRootTypes['Artwork'][]; // [Artwork!]!
     listCreators: NexusGenRootTypes['User'][]; // [User!]!
   }
@@ -208,7 +208,7 @@ export interface NexusGenFieldTypeNames {
   }
   Query: { // field return type name
     findArtwork: 'Artwork'
-    findUser: 'Artwork'
+    findUser: 'User'
     listArtworks: 'Artwork'
     listCreators: 'User'
   }
