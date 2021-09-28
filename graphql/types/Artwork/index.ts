@@ -11,6 +11,7 @@ export const Artwork = objectType({
     t.string('kind');
     t.string('handle');
     t.string('title');
+    t.string('image');
     t.string('description');
     t.boolean('listed');
     t.nullable.field('price', {

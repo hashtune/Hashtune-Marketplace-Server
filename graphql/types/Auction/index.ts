@@ -5,6 +5,9 @@ export const Auction = objectType({
   name: 'Auction',
   definition(t) {
     t.string('id');
+    t.field('currentHigh', {
+      type: 'BigInt',
+    });
     t.string('artworkId');
     t.list.field('bids', {
       type: 'Bid',
