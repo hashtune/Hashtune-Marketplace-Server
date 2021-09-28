@@ -17,12 +17,18 @@ export const ListArtworks = extendType({
                         where: {
                             saleType: 'auction',
                         },
+                        orderBy: {
+                            createdAt: "desc"
+                        },
                     });
                 } else if (args.auction === false) {
                     return ctx.prisma.artwork.findMany({
                         where: {
                             saleType: 'fixed',
                         },
+                        orderBy: {
+                            createdAt: "desc"
+                        }
                     });
                 } else {
                     return ctx.prisma.artwork.findMany({ orderBy: { saleType: "asc" } });
