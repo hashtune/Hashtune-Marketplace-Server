@@ -2,14 +2,11 @@ import { prisma } from '../singletons/prisma';
 
 export default async function reset() {
   try {
-    await prisma.$transaction([
-      prisma.bid.deleteMany({}),
-      prisma.auction.deleteMany({}),
-      prisma.sale.deleteMany({}),
-      prisma.artwork.deleteMany({}),
-      prisma.user.deleteMany({}),
-    ]);
+    const models: string[] = ['Artwork', 'Sale', 'Auction', 'Bid', 'User'];
+    for (const model in models) {
+      await prisma.$executeRaw(`DELETE FROM "${models[model]}";`);
+    }
   } catch (e) {
-    console.log('error tearing down tests', e);
+    throw new Error(`${e}`);
   }
 }

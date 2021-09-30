@@ -40,7 +40,7 @@
     "jest-mock-extended": "^1.0.18",
     "nodemon": "^2.0.12",
     "prettier": "^2.3.2",
-    "prisma": "^2.30.3",
+    "prisma": "2.29.0",
     "ts-jest": "^27.0.4",
     "ts-node": "^10.1.0",
     "ts-node-dev": "^1.1.8",
@@ -50,7 +50,7 @@
   "dependencies": {
     "@genql/runtime": "2.6.0",
     "@nexus/schema": "^0.20.1",
-    "@prisma/client": "^2.27.0",
+    "@prisma/client": "2.29.0",
     "apollo-graphql": "^0.9.3",
     "apollo-server": "^3.0.2",
     "apollo-server-express": "^3.3.0",

@@ -42,7 +42,8 @@ CREATE TABLE "Artwork" (
     "saleType" "SaleType" NOT NULL,
     "price" BIGINT,
     "reservePrice" BIGINT,
-    "userId" TEXT NOT NULL,
+    "ownerId" TEXT NOT NULL,
+    "creatorId" TEXT NOT NULL,
     "listed" BOOLEAN NOT NULL DEFAULT true,
     "streamCount" INTEGER NOT NULL DEFAULT 0,
 
@@ -129,10 +130,10 @@ CREATE UNIQUE INDEX "_features_AB_unique" ON "_features"("A", "B");
 CREATE INDEX "_features_B_index" ON "_features"("B");
 
 -- AddForeignKey
-ALTER TABLE "Artwork" ADD FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "Artwork" ADD FOREIGN KEY ("ownerId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Artwork" ADD FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "Artwork" ADD FOREIGN KEY ("creatorId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Auction" ADD FOREIGN KEY ("artworkId") REFERENCES "Artwork"("id") ON DELETE CASCADE ON UPDATE CASCADE;

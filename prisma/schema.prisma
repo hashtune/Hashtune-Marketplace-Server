@@ -67,10 +67,11 @@ model Artwork {
   reservePrice  BigInt?
   auctions      Auction[]      @relation(name: "auctions")
   sales         Sale[]         @relation(name: "sales")
-  userId        String
-  currentOwner  User           @relation(name: "currentOwner", fields: [userId], references: [id])
+  ownerId        String
+  currentOwner  User           @relation(name: "currentOwner", fields: [ownerId], references: [id])
   features      User[]         @relation(name: "features")
-  creator       User           @relation(name: "originalCreator", fields: [userId], references: [id])
+  creatorId        String
+  creator       User           @relation(name: "originalCreator", fields: [creatorId], references: [id])
   listed        Boolean        @default(true)
   streamCount   Int            @default(0)
 }
