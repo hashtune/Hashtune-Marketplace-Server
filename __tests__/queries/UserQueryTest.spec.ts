@@ -1,4 +1,12 @@
+import { prisma } from '../../singletons/prisma';
+import reset from '../../utils/reset';
+import seed from '../../utils/seed';
 import server from '../server';
+
+beforeAll(async () => {
+  await reset();
+  await seed();
+});
 
 describe('Test users query', () => {
   const USERS_QUERY = `
@@ -15,7 +23,7 @@ describe('Test users query', () => {
         handle
       }
     }
-  `
+  `;
 
   it('should query the all the users', async () => {
     const res = await server.executeOperation({
@@ -25,9 +33,10 @@ describe('Test users query', () => {
   });
 
   it('should find a user by id', async () => {
+    const userId = await prisma.user.findMany({});
     const res = await server.executeOperation({
       query: FIND_USER_QUERY,
-      variables: { findUserId: "cku10kd240000sm0wostud3r8" }
+      variables: { findUserId: userId[0].id },
     });
     expect(res).toMatchSnapshot();
   });
@@ -35,11 +44,10 @@ describe('Test users query', () => {
   it('should not find a user by id and throw an error', async () => {
     const res = await server.executeOperation({
       query: FIND_USER_QUERY,
-      variables: { findUserId: "abc" }
+      variables: { findUserId: 'abc' },
     });
     expect(res).toMatchSnapshot();
   });
 });
 
-export { };
-
+export {};

@@ -2,14 +2,12 @@ import { prisma } from '../singletons/prisma';
 
 export default async function reset() {
   try {
-    await prisma.$transaction([
-      prisma.bid.deleteMany({}),
-      prisma.auction.deleteMany({}),
-      prisma.sale.deleteMany({}),
-      prisma.artwork.deleteMany({}),
-      prisma.user.deleteMany({}),
-    ]);
+    await prisma.$executeRaw(`DELETE FROM "Artwork";`);
+    await prisma.$executeRaw(`DELETE FROM "Sale";`);
+    await prisma.$executeRaw(`DELETE FROM "Auction";`);
+    await prisma.$executeRaw(`DELETE FROM "Bid";`);
+    await prisma.$executeRaw(`DELETE FROM "User";`);
   } catch (e) {
-    console.log('error tearing down tests', e);
+    throw new Error(`${e}`);
   }
 }

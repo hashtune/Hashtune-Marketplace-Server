@@ -33,7 +33,7 @@ export const ListArtworks = extendType({
             },
           });
         } else {
-          return ctx.prisma.artwork.findMany({ orderBy: { saleType: 'asc' } });
+          return ctx.prisma.artwork.findMany({ orderBy: { saleType: 'desc' } });
         }
       },
     });

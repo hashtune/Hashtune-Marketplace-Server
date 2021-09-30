@@ -22,13 +22,13 @@ Object {
 }
 `;
 
-exports[`Test artwork mutations should delete an artork 1`] = `
+exports[`Test artwork mutations should delete an artork with an existing id 1`] = `
 Object {
   "data": Object {
     "deleteArtwork": Object {
-      "description": "Art",
+      "description": "song description",
       "listed": true,
-      "title": "strstrstr",
+      "title": "amazingsongT1itle",
     },
   },
   "errors": undefined,
@@ -41,7 +41,7 @@ Object {
 }
 `;
 
-exports[`Test artwork mutations should fail to create an artwork 1`] = `
+exports[`Test artwork mutations should fail to create an artwork with fixed sale type and reserve price set 1`] = `
 Object {
   "data": null,
   "errors": Array [
