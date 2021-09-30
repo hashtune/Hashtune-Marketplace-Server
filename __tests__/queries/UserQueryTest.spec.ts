@@ -18,8 +18,8 @@ describe('Test users query', () => {
 `;
 
   const FIND_USER_QUERY = `
-    query Query($findUserId: String!) {
-      findUser(id: $findUserId) {
+    query Query($findUserHandle: String!) {
+      findUser(handle: $findUserHandle) {
         handle
       }
     }
@@ -32,19 +32,19 @@ describe('Test users query', () => {
     expect(res).toMatchSnapshot();
   });
 
-  it('should find a user by id', async () => {
-    const userId = await prisma.user.findMany({});
+  it('should find a user by handle', async () => {
+    const userHandle = await prisma.user.findMany({});
     const res = await server.executeOperation({
       query: FIND_USER_QUERY,
-      variables: { findUserId: userId[0].id },
+      variables: { findUserHandle: userHandle[0].handle },
     });
     expect(res).toMatchSnapshot();
   });
 
-  it('should not find a user by id and throw an error', async () => {
+  it('should not find a user by handle and throw an error', async () => {
     const res = await server.executeOperation({
       query: FIND_USER_QUERY,
-      variables: { findUserId: 'abc' },
+      variables: { findUserHandle: 'user1' },
     });
     expect(res).toMatchSnapshot();
   });
