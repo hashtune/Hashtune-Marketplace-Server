@@ -1,5 +1,5 @@
 import { booleanArg, extendType } from 'nexus';
-import { Context } from '../context';
+import { Context } from '../../context';
 
 export const ListArtworks = extendType({
   type: 'Query',

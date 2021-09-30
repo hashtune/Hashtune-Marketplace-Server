@@ -1,5 +1,5 @@
 import { extendType } from 'nexus';
-import { Context } from '../context';
+import { Context } from '../../context';
 
 export const ListUsers = extendType({
   type: 'Query',

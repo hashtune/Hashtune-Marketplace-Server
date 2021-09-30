@@ -1,5 +1,5 @@
 import { extendType, nonNull, stringArg } from 'nexus';
-import { Context } from '../context';
+import { Context } from '../../context';
 
 export const FindArtwork = extendType({
   type: 'Query',
