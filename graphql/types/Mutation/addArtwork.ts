@@ -1,5 +1,5 @@
 import { extendType, inputObjectType } from 'nexus';
-import { Context } from '../context';
+import { Context } from '../../context';
 
 const InputType = inputObjectType({
   name: 'CreateArtworkInput',
