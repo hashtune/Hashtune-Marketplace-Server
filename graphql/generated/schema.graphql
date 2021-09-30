@@ -68,7 +68,6 @@ export interface NexusGenInputs {
     currentOwner: string; // String!
     description: string; // String!
     handle: string; // String!
-    id?: string | null; // String
     image: string; // String!
     link: string; // String!
     media: NexusGenScalars['Json']; // Json!

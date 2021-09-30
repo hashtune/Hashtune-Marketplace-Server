@@ -4,7 +4,7 @@ exports[`Test artwork queries should find an artwork by id 1`] = `
 Object {
   "data": Object {
     "findArtwork": Object {
-      "title": "amazingsongTitle",
+      "title": "amazingsongT1itle",
     },
   },
   "errors": undefined,
@@ -37,24 +37,28 @@ Object {
   "data": Object {
     "listArtworks": Array [
       Object {
-        "handle": "amazingsong",
-        "saleType": "auction",
-      },
-      Object {
-        "handle": "hello",
-        "saleType": "auction",
-      },
-      Object {
-        "handle": "history",
-        "saleType": "auction",
-      },
-      Object {
-        "handle": "amazingsong2",
+        "handle": "4",
         "saleType": "fixed",
       },
       Object {
-        "handle": "fixedwithhistory",
+        "handle": "5",
         "saleType": "fixed",
+      },
+      Object {
+        "handle": "art 1",
+        "saleType": "auction",
+      },
+      Object {
+        "handle": "1",
+        "saleType": "auction",
+      },
+      Object {
+        "handle": "2",
+        "saleType": "auction",
+      },
+      Object {
+        "handle": "3",
+        "saleType": "auction",
       },
     ],
   },
@@ -73,15 +77,19 @@ Object {
   "data": Object {
     "listArtworks": Array [
       Object {
-        "handle": "history",
+        "handle": "3",
         "saleType": "auction",
       },
       Object {
-        "handle": "hello",
+        "handle": "2",
         "saleType": "auction",
       },
       Object {
-        "handle": "amazingsong",
+        "handle": "1",
+        "saleType": "auction",
+      },
+      Object {
+        "handle": "art 1",
         "saleType": "auction",
       },
     ],
@@ -101,11 +109,11 @@ Object {
   "data": Object {
     "listArtworks": Array [
       Object {
-        "handle": "fixedwithhistory",
+        "handle": "5",
         "saleType": "fixed",
       },
       Object {
-        "handle": "amazingsong2",
+        "handle": "4",
         "saleType": "fixed",
       },
     ],
@@ -125,11 +133,11 @@ Object {
   "data": Object {
     "listArtworks": Array [
       Object {
-        "handle": "fixedwithhistory",
+        "handle": "5",
         "saleType": "fixed",
       },
       Object {
-        "handle": "amazingsong2",
+        "handle": "4",
         "saleType": "fixed",
       },
     ],

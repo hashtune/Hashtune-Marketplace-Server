@@ -1,13 +1,14 @@
+import { prisma } from '../../singletons/prisma';
 import reset from '../../utils/reset';
 import seed from '../../utils/seed';
 import server from '../server';
 
-describe('Test artwork queries', () => {
-  beforeAll(async () => {
-    await reset();
-    await seed();
-  });
+beforeAll(async () => {
+  await reset();
+  await seed();
+});
 
+describe('Test artwork queries', () => {
   const ARTWORKS_QUERY = `
     query Query($listArtworksAuction: Boolean) {
         listArtworks(auction: $listArtworksAuction) {
@@ -58,9 +59,10 @@ describe('Test artwork queries', () => {
   });
 
   it('should find an artwork by id', async () => {
+    const artworks = await prisma.artwork.findMany({});
     const res = await server.executeOperation({
       query: FIND_ARTWORK_QUERY,
-      variables: { findArtworkId: 'cku1ahnm200109q0wx8p4x2u1' },
+      variables: { findArtworkId: artworks[0].id },
     });
     expect(res).toMatchSnapshot();
   });

@@ -1,5 +1,5 @@
 import { booleanArg, extendType } from 'nexus';
-import { Context } from '../../context';
+import { Context } from '../context';
 
 export const ListArtworks = extendType({
   type: 'Query',
@@ -33,7 +33,7 @@ export const ListArtworks = extendType({
             },
           });
         } else {
-          return ctx.prisma.artwork.findMany({ orderBy: { saleType: 'asc' } });
+          return ctx.prisma.artwork.findMany({ orderBy: { saleType: 'desc' } });
         }
       },
     });
