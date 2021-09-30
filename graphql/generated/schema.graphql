@@ -237,7 +237,7 @@ export interface NexusGenArgTypes {
       id: string; // String!
     }
     findUser: { // args
-      id: string; // String!
+      handle: string; // String!
     }
     listArtworks: { // args
       auction?: boolean | null; // Boolean

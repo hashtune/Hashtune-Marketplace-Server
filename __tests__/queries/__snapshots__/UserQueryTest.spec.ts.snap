@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Test users query should find a user by id 1`] = `
+exports[`Test users query should find a user by slug 1`] = `
 Object {
   "data": Object {
     "findUser": Object {
@@ -21,7 +21,7 @@ exports[`Test users query should not find a user by id and throw an error 1`] = 
 Object {
   "data": null,
   "errors": Array [
-    [GraphQLError: Couldn't find a user with id 'abc'],
+    [GraphQLError: Couldn't find a user with username 'abc'],
   ],
   "extensions": undefined,
   "http": Object {

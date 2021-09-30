@@ -10,12 +10,12 @@ describe('Test users query', () => {
 `;
 
   const FIND_USER_QUERY = `
-    query Query($findUserId: String!) {
-      findUser(id: $findUserId) {
+    query Query($findUserHandle: String!) {
+      findUser(handle: $findUserHandle) {
         handle
       }
     }
-  `
+  `;
 
   it('should query the all the users', async () => {
     const res = await server.executeOperation({
@@ -24,10 +24,10 @@ describe('Test users query', () => {
     expect(res).toMatchSnapshot();
   });
 
-  it('should find a user by id', async () => {
+  it('should find a user by slug', async () => {
     const res = await server.executeOperation({
       query: FIND_USER_QUERY,
-      variables: { findUserId: "cku10kd240000sm0wostud3r8" }
+      variables: { findUserHandle: 'user1' },
     });
     expect(res).toMatchSnapshot();
   });
@@ -35,11 +35,10 @@ describe('Test users query', () => {
   it('should not find a user by id and throw an error', async () => {
     const res = await server.executeOperation({
       query: FIND_USER_QUERY,
-      variables: { findUserId: "abc" }
+      variables: { findUserHandle: 'abc' },
     });
     expect(res).toMatchSnapshot();
   });
 });
 
-export { };
-
+export {};

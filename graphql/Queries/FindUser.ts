@@ -6,16 +6,18 @@ export const FindUser = extendType({
   definition(t) {
     t.field('findUser', {
       type: 'Artwork',
-      description: 'Find an user by id',
-      args: { id: nonNull(stringArg()) },
+      description: 'Find an user by handle',
+      args: { handle: nonNull(stringArg()) },
       resolve: async (_, args, ctx: Context) => {
         const res = await ctx.prisma.user.findUnique({
-          where: { id: args.id },
+          where: { handle: args.handle },
         });
         if (res) {
           return res;
         } else {
-          throw new Error(`Couldn't find a user with id '${args.id}'`);
+          throw new Error(
+            `Couldn't find a user with username '${args.handle}'`
+          );
         }
       },
     });
