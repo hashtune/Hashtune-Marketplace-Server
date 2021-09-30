@@ -13,7 +13,14 @@ export const deleteArtwork = extendType({
       },
       // TODO: Test that a user cannot delete an artwork that they do not currently own AND created
       resolve: async (_, args, ctx: Context) => {
-        return await ctx.prisma.artwork.delete({ where: { id: args.id } });
+        const artwork = await ctx.prisma.artwork.findUnique({
+          where: { id: args.id },
+        });
+        if (artwork) {
+          return await ctx.prisma.artwork.delete({ where: { id: args.id } });
+        } else {
+          throw new Error(`Couldn't find an artowrk with id ${args.id}`);
+        }
       },
     });
   },

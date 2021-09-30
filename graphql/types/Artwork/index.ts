@@ -84,7 +84,14 @@ export const Artwork = objectType({
             creator: true,
           },
         });
-        return res?.creator;
+        // TODO: Refactoring conditionals
+        if (res?.creator) {
+          return res.creator;
+        } else if (res) {
+          throw new Error("Couldn't find Artwork");
+        } else {
+          throw new Error("Couldn't find a creator");
+        }
       },
     });
     t.nullable.field('owner', {
