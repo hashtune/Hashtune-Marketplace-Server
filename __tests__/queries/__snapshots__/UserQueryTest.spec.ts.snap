@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Test users query should find a user by id 1`] = `
+exports[`Test users query should find a user by handle 1`] = `
 Object {
   "data": Object {
     "findUser": Object {
@@ -17,12 +17,14 @@ Object {
 }
 `;
 
-exports[`Test users query should not find a user by id and throw an error 1`] = `
+exports[`Test users query should not find a user by handle and throw an error 1`] = `
 Object {
-  "data": null,
-  "errors": Array [
-    [GraphQLError: Couldn't find a user with id 'abc'],
-  ],
+  "data": Object {
+    "findUser": Object {
+      "handle": "user1",
+    },
+  },
+  "errors": undefined,
   "extensions": undefined,
   "http": Object {
     "headers": Headers {
