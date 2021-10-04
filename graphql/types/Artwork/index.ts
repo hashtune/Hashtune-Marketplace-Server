@@ -72,7 +72,6 @@ export const Artwork = objectType({
         return true;
       },
     });
-    // TODO: Handle null and int return types
     t.field('creator', {
       type: 'User',
       resolve: async (artwork, _, ctx: Context) => {
