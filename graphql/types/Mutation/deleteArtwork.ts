@@ -7,17 +7,21 @@ export const deleteArtwork = extendType({
     t.field('deleteArtwork', {
       type: 'Artwork',
       description:
-        'Delete an artwork from the database. Accepts one id argument.',
+        'Delete an artwork from the database. Accepts an artork id argument and a user id argument .',
       args: {
-        id: nonNull(stringArg()),
+        artworkId: nonNull(stringArg()),
+        userId: nonNull(stringArg()),
       },
-      // TODO: Test that a user cannot delete an artwork that they do not currently own AND created
       resolve: async (_, args, ctx: Context) => {
         const artwork = await ctx.prisma.artwork.findUnique({
-          where: { id: args.id },
+          where: { id: args.artworkId },
         });
         if (artwork) {
-          return await ctx.prisma.artwork.delete({ where: { id: args.id } });
+          if (artwork.ownerId == args.userId) {
+            return await ctx.prisma.artwork.delete({ where: { id: args.id } })
+          } else {
+            throw new Error(`Unauthorized`)
+          }
         } else {
           throw new Error(`Couldn't find an artowrk with id ${args.id}`);
         }
