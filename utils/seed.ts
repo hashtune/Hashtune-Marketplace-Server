@@ -39,7 +39,17 @@ export default async function seed() {
         owned: true,
       },
     });
-    if (!user1 || !user2) throw new Error('no Userss');
+    const user3 = await prisma.user.create({
+      data: {
+        fullName: 'user 3',
+        email: 'mr3@dgfhjj.com',
+        handle: 'user3',
+        bio: "Hey I'm not an approved creator and I love cryptooo..",
+        isApprovedCreator: false,
+      },
+    });
+
+    if (!user1 || !user2 || !user3) throw new Error('no Userss');
 
     const one = await prisma.artwork.create({
       data: {
