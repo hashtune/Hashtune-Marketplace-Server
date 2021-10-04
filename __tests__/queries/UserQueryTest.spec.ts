@@ -1,4 +1,4 @@
-import { prisma } from '../../singletons/prisma';
+import getGlobalData from '../../utils/getGlobalData';
 import reset from '../../utils/reset';
 import seed from '../../utils/seed';
 import server from '../server';
@@ -6,6 +6,7 @@ import server from '../server';
 beforeAll(async () => {
   await reset();
   await seed();
+  global.testData = await getGlobalData();
 });
 
 describe('Test users query', () => {
@@ -33,10 +34,9 @@ describe('Test users query', () => {
   });
 
   it('should find a user by handle', async () => {
-    const userHandle = await prisma.user.findMany({});
     const res = await server.executeOperation({
       query: FIND_USER_QUERY,
-      variables: { findUserHandle: userHandle[0].handle },
+      variables: { findUserHandle: global.testData.users[0].handle },
     });
     expect(res).toMatchSnapshot();
   });
@@ -50,4 +50,5 @@ describe('Test users query', () => {
   });
 });
 
-export {};
+export { };
+

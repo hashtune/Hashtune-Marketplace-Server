@@ -1,4 +1,4 @@
-import { prisma } from '../../singletons/prisma';
+import getGlobalData from '../../utils/getGlobalData';
 import reset from '../../utils/reset';
 import seed from '../../utils/seed';
 import server from '../server';
@@ -6,6 +6,7 @@ import server from '../server';
 beforeAll(async () => {
   await reset();
   await seed();
+  global.testData = await getGlobalData();
 });
 
 describe('Test artwork queries', () => {
@@ -59,10 +60,9 @@ describe('Test artwork queries', () => {
   });
 
   it('should find an artwork by id', async () => {
-    const artworks = await prisma.artwork.findMany({});
     const res = await server.executeOperation({
       query: FIND_ARTWORK_QUERY,
-      variables: { findArtworkId: artworks[0].id },
+      variables: { findArtworkId: global.testData.artworks[0].id },
     });
     expect(res).toMatchSnapshot();
   });
