@@ -1,4 +1,5 @@
 import { objectType } from 'nexus';
+import * as errorTypes from '../Errors';
 
 export const UserType = objectType({
   name: 'User',
@@ -40,3 +41,12 @@ export const UserType = objectType({
     });
   },
 });
+
+export const UserResult = objectType({
+  name: "UserResult",
+  definition(t) {
+    t.nullable.field("User", { type: "User" });
+    t.nullable.field("UserNotFound", { type: errorTypes.UserNotFoundError });
+    t.nullable.field("ClientError", { type: errorTypes.ClientError });
+  }
+})
