@@ -4,7 +4,11 @@ exports[`Test users query should find a user by handle 1`] = `
 Object {
   "data": Object {
     "findUser": Object {
-      "handle": "user1",
+      "ClientError": null,
+      "User": Object {
+        "handle": "user1",
+      },
+      "UserNotFound": null,
     },
   },
   "errors": undefined,
@@ -21,7 +25,11 @@ exports[`Test users query should not find a user by handle and throw an error 1`
 Object {
   "data": Object {
     "findUser": Object {
-      "handle": "user1",
+      "ClientError": null,
+      "User": null,
+      "UserNotFound": Object {
+        "message": "Couldn't find user with handle hgyujghf8989y89",
+      },
     },
   },
   "errors": undefined,
@@ -39,10 +47,18 @@ Object {
   "data": Object {
     "listCreators": Array [
       Object {
-        "handle": "user2",
+        "ClientError": null,
+        "User": Object {
+          "handle": "user2",
+        },
+        "UserNotFound": null,
       },
       Object {
-        "handle": "user1",
+        "ClientError": null,
+        "User": Object {
+          "handle": "user1",
+        },
+        "UserNotFound": null,
       },
     ],
   },

@@ -11,18 +11,46 @@ beforeAll(async () => {
 
 describe('Test artwork queries', () => {
   const ARTWORKS_QUERY = `
-    query Query($listArtworksAuction: Boolean) {
-        listArtworks(auction: $listArtworksAuction) {
-            saleType
-            handle
+    query Query($listArtworksListed: Boolean, $listArtworksAuction: Boolean) {
+      listArtworks(listed: $listArtworksListed, auction: $listArtworksAuction) {
+        Artwork {
+          saleType
+          handle
         }
+        ArtworkNotFound {
+          message
+        }
+        UserArgumentsConflict {
+          message
+        }
+        UserUnauthorized {
+          message
+        }
+        ClientError {
+          message
+        }
+      }
     }
 `;
 
   const FIND_ARTWORK_QUERY = `
     query Query($findArtworkId: String!) {
       findArtwork(id: $findArtworkId) {
-        title
+        Artwork {
+          title
+        }
+        ArtworkNotFound {
+          message
+        }
+        UserArgumentsConflict {
+          message
+        }
+        UserUnauthorized {
+          message
+        }
+        ClientError {
+          message
+        }
       }
     }
   `;

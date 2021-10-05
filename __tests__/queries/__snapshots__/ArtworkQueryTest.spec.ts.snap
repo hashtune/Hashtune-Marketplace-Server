@@ -4,7 +4,13 @@ exports[`Test artwork queries should find an artwork by id 1`] = `
 Object {
   "data": Object {
     "findArtwork": Object {
-      "title": "amazingsongT1itle",
+      "Artwork": Object {
+        "title": "amazingsongT1itle",
+      },
+      "ArtworkNotFound": null,
+      "ClientError": null,
+      "UserArgumentsConflict": null,
+      "UserUnauthorized": null,
     },
   },
   "errors": undefined,
@@ -19,10 +25,18 @@ Object {
 
 exports[`Test artwork queries should not find an artwork by id and throw an error 1`] = `
 Object {
-  "data": null,
-  "errors": Array [
-    [GraphQLError: Couldn't find an artwork with id 'abc'],
-  ],
+  "data": Object {
+    "findArtwork": Object {
+      "Artwork": null,
+      "ArtworkNotFound": Object {
+        "message": "Couldn't find artwork",
+      },
+      "ClientError": null,
+      "UserArgumentsConflict": null,
+      "UserUnauthorized": null,
+    },
+  },
+  "errors": undefined,
   "extensions": undefined,
   "http": Object {
     "headers": Headers {
@@ -37,28 +51,64 @@ Object {
   "data": Object {
     "listArtworks": Array [
       Object {
-        "handle": "4",
-        "saleType": "fixed",
+        "Artwork": Object {
+          "handle": "4",
+          "saleType": "fixed",
+        },
+        "ArtworkNotFound": null,
+        "ClientError": null,
+        "UserArgumentsConflict": null,
+        "UserUnauthorized": null,
       },
       Object {
-        "handle": "5",
-        "saleType": "fixed",
+        "Artwork": Object {
+          "handle": "5",
+          "saleType": "fixed",
+        },
+        "ArtworkNotFound": null,
+        "ClientError": null,
+        "UserArgumentsConflict": null,
+        "UserUnauthorized": null,
       },
       Object {
-        "handle": "art 1",
-        "saleType": "auction",
+        "Artwork": Object {
+          "handle": "art 1",
+          "saleType": "auction",
+        },
+        "ArtworkNotFound": null,
+        "ClientError": null,
+        "UserArgumentsConflict": null,
+        "UserUnauthorized": null,
       },
       Object {
-        "handle": "1",
-        "saleType": "auction",
+        "Artwork": Object {
+          "handle": "1",
+          "saleType": "auction",
+        },
+        "ArtworkNotFound": null,
+        "ClientError": null,
+        "UserArgumentsConflict": null,
+        "UserUnauthorized": null,
       },
       Object {
-        "handle": "2",
-        "saleType": "auction",
+        "Artwork": Object {
+          "handle": "2",
+          "saleType": "auction",
+        },
+        "ArtworkNotFound": null,
+        "ClientError": null,
+        "UserArgumentsConflict": null,
+        "UserUnauthorized": null,
       },
       Object {
-        "handle": "3",
-        "saleType": "auction",
+        "Artwork": Object {
+          "handle": "3",
+          "saleType": "auction",
+        },
+        "ArtworkNotFound": null,
+        "ClientError": null,
+        "UserArgumentsConflict": null,
+        "UserUnauthorized": null,
       },
     ],
   },
@@ -77,20 +127,44 @@ Object {
   "data": Object {
     "listArtworks": Array [
       Object {
-        "handle": "3",
-        "saleType": "auction",
+        "Artwork": Object {
+          "handle": "3",
+          "saleType": "auction",
+        },
+        "ArtworkNotFound": null,
+        "ClientError": null,
+        "UserArgumentsConflict": null,
+        "UserUnauthorized": null,
       },
       Object {
-        "handle": "2",
-        "saleType": "auction",
+        "Artwork": Object {
+          "handle": "2",
+          "saleType": "auction",
+        },
+        "ArtworkNotFound": null,
+        "ClientError": null,
+        "UserArgumentsConflict": null,
+        "UserUnauthorized": null,
       },
       Object {
-        "handle": "1",
-        "saleType": "auction",
+        "Artwork": Object {
+          "handle": "1",
+          "saleType": "auction",
+        },
+        "ArtworkNotFound": null,
+        "ClientError": null,
+        "UserArgumentsConflict": null,
+        "UserUnauthorized": null,
       },
       Object {
-        "handle": "art 1",
-        "saleType": "auction",
+        "Artwork": Object {
+          "handle": "art 1",
+          "saleType": "auction",
+        },
+        "ArtworkNotFound": null,
+        "ClientError": null,
+        "UserArgumentsConflict": null,
+        "UserUnauthorized": null,
       },
     ],
   },
@@ -109,12 +183,24 @@ Object {
   "data": Object {
     "listArtworks": Array [
       Object {
-        "handle": "5",
-        "saleType": "fixed",
+        "Artwork": Object {
+          "handle": "5",
+          "saleType": "fixed",
+        },
+        "ArtworkNotFound": null,
+        "ClientError": null,
+        "UserArgumentsConflict": null,
+        "UserUnauthorized": null,
       },
       Object {
-        "handle": "4",
-        "saleType": "fixed",
+        "Artwork": Object {
+          "handle": "4",
+          "saleType": "fixed",
+        },
+        "ArtworkNotFound": null,
+        "ClientError": null,
+        "UserArgumentsConflict": null,
+        "UserUnauthorized": null,
       },
     ],
   },
@@ -133,12 +219,24 @@ Object {
   "data": Object {
     "listArtworks": Array [
       Object {
-        "handle": "5",
-        "saleType": "fixed",
+        "Artwork": Object {
+          "handle": "5",
+          "saleType": "fixed",
+        },
+        "ArtworkNotFound": null,
+        "ClientError": null,
+        "UserArgumentsConflict": null,
+        "UserUnauthorized": null,
       },
       Object {
-        "handle": "4",
-        "saleType": "fixed",
+        "Artwork": Object {
+          "handle": "4",
+          "saleType": "fixed",
+        },
+        "ArtworkNotFound": null,
+        "ClientError": null,
+        "UserArgumentsConflict": null,
+        "UserUnauthorized": null,
       },
     ],
   },

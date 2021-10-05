@@ -13,17 +13,33 @@ describe('Test users query', () => {
   const USERS_QUERY = `
     query Query {
       listCreators {
-        handle
+        User {
+          handle
+        }
+        UserNotFound {
+          message
+        }
+        ClientError {
+          message
+        }
       }
     }
 `;
 
   const FIND_USER_QUERY = `
-    query Query($findUserHandle: String!) {
-      findUser(handle: $findUserHandle) {
+  query Query($findUserHandle: String!) {
+    findUser(handle: $findUserHandle) {
+      User {
         handle
       }
+      UserNotFound {
+        message
+      }
+      ClientError {
+        message
+      }
     }
+  }
   `;
 
   it('should query the all the users', async () => {
@@ -44,7 +60,7 @@ describe('Test users query', () => {
   it('should not find a user by handle and throw an error', async () => {
     const res = await server.executeOperation({
       query: FIND_USER_QUERY,
-      variables: { findUserHandle: 'user1' },
+      variables: { findUserHandle: 'hgyujghf8989y89' },
     });
     expect(res).toMatchSnapshot();
   });

@@ -16,27 +16,54 @@ describe('Test artwork mutations', () => {
   });
 
   const ADD_ARTWORK_MUTATION = `
-        mutation AddArtwork($addArtworkInputType: CreateArtworkInput) {
-            addArtwork(InputType: $addArtworkInputType) {
-                title
-                description
-                saleType
-                creator {
-                    fullName
-                }
-            }
+    mutation Mutation($addArtworkInputType: CreateArtworkInput) {
+      addArtwork(InputType: $addArtworkInputType) {
+        Artwork {
+          title
+          description
+          saleType
+          creator {
+            fullName
+          }
+          owner {
+            fullName
+          }
         }
-    `;
+        ArtworkNotFound {
+          message
+        }
+        UserArgumentsConflict {
+          message
+        }
+        UserUnauthorized {
+          message
+        }
+        ClientError {
+          message
+        }
+      }
+    }`;
 
   const DELETE_ARTWORK_MUTATION = `
-        mutation DeleteArtworkMutation($deleteArtworkArtworkId: String!, $deleteArtworkUserId: String!) {
-            deleteArtwork(artworkId: $deleteArtworkArtworkId, userId: $deleteArtworkUserId) {
-                title
-                description
-                listed
-            }
+    mutation DeleteArtworkMutation($deleteArtworkArtworkId: String!, $deleteArtworkUserId: String!) {
+      deleteArtwork(artworkId: $deleteArtworkArtworkId, userId: $deleteArtworkUserId) {
+        Artwork {
+          handle
         }
-        `;
+        ArtworkNotFound {
+          message
+        }
+        UserArgumentsConflict {
+          message
+        }
+        UserUnauthorized {
+          message
+        }
+        ClientError {
+          message
+        }
+      }
+    }`;
 
   const exampleArgs = {
     handle: 'something',
@@ -48,28 +75,38 @@ describe('Test artwork mutations', () => {
   };
 
   it('should create an artwork', async () => {
-    const approvedCreator = global.testData.users[0];
+    const user1 = global.testData.users.filter(u => u.handle === 'user1')[0];
     const res = await server.executeOperation({
       query: ADD_ARTWORK_MUTATION,
       variables: {
         addArtworkInputType: {
           ...exampleArgs,
-          currentOwner: approvedCreator.id,
-          creator: approvedCreator.id,
+          currentOwner: user1.id,
+          creator: user1.id,
           saleType: 'auction',
           reservePrice: 50,
-        },
-      },
+        }
+      }
     });
-    const artwork = await prisma.artwork.findMany({
-      orderBy: {
-        createdAt: 'asc',
-      },
-      take: 1
+    const artwork = await prisma.artwork.findUnique({
+      where: {
+        handle: "something"
+      }
     });
     if (!artwork) throw new Error('Error fetching the created artwork');
-    createdId = artwork[0].id;
-    creatorId = approvedCreator.id;
+    createdId = artwork.id;
+    creatorId = user1.id;
+    expect(res).toMatchSnapshot();
+  });
+
+  it('should delete an artork with an existing id', async () => {
+    const res = await server.executeOperation({
+      query: DELETE_ARTWORK_MUTATION,
+      variables: {
+        deleteArtworkArtworkId: createdId,
+        deleteArtworkUserId: creatorId,
+      },
+    });
     expect(res).toMatchSnapshot();
   });
 
@@ -102,17 +139,6 @@ describe('Test artwork mutations', () => {
           saleType: 'fixed',
           reservePrice: 50,
         },
-      },
-    });
-    expect(res).toMatchSnapshot();
-  });
-
-  it('should delete an artork with an existing id', async () => {
-    const res = await server.executeOperation({
-      query: DELETE_ARTWORK_MUTATION,
-      variables: {
-        deleteArtworkArtworkId: createdId,
-        deleteArtworkUserId: creatorId,
       },
     });
     expect(res).toMatchSnapshot();
