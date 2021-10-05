@@ -5,9 +5,9 @@ export const deleteArtwork = extendType({
   type: 'Mutation',
   definition(t) {
     t.field('deleteArtwork', {
-      type: 'Artwork',
+      type: 'ArtworkResult',
       description:
-        'Delete an artwork from the database. Accepts an artork id argument and a user id argument .',
+        'Delete an artwork from the database. Accepts an artork id argument and a user id argument.',
       args: {
         artworkId: nonNull(stringArg()),
         userId: nonNull(stringArg()),
@@ -18,12 +18,12 @@ export const deleteArtwork = extendType({
         });
         if (artwork) {
           if (artwork.ownerId == args.userId) {
-            return await ctx.prisma.artwork.delete({ where: { id: args.id } })
+            return { Artwork: await ctx.prisma.artwork.delete({ where: { id: artwork.id } }) }
           } else {
-            throw new Error(`Unauthorized`)
+            return { UserUnauthorized: { message: 'User is not the current owner' } };
           }
         } else {
-          throw new Error(`Couldn't find an artowrk with id ${args.id}`);
+          return { ArtworkNotFound: { message: `Couldn't find artwork with id ${args.artworkId}` } };
         }
       },
     });

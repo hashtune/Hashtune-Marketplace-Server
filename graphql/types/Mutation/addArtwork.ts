@@ -23,7 +23,7 @@ export const addArtwork = extendType({
   type: 'Mutation',
   definition(t) {
     t.field('addArtwork', {
-      type: 'Artwork',
+      type: 'ArtworkResult',
       description: 'Add an artwork to the database',
       args: { InputType },
       resolve: async (_, args, ctx: Context) => {
@@ -55,18 +55,18 @@ export const addArtwork = extendType({
           const isValidSale =
             args.saleType == 'fixed' && args.price && !args.reservePrice;
           if (isValidAuction || isValidSale) {
-            return ctx.prisma.artwork.create(payload);
+            return { Artwork: ctx.prisma.artwork.create(payload) };
           } else {
-            throw new Error(
-              `Argument conflict. ${
-                args.saleType == 'auction' && args.price
+            return {
+              UserArgumentsConflict: {
+                message: `Argument conflict. ${args.saleType == 'auction' && args.price
                   ? "Auction doesn't need a price arg"
-                  : 'Fixed sale requires a price arg and no reservePrice arg'
-              }`
-            );
+                  : 'Fixed sale requires a price arg and no reservePrice arg'}`
+              }
+            }
           }
         } else {
-          throw new Error('Not approved or non-existing creator');
+          return { UserUnauthorized: { message: 'Not approved or non-existing creator' } };
         }
       },
     });

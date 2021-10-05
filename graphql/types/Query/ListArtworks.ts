@@ -1,11 +1,12 @@
 import { booleanArg, extendType } from 'nexus';
+import { Artwork } from "../../../node_modules/.prisma/client/index";
 import { Context } from '../../context';
 
 export const ListArtworks = extendType({
   type: 'Query',
   definition(t) {
     t.list.field('listArtworks', {
-      type: 'Artwork',
+      type: 'ArtworkResult',
       description:
         'If only auction argument is true then all auctions are returned. If not then all artworks are returned. ',
       args: {
@@ -13,8 +14,9 @@ export const ListArtworks = extendType({
         listed: booleanArg(),
       },
       resolve: async (_, args, ctx: Context) => {
+        let res: Artwork[];
         if (args.auction === true) {
-          return ctx.prisma.artwork.findMany({
+          res = await ctx.prisma.artwork.findMany({
             where: {
               saleType: 'auction',
             },
@@ -23,7 +25,7 @@ export const ListArtworks = extendType({
             },
           });
         } else if (args.auction === false) {
-          return ctx.prisma.artwork.findMany({
+          res = await ctx.prisma.artwork.findMany({
             where: {
               saleType: 'fixed',
               listed: args.listed ? true : undefined,
@@ -33,7 +35,13 @@ export const ListArtworks = extendType({
             },
           });
         } else {
-          return ctx.prisma.artwork.findMany({ orderBy: { saleType: 'desc' } });
+          res = await ctx.prisma.artwork.findMany({ orderBy: { saleType: 'desc' } });
+        }
+
+        if (res && res.map) {
+          return res.map(artwork => ({ Artwork: artwork }))
+        } else {
+          return [{ ClientError: { message: "Error fetching the artworks" } }]
         }
       },
     });

@@ -5,17 +5,22 @@ export const ListUsers = extendType({
   type: 'Query',
   definition(t) {
     t.list.field('listCreators', {
-      type: 'User',
+      type: 'UserResult',
       description: 'Returns all creators where isApprovedCreator is true',
       resolve: async (_, args, ctx: Context) => {
-        return await ctx.prisma.user.findMany({
+        const res = await ctx.prisma.user.findMany({
           where: {
             isApprovedCreator: true,
           },
           orderBy: {
             createdAt: 'desc',
           },
-        });
+        })
+        if (res) {
+          return res.map(user => ({ User: user }))
+        } else {
+          return [{ ClientError: { message: "Error fetching the users" } }]
+        }
       },
     });
   },
