@@ -58,10 +58,11 @@ export const addArtwork = extendType({
             return { Artwork: ctx.prisma.artwork.create(payload) };
           } else {
             return {
-              UserArgumentsConflict: {
-                message: `Argument conflict. ${args.saleType == 'auction' && args.price
+              ArtworkArgumentsConflict: {
+                message: `Argument conflict.`,
+                path: `${args.saleType == 'auction' && args.price
                   ? "Auction doesn't need a price arg"
-                  : 'Fixed sale requires a price arg and no reservePrice arg'}`
+                  : 'Fixed sale requires a price arg and no reservePrice arg'}`,
               }
             }
           }
