@@ -20,8 +20,9 @@ describe('Test artwork queries', () => {
         ArtworkNotFound {
           message
         }
-        UserArgumentsConflict {
+        ArtworkArgumentsConflict {
           message
+          path
         }
         UserUnauthorized {
           message
@@ -42,8 +43,9 @@ describe('Test artwork queries', () => {
         ArtworkNotFound {
           message
         }
-        UserArgumentsConflict {
+        ArtworkArgumentsConflict {
           message
+          path
         }
         UserUnauthorized {
           message

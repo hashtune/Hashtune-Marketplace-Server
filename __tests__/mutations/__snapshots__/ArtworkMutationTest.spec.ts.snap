@@ -15,9 +15,9 @@ Object {
         "saleType": "auction",
         "title": "strstrstr",
       },
+      "ArtworkArgumentsConflict": null,
       "ArtworkNotFound": null,
       "ClientError": null,
-      "UserArgumentsConflict": null,
       "UserUnauthorized": null,
     },
   },
@@ -38,9 +38,9 @@ Object {
       "Artwork": Object {
         "handle": "something",
       },
+      "ArtworkArgumentsConflict": null,
       "ArtworkNotFound": null,
       "ClientError": null,
-      "UserArgumentsConflict": null,
       "UserUnauthorized": null,
     },
   },
@@ -59,9 +59,9 @@ Object {
   "data": Object {
     "addArtwork": Object {
       "Artwork": null,
+      "ArtworkArgumentsConflict": null,
       "ArtworkNotFound": null,
       "ClientError": null,
-      "UserArgumentsConflict": null,
       "UserUnauthorized": Object {
         "message": "Not approved or non-existing creator",
       },
@@ -82,11 +82,12 @@ Object {
   "data": Object {
     "addArtwork": Object {
       "Artwork": null,
+      "ArtworkArgumentsConflict": Object {
+        "message": "Argument conflict.",
+        "path": "Fixed sale requires a price arg and no reservePrice arg",
+      },
       "ArtworkNotFound": null,
       "ClientError": null,
-      "UserArgumentsConflict": Object {
-        "message": "Argument conflict. Fixed sale requires a price arg and no reservePrice arg",
-      },
       "UserUnauthorized": null,
     },
   },
@@ -105,11 +106,11 @@ Object {
   "data": Object {
     "deleteArtwork": Object {
       "Artwork": null,
+      "ArtworkArgumentsConflict": null,
       "ArtworkNotFound": Object {
         "message": "Couldn't find artwork with id artworkId",
       },
       "ClientError": null,
-      "UserArgumentsConflict": null,
       "UserUnauthorized": null,
     },
   },
@@ -128,9 +129,9 @@ Object {
   "data": Object {
     "deleteArtwork": Object {
       "Artwork": null,
+      "ArtworkArgumentsConflict": null,
       "ArtworkNotFound": null,
       "ClientError": null,
-      "UserArgumentsConflict": null,
       "UserUnauthorized": Object {
         "message": "User is not the current owner",
       },
@@ -151,9 +152,9 @@ Object {
   "data": Object {
     "deleteArtwork": Object {
       "Artwork": null,
+      "ArtworkArgumentsConflict": null,
       "ArtworkNotFound": null,
       "ClientError": null,
-      "UserArgumentsConflict": null,
       "UserUnauthorized": Object {
         "message": "User is not the current owner",
       },
