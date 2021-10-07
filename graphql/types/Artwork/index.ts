@@ -122,7 +122,7 @@ export const ArtworkResult = objectType({
   definition(t) {
     t.nullable.field("Artwork", { type: 'Artwork' });
     t.nullable.field("ArtworkNotFound", { type: errorTypes.ArtworkNotFound });
-    t.nullable.field("UserArgumentsConflict", { type: errorTypes.ArtworkArgumentsConflict });
+    t.nullable.field("ArtworkArgumentsConflict", { type: errorTypes.ArtworkArgumentsConflict });
     t.nullable.field("UserUnauthorized", { type: errorTypes.UserUnauthorized });
     t.nullable.field("ClientError", { type: errorTypes.ClientError });
   }
