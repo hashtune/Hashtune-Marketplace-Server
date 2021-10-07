@@ -98,15 +98,16 @@ export interface NexusGenObjects {
   Artwork: PrismaClient.Artwork;
   ArtworkArgumentsConflict: { // root type
     message?: string | null; // String
+    path?: string | null; // String
   }
   ArtworkNotFound: { // root type
     message?: string | null; // String
   }
   ArtworkResult: { // root type
     Artwork?: NexusGenRootTypes['Artwork'] | null; // Artwork
+    ArtworkArgumentsConflict?: NexusGenRootTypes['ArtworkArgumentsConflict'] | null; // ArtworkArgumentsConflict
     ArtworkNotFound?: NexusGenRootTypes['ArtworkNotFound'] | null; // ArtworkNotFound
     ClientError?: NexusGenRootTypes['ClientError'] | null; // ClientError
-    UserArgumentsConflict?: NexusGenRootTypes['ArtworkArgumentsConflict'] | null; // ArtworkArgumentsConflict
     UserUnauthorized?: NexusGenRootTypes['UserUnauthorized'] | null; // UserUnauthorized
   }
   Auction: PrismaClient.Auction;
@@ -160,15 +161,16 @@ export interface NexusGenFieldTypes {
   }
   ArtworkArgumentsConflict: { // field return type
     message: string | null; // String
+    path: string | null; // String
   }
   ArtworkNotFound: { // field return type
     message: string | null; // String
   }
   ArtworkResult: { // field return type
     Artwork: NexusGenRootTypes['Artwork'] | null; // Artwork
+    ArtworkArgumentsConflict: NexusGenRootTypes['ArtworkArgumentsConflict'] | null; // ArtworkArgumentsConflict
     ArtworkNotFound: NexusGenRootTypes['ArtworkNotFound'] | null; // ArtworkNotFound
     ClientError: NexusGenRootTypes['ClientError'] | null; // ClientError
-    UserArgumentsConflict: NexusGenRootTypes['ArtworkArgumentsConflict'] | null; // ArtworkArgumentsConflict
     UserUnauthorized: NexusGenRootTypes['UserUnauthorized'] | null; // UserUnauthorized
   }
   Auction: { // field return type
@@ -238,15 +240,16 @@ export interface NexusGenFieldTypeNames {
   }
   ArtworkArgumentsConflict: { // field return type name
     message: 'String'
+    path: 'String'
   }
   ArtworkNotFound: { // field return type name
     message: 'String'
   }
   ArtworkResult: { // field return type name
     Artwork: 'Artwork'
+    ArtworkArgumentsConflict: 'ArtworkArgumentsConflict'
     ArtworkNotFound: 'ArtworkNotFound'
     ClientError: 'ClientError'
-    UserArgumentsConflict: 'ArtworkArgumentsConflict'
     UserUnauthorized: 'UserUnauthorized'
   }
   Auction: { // field return type name
