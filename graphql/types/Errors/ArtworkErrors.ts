@@ -4,6 +4,7 @@ export const ArtworkArgumentsConflict = objectType({
     name: 'ArtworkArgumentsConflict',
     definition(t) {
         t.nullable.string('message');
+        t.nullable.string('path');
     },
 });
 
