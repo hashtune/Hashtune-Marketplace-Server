@@ -4,7 +4,7 @@ import { Context } from '../../context';
 export const ListUsers = extendType({
   type: 'Query',
   definition(t) {
-    t.list.field('listCreators', {
+    t.field('listCreators', {
       type: 'UserResult',
       description: 'Returns all creators where isApprovedCreator is true',
       resolve: async (_, args, ctx: Context) => {
@@ -17,7 +17,7 @@ export const ListUsers = extendType({
           },
         })
         if (res) {
-          return res.map(user => ({ User: user }))
+          return { Users: res }
         } else {
           return [{ ClientError: { message: "Error fetching the users" } }]
         }

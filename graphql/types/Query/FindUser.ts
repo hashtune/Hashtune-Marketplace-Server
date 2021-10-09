@@ -13,7 +13,7 @@ export const FindUser = extendType({
           where: { handle: args.handle },
         });
         if (res) {
-          return { User: res };
+          return { Users: [res] };
         } else {
           return { UserNotFound: { message: `Couldn't find user with handle ${args.handle}` } }
         }
