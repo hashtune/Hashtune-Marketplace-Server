@@ -5,10 +5,12 @@ Object {
   "data": Object {
     "findUser": Object {
       "ClientError": null,
-      "User": Object {
-        "handle": "user1",
-      },
       "UserNotFound": null,
+      "Users": Array [
+        Object {
+          "handle": "user1",
+        },
+      ],
     },
   },
   "errors": undefined,
@@ -26,10 +28,10 @@ Object {
   "data": Object {
     "findUser": Object {
       "ClientError": null,
-      "User": null,
       "UserNotFound": Object {
         "message": "Couldn't find user with handle hgyujghf8989y89",
       },
+      "Users": null,
     },
   },
   "errors": undefined,
@@ -45,22 +47,18 @@ Object {
 exports[`Test users query should query the all the users 1`] = `
 Object {
   "data": Object {
-    "listCreators": Array [
-      Object {
-        "ClientError": null,
-        "User": Object {
+    "listCreators": Object {
+      "ClientError": null,
+      "UserNotFound": null,
+      "Users": Array [
+        Object {
           "handle": "user2",
         },
-        "UserNotFound": null,
-      },
-      Object {
-        "ClientError": null,
-        "User": Object {
+        Object {
           "handle": "user1",
         },
-        "UserNotFound": null,
-      },
-    ],
+      ],
+    },
   },
   "errors": undefined,
   "extensions": undefined,

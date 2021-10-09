@@ -13,7 +13,7 @@ describe('Test users query', () => {
   const USERS_QUERY = `
     query Query {
       listCreators {
-        User {
+        Users {
           handle
         }
         UserNotFound {
@@ -29,7 +29,7 @@ describe('Test users query', () => {
   const FIND_USER_QUERY = `
   query Query($findUserHandle: String!) {
     findUser(handle: $findUserHandle) {
-      User {
+      Users {
         handle
       }
       UserNotFound {
