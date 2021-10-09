@@ -55,7 +55,7 @@ export const addArtwork = extendType({
           const isValidSale =
             args.saleType == 'fixed' && args.price && !args.reservePrice;
           if (isValidAuction || isValidSale) {
-            return { Artwork: ctx.prisma.artwork.create(payload) };
+            return { Artworks: [ctx.prisma.artwork.create(payload)] };
           } else {
             return {
               ArtworkArgumentsConflict: {

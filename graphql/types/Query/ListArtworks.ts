@@ -5,7 +5,7 @@ import { Context } from '../../context';
 export const ListArtworks = extendType({
   type: 'Query',
   definition(t) {
-    t.list.field('listArtworks', {
+    t.field('listArtworks', {
       type: 'ArtworkResult',
       description:
         'If only auction argument is true then all auctions are returned. If not then all artworks are returned. ',
@@ -38,10 +38,10 @@ export const ListArtworks = extendType({
           res = await ctx.prisma.artwork.findMany({ orderBy: { saleType: 'desc' } });
         }
 
-        if (res && res.map) {
-          return res.map(artwork => ({ Artwork: artwork }))
+        if (res) {
+          return { Artworks: res }
         } else {
-          return [{ ClientError: { message: "Error fetching the artworks" } }]
+          return { ClientError: { message: "Error fetching the artworks" } }
         }
       },
     });

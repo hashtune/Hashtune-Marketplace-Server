@@ -13,7 +13,7 @@ export const FindArtwork = extendType({
           where: { id: args.id },
         });
         if (res) {
-          return { Artwork: res };
+          return { Artworks: [res] };
         } else {
           return { ArtworkNotFound: { message: "Couldn't find artwork" } }
         }

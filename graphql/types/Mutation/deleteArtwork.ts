@@ -18,7 +18,7 @@ export const deleteArtwork = extendType({
         });
         if (artwork) {
           if (artwork.ownerId == args.userId) {
-            return { Artwork: await ctx.prisma.artwork.delete({ where: { id: artwork.id } }) }
+            return { Artworks: [await ctx.prisma.artwork.delete({ where: { id: artwork.id } })] }
           } else {
             return { UserUnauthorized: { message: 'User is not the current owner' } };
           }
