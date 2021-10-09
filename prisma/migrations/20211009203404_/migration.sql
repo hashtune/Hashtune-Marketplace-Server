@@ -9,7 +9,6 @@ CREATE TYPE "SaleType" AS ENUM ('auction', 'fixed');
 
 -- CreateEnum
 CREATE TYPE "WalletProvider" AS ENUM ('metamask');
-
 -- CreateTable
 CREATE TABLE "User" (
     "kind" "ModelKind" NOT NULL DEFAULT E'user',
