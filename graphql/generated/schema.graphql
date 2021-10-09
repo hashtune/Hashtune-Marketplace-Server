@@ -123,8 +123,8 @@ export interface NexusGenObjects {
   }
   UserResult: { // root type
     ClientError?: NexusGenRootTypes['ClientError'] | null; // ClientError
-    User?: NexusGenRootTypes['User'] | null; // User
     UserNotFound?: NexusGenRootTypes['UserNotFoundError'] | null; // UserNotFoundError
+    Users?: NexusGenRootTypes['User'][] | null; // [User!]
   }
   UserUnauthorized: { // root type
     message?: string | null; // String
@@ -194,7 +194,7 @@ export interface NexusGenFieldTypes {
     findArtwork: NexusGenRootTypes['ArtworkResult']; // ArtworkResult!
     findUser: NexusGenRootTypes['UserResult']; // UserResult!
     listArtworks: NexusGenRootTypes['ArtworkResult']; // ArtworkResult!
-    listCreators: NexusGenRootTypes['UserResult'][]; // [UserResult!]!
+    listCreators: NexusGenRootTypes['UserResult']; // UserResult!
   }
   User: { // field return type
     bio: string; // String!
@@ -212,8 +212,8 @@ export interface NexusGenFieldTypes {
   }
   UserResult: { // field return type
     ClientError: NexusGenRootTypes['ClientError'] | null; // ClientError
-    User: NexusGenRootTypes['User'] | null; // User
     UserNotFound: NexusGenRootTypes['UserNotFoundError'] | null; // UserNotFoundError
+    Users: NexusGenRootTypes['User'][] | null; // [User!]
   }
   UserUnauthorized: { // field return type
     message: string | null; // String
@@ -291,8 +291,8 @@ export interface NexusGenFieldTypeNames {
   }
   UserResult: { // field return type name
     ClientError: 'ClientError'
-    User: 'User'
     UserNotFound: 'UserNotFoundError'
+    Users: 'User'
   }
   UserUnauthorized: { // field return type name
     message: 'String'
