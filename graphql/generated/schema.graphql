@@ -104,9 +104,9 @@ export interface NexusGenObjects {
     message?: string | null; // String
   }
   ArtworkResult: { // root type
-    Artwork?: NexusGenRootTypes['Artwork'] | null; // Artwork
     ArtworkArgumentsConflict?: NexusGenRootTypes['ArtworkArgumentsConflict'] | null; // ArtworkArgumentsConflict
     ArtworkNotFound?: NexusGenRootTypes['ArtworkNotFound'] | null; // ArtworkNotFound
+    Artworks?: NexusGenRootTypes['Artwork'][] | null; // [Artwork!]
     ClientError?: NexusGenRootTypes['ClientError'] | null; // ClientError
     UserUnauthorized?: NexusGenRootTypes['UserUnauthorized'] | null; // UserUnauthorized
   }
@@ -167,9 +167,9 @@ export interface NexusGenFieldTypes {
     message: string | null; // String
   }
   ArtworkResult: { // field return type
-    Artwork: NexusGenRootTypes['Artwork'] | null; // Artwork
     ArtworkArgumentsConflict: NexusGenRootTypes['ArtworkArgumentsConflict'] | null; // ArtworkArgumentsConflict
     ArtworkNotFound: NexusGenRootTypes['ArtworkNotFound'] | null; // ArtworkNotFound
+    Artworks: NexusGenRootTypes['Artwork'][] | null; // [Artwork!]
     ClientError: NexusGenRootTypes['ClientError'] | null; // ClientError
     UserUnauthorized: NexusGenRootTypes['UserUnauthorized'] | null; // UserUnauthorized
   }
@@ -193,7 +193,7 @@ export interface NexusGenFieldTypes {
   Query: { // field return type
     findArtwork: NexusGenRootTypes['ArtworkResult']; // ArtworkResult!
     findUser: NexusGenRootTypes['UserResult']; // UserResult!
-    listArtworks: NexusGenRootTypes['ArtworkResult'][]; // [ArtworkResult!]!
+    listArtworks: NexusGenRootTypes['ArtworkResult']; // ArtworkResult!
     listCreators: NexusGenRootTypes['UserResult'][]; // [UserResult!]!
   }
   User: { // field return type
@@ -246,9 +246,9 @@ export interface NexusGenFieldTypeNames {
     message: 'String'
   }
   ArtworkResult: { // field return type name
-    Artwork: 'Artwork'
     ArtworkArgumentsConflict: 'ArtworkArgumentsConflict'
     ArtworkNotFound: 'ArtworkNotFound'
+    Artworks: 'Artwork'
     ClientError: 'ClientError'
     UserUnauthorized: 'UserUnauthorized'
   }
