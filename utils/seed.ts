@@ -1,16 +1,19 @@
 import { prisma } from '../singletons/prisma';
+import cryptoRandomString from 'crypto-random-string';
+
 export default async function seed() {
   try {
+    const publicKeyLength = 12;
     const wallet1 = await prisma.wallet.create({
       data: {
         provider: 'metamask',
-        publicKey: '0xEe57e7DCaD26F43cD8bEEaebCE6E3474A08BBF28',
+        publicKey: cryptoRandomString(publicKeyLength),
       },
     });
     const wallet2 = await prisma.wallet.create({
       data: {
         provider: 'metamask',
-        publicKey: '0xEs51g9sCaD29F43cH8bEEaebCE6E3474A08BBF28',
+        publicKey: cryptoRandomString(publicKeyLength),
       },
     });
 
