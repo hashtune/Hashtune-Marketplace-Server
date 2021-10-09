@@ -13,7 +13,7 @@ describe('Test artwork queries', () => {
   const ARTWORKS_QUERY = `
     query Query($listArtworksListed: Boolean, $listArtworksAuction: Boolean) {
       listArtworks(listed: $listArtworksListed, auction: $listArtworksAuction) {
-        Artwork {
+        Artworks {
           saleType
           handle
         }
@@ -37,7 +37,7 @@ describe('Test artwork queries', () => {
   const FIND_ARTWORK_QUERY = `
     query Query($findArtworkId: String!) {
       findArtwork(id: $findArtworkId) {
-        Artwork {
+        Artworks {
           title
         }
         ArtworkNotFound {

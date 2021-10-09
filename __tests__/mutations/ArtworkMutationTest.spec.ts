@@ -18,7 +18,7 @@ describe('Test artwork mutations', () => {
   const ADD_ARTWORK_MUTATION = `
     mutation Mutation($addArtworkInputType: CreateArtworkInput) {
       addArtwork(InputType: $addArtworkInputType) {
-        Artwork {
+        Artworks {
           title
           description
           saleType
@@ -48,7 +48,7 @@ describe('Test artwork mutations', () => {
   const DELETE_ARTWORK_MUTATION = `
     mutation DeleteArtworkMutation($deleteArtworkArtworkId: String!, $deleteArtworkUserId: String!) {
       deleteArtwork(artworkId: $deleteArtworkArtworkId, userId: $deleteArtworkUserId) {
-        Artwork {
+        Artworks {
           handle
         }
         ArtworkNotFound {

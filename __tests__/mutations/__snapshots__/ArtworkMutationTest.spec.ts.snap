@@ -4,19 +4,21 @@ exports[`Test artwork mutations should create an artwork 1`] = `
 Object {
   "data": Object {
     "addArtwork": Object {
-      "Artwork": Object {
-        "creator": Object {
-          "fullName": "user 1",
-        },
-        "description": "Art",
-        "owner": Object {
-          "fullName": "user 1",
-        },
-        "saleType": "auction",
-        "title": "strstrstr",
-      },
       "ArtworkArgumentsConflict": null,
       "ArtworkNotFound": null,
+      "Artworks": Array [
+        Object {
+          "creator": Object {
+            "fullName": "user 1",
+          },
+          "description": "Art",
+          "owner": Object {
+            "fullName": "user 1",
+          },
+          "saleType": "auction",
+          "title": "strstrstr",
+        },
+      ],
       "ClientError": null,
       "UserUnauthorized": null,
     },
@@ -35,11 +37,13 @@ exports[`Test artwork mutations should delete an artork with an existing id 1`] 
 Object {
   "data": Object {
     "deleteArtwork": Object {
-      "Artwork": Object {
-        "handle": "something",
-      },
       "ArtworkArgumentsConflict": null,
       "ArtworkNotFound": null,
+      "Artworks": Array [
+        Object {
+          "handle": "something",
+        },
+      ],
       "ClientError": null,
       "UserUnauthorized": null,
     },
@@ -58,9 +62,9 @@ exports[`Test artwork mutations should fail to create an artwork because the use
 Object {
   "data": Object {
     "addArtwork": Object {
-      "Artwork": null,
       "ArtworkArgumentsConflict": null,
       "ArtworkNotFound": null,
+      "Artworks": null,
       "ClientError": null,
       "UserUnauthorized": Object {
         "message": "Not approved or non-existing creator",
@@ -81,12 +85,12 @@ exports[`Test artwork mutations should fail to create an artwork with fixed sale
 Object {
   "data": Object {
     "addArtwork": Object {
-      "Artwork": null,
       "ArtworkArgumentsConflict": Object {
         "message": "Argument conflict.",
         "path": "Fixed sale requires a price arg and no reservePrice arg",
       },
       "ArtworkNotFound": null,
+      "Artworks": null,
       "ClientError": null,
       "UserUnauthorized": null,
     },
@@ -105,11 +109,11 @@ exports[`Test artwork mutations should try to delete an artork that doesn't exis
 Object {
   "data": Object {
     "deleteArtwork": Object {
-      "Artwork": null,
       "ArtworkArgumentsConflict": null,
       "ArtworkNotFound": Object {
         "message": "Couldn't find artwork with id artworkId",
       },
+      "Artworks": null,
       "ClientError": null,
       "UserUnauthorized": null,
     },
@@ -128,9 +132,9 @@ exports[`Test artwork mutations should try to delete an artwork that the user do
 Object {
   "data": Object {
     "deleteArtwork": Object {
-      "Artwork": null,
       "ArtworkArgumentsConflict": null,
       "ArtworkNotFound": null,
+      "Artworks": null,
       "ClientError": null,
       "UserUnauthorized": Object {
         "message": "User is not the current owner",
@@ -151,9 +155,9 @@ exports[`Test artwork mutations should try to delete an artwork that the user do
 Object {
   "data": Object {
     "deleteArtwork": Object {
-      "Artwork": null,
       "ArtworkArgumentsConflict": null,
       "ArtworkNotFound": null,
+      "Artworks": null,
       "ClientError": null,
       "UserUnauthorized": Object {
         "message": "User is not the current owner",
