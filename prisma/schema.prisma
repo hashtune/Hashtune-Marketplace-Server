@@ -32,48 +32,59 @@ enum SaleType {
 }
 
 model User {
-  kind                   ModelKind      @default(user)
-  fullName               String
-  handle                 String         @unique
-  id                     String         @id @default(cuid())
-  email                  String         @unique
-  bio                    String
-  image                  String?
-  isApprovedCreator      Boolean        @default(false)
-  createdAt              DateTime       @default(now())
-  updatedAt              DateTime       @updatedAt
-  socialLinks            Json?
-  bids                   Bid[]
-  sales                  Sale[]
-  wallets                Wallet[]
-  owned                  Artwork[]      @relation("currentOwner")
-  featuredOn             Artwork[]      @relation("features")
-  created                Artwork[]      @relation("originalCreator")
+  kind              ModelKind @default(user)
+  fullName          String
+  handle            String    @unique
+  id                String    @id @default(cuid())
+  email             String    @unique
+  bio               String
+  image             String?
+  isApprovedCreator Boolean   @default(false)
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+  socialLinks       Json?
+  bids              Bid[]
+  sales             Sale[]
+  wallet            Wallet    @relation(fields: [walletId], references: [id])
+  walletId          String
+  owned             Artwork[] @relation("currentOwner")
+  featuredOn        Artwork[] @relation("features")
+  created           Artwork[] @relation("originalCreator")
+}
+
+model Wallet {
+  kind      ModelKind      @default(wallet)
+  id        String         @id @default(cuid())
+  provider  WalletProvider
+  publicKey String         @unique
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+  user      User?
 }
 
 model Artwork {
-  kind          ModelKind      @default(artwork)
-  id            String         @id @default(cuid())
-  handle        String         @unique
-  title         String
-  image         String
-  description   String
-  link          String 
-  media         Json // Array of objects objects song: [{title: "", media:""}], album: [{title: "", media:""}, {title: "", media: ""}]
-  createdAt     DateTime       @default(now())
-  updatedAt     DateTime       @updatedAt
-  saleType      SaleType
-  price         BigInt?
-  reservePrice  BigInt?
-  auctions      Auction[]      @relation(name: "auctions")
-  sales         Sale[]         @relation(name: "sales")
-  ownerId        String
-  currentOwner  User           @relation(name: "currentOwner", fields: [ownerId], references: [id])
-  features      User[]         @relation(name: "features")
-  creatorId        String
-  creator       User           @relation(name: "originalCreator", fields: [creatorId], references: [id])
-  listed        Boolean        @default(true)
-  streamCount   Int            @default(0)
+  kind         ModelKind @default(artwork)
+  id           String    @id @default(cuid())
+  handle       String    @unique
+  title        String
+  image        String
+  description  String
+  link         String
+  media        Json // Array of objects objects song: [{title: "", media:""}], album: [{title: "", media:""}, {title: "", media: ""}]
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  saleType     SaleType
+  price        BigInt?
+  reservePrice BigInt?
+  auctions     Auction[] @relation(name: "auctions")
+  sales        Sale[]    @relation(name: "sales")
+  ownerId      String
+  currentOwner User      @relation(name: "currentOwner", fields: [ownerId], references: [id])
+  features     User[]    @relation(name: "features")
+  creatorId    String
+  creator      User      @relation(name: "originalCreator", fields: [creatorId], references: [id])
+  listed       Boolean   @default(true)
+  streamCount  Int       @default(0)
 }
 
 model Auction {
@@ -87,20 +98,20 @@ model Auction {
   live              Boolean   @default(false)
   liveAt            DateTime?
   isFinalized       Boolean   @default(false)
-  createdAt     DateTime       @default(now())
-  updatedAt     DateTime       @updatedAt
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
 }
 
 model Sale {
-  kind              ModelKind @default(sale)
-  id                String    @id @default(cuid())
-  artworkId         String
-  artwork           Artwork   @relation("sales", fields: [artworkId], references: [id])  
-  price             BigInt     
-  userId            String
-  user              User      @relation(fields: [userId], references: [id]) 
-  createdAt     DateTime       @default(now())
-  updatedAt     DateTime       @updatedAt
+  kind      ModelKind @default(sale)
+  id        String    @id @default(cuid())
+  artworkId String
+  artwork   Artwork   @relation("sales", fields: [artworkId], references: [id])
+  price     BigInt
+  userId    String
+  user      User      @relation(fields: [userId], references: [id])
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
 }
 
 model Bid {
@@ -111,21 +122,10 @@ model Bid {
   offer     BigInt
   userId    String
   user      User      @relation(fields: [userId], references: [id])
-  createdAt     DateTime       @default(now())
-  updatedAt     DateTime       @updatedAt
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
 }
 
 enum WalletProvider {
   metamask
-}
-
-model Wallet {
-  kind      ModelKind      @default(wallet)
-  id        String         @id @default(cuid())
-  provider  WalletProvider
-  publicKey String         @unique
-  createdAt DateTime       @default(now())
-  updatedAt DateTime       @updatedAt
-  userId    String
-  user      User           @relation(fields: [userId], references: [id])
 }
