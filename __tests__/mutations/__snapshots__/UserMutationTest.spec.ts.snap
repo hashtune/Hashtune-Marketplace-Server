@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test artwork mutations should create an artwork 1`] = `
+Object {
+  "data": null,
+  "errors": Array [
+    [GraphQLError: Cannot read property 'fullName' of undefined],
+  ],
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`Test user mutations should create a user 1`] = `
+Object {
+  "data": null,
+  "errors": Array [
+    [GraphQLError: Cannot read property 'fullName' of undefined],
+  ],
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
