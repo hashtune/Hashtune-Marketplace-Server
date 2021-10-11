@@ -38,7 +38,7 @@ export const registerUser = extendType({
         };
 
         return await ctx.prisma.user.create(payload);
-        // throw new Error(`Argument conflict.`);`
+        // TODO: Handling potential mutation errors
       },
     });
   },
