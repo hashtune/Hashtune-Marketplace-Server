@@ -83,7 +83,7 @@ export interface NexusGenInputs {
     handle: string; // String!
     image?: string | null; // String
     isApprovedCreator?: boolean | null; // Boolean
-    walletId: string; // String!
+    wallet: string; // String!
   }
 }
 
