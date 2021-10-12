@@ -1,15 +1,15 @@
 import { objectType } from "nexus";
 
-export const ArtworkArgumentsConflict = objectType({
-    name: 'ArtworkArgumentsConflict',
+export const ClientErrorArgumentsConflict = objectType({
+    name: 'ClientErrorArgumentsConflict',
     definition(t) {
         t.nullable.string('message');
         t.nullable.string('path');
     },
 });
 
-export const ArtworkNotFound = objectType({
-    name: 'ArtworkNotFound',
+export const ClientErrorArtworkNotFound = objectType({
+    name: 'ClientErrorArtworkNotFound',
     definition(t) {
         t.nullable.string("message");
     }

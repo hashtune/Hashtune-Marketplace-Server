@@ -41,7 +41,7 @@ export const ListArtworks = extendType({
         if (res) {
           return { Artworks: res }
         } else {
-          return { ClientError: { message: "Error fetching the artworks" } }
+          return { ClientErrorUnknown: { message: "Error fetching the artworks" } }
         }
       },
     });

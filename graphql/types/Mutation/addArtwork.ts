@@ -58,7 +58,7 @@ export const addArtwork = extendType({
             return { Artworks: [ctx.prisma.artwork.create(payload)] };
           } else {
             return {
-              ArtworkArgumentsConflict: {
+              ClientErrorArgumentsConflict: {
                 message: `Argument conflict.`,
                 path: `${args.saleType == 'auction' && args.price
                   ? "Auction doesn't need a price arg"
@@ -67,7 +67,7 @@ export const addArtwork = extendType({
             }
           }
         } else {
-          return { UserUnauthorized: { message: 'Not approved or non-existing creator' } };
+          return { ClientErrorUserUnauthorized: { message: 'Not approved or non-existing creator' } };
         }
       },
     });

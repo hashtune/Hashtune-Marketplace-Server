@@ -15,7 +15,7 @@ export const FindArtwork = extendType({
         if (res) {
           return { Artworks: [res] };
         } else {
-          return { ArtworkNotFound: { message: "Couldn't find artwork" } }
+          return { ClientErrorArtworkNotFound: { message: "Couldn't find artwork" } }
         }
       },
     });

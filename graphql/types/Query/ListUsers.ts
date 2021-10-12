@@ -19,7 +19,7 @@ export const ListUsers = extendType({
         if (res) {
           return { Users: res }
         } else {
-          return { ClientError: { message: "Error fetching the users" } }
+          return { ClientErrorUnknown: { message: "Error fetching the users" } }
         }
       },
     });

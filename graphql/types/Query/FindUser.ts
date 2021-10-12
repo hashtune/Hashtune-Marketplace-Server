@@ -15,7 +15,7 @@ export const FindUser = extendType({
         if (res) {
           return { Users: [res] };
         } else {
-          return { UserNotFound: { message: `Couldn't find user with handle ${args.handle}` } }
+          return { ClientErrorUserNotFound: { message: `Couldn't find user with handle ${args.handle}` } }
         }
       },
     });

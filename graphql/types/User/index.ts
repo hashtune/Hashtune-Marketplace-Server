@@ -46,7 +46,7 @@ export const UserResult = objectType({
   name: "UserResult",
   definition(t) {
     t.nullable.list.field("Users", { type: "User" });
-    t.nullable.field("UserNotFound", { type: errorTypes.UserNotFoundError });
-    t.nullable.field("ClientError", { type: errorTypes.ClientError });
+    t.nullable.field("ClientErrorUserNotFound", { type: errorTypes.ClientErrorUserNotFound });
+    t.nullable.field("ClientErrorUnknown", { type: errorTypes.ClientErrorUnknown });
   }
 })
