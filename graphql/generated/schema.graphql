@@ -188,7 +188,6 @@ export interface NexusGenFieldTypes {
   }
   Mutation: { // field return type
     addArtwork: NexusGenRootTypes['ArtworkResult']; // ArtworkResult!
-    deleteArtwork: NexusGenRootTypes['ArtworkResult']; // ArtworkResult!
   }
   Query: { // field return type
     findArtwork: NexusGenRootTypes['ArtworkResult']; // ArtworkResult!
@@ -267,7 +266,6 @@ export interface NexusGenFieldTypeNames {
   }
   Mutation: { // field return type name
     addArtwork: 'ArtworkResult'
-    deleteArtwork: 'ArtworkResult'
   }
   Query: { // field return type name
     findArtwork: 'ArtworkResult'
@@ -303,10 +301,6 @@ export interface NexusGenArgTypes {
   Mutation: {
     addArtwork: { // args
       InputType?: NexusGenInputs['CreateArtworkInput'] | null; // CreateArtworkInput
-    }
-    deleteArtwork: { // args
-      artworkId: string; // String!
-      userId: string; // String!
     }
   }
   Query: {

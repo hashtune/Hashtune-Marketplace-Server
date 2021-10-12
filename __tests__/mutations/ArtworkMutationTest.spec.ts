@@ -6,9 +6,6 @@ import server from '../server';
 
 describe('Test artwork mutations', () => {
 
-  let createdId: string;
-  let creatorId: string;
-
   beforeAll(async () => {
     await reset();
     await seed();
@@ -28,28 +25,6 @@ describe('Test artwork mutations', () => {
           owner {
             fullName
           }
-        }
-        ArtworkNotFound {
-          message
-        }
-        ArtworkArgumentsConflict {
-          message
-          path
-        }
-        UserUnauthorized {
-          message
-        }
-        ClientError {
-          message
-        }
-      }
-    }`;
-
-  const DELETE_ARTWORK_MUTATION = `
-    mutation DeleteArtworkMutation($deleteArtworkArtworkId: String!, $deleteArtworkUserId: String!) {
-      deleteArtwork(artworkId: $deleteArtworkArtworkId, userId: $deleteArtworkUserId) {
-        Artworks {
-          handle
         }
         ArtworkNotFound {
           message
@@ -96,19 +71,6 @@ describe('Test artwork mutations', () => {
       }
     });
     if (!artwork) throw new Error('Error fetching the created artwork');
-    createdId = artwork.id;
-    creatorId = user1.id;
-    expect(res).toMatchSnapshot();
-  });
-
-  it('should delete an artork with an existing id', async () => {
-    const res = await server.executeOperation({
-      query: DELETE_ARTWORK_MUTATION,
-      variables: {
-        deleteArtworkArtworkId: createdId,
-        deleteArtworkUserId: creatorId,
-      },
-    });
     expect(res).toMatchSnapshot();
   });
 
@@ -146,44 +108,6 @@ describe('Test artwork mutations', () => {
     expect(res).toMatchSnapshot();
   });
 
-  it('should try to delete an artork that doesn\'t exist', async () => {
-    const res = await server.executeOperation({
-      query: DELETE_ARTWORK_MUTATION,
-      variables: {
-        deleteArtworkArtworkId: "artworkId",
-        deleteArtworkUserId: "-",
-      },
-    });
-    expect(res).toMatchSnapshot();
-  });
-
-  it('should try to delete an artwork that the user does not own and did not create', async () => {
-    const user = global.testData.users[2];
-    const artwork = global.testData.artworks[4];
-    if (!user || !artwork) throw new Error("Error fetching the data");
-    const res = await server.executeOperation({
-      query: DELETE_ARTWORK_MUTATION,
-      variables: {
-        deleteArtworkArtworkId: artwork.id,
-        deleteArtworkUserId: user.id,
-      },
-    });
-    expect(res).toMatchSnapshot();
-  })
-
-  it('should try to delete an artwork that the user does not own and created', async () => {
-    const user = global.testData.users[1];
-    const artwork = global.testData.artworks[3];
-    if (!user || !artwork) throw new Error("Error fetching the data");
-    const res = await server.executeOperation({
-      query: DELETE_ARTWORK_MUTATION,
-      variables: {
-        deleteArtworkArtworkId: artwork.id,
-        deleteArtworkUserId: user.id,
-      },
-    });
-    expect(res).toMatchSnapshot();
-  })
 });
 
 export { };
