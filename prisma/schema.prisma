@@ -46,19 +46,19 @@ model User {
   bids              Bid[]
   sales             Sale[]
   wallet            Wallet    @relation(fields: [walletId], references: [id])
-  walletId          String
+  walletId          String    @unique
   owned             Artwork[] @relation("currentOwner")
   featuredOn        Artwork[] @relation("features")
   created           Artwork[] @relation("originalCreator")
 }
 
 model Wallet {
-  kind      ModelKind      @default(wallet)
-  id        String         @id @default(cuid())
-  provider  WalletProvider
-  publicKey String         @unique
-  createdAt DateTime       @default(now())
-  updatedAt DateTime       @updatedAt
+  kind      ModelKind @default(wallet)
+  id        String    @id @default(cuid())
+  provider  String    @default("metamask")
+  publicKey String    @unique
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
   user      User?
 }
 
@@ -126,6 +126,4 @@ model Bid {
   updatedAt DateTime  @updatedAt
 }
 
-enum WalletProvider {
-  metamask
-}
+// TODO: Adding an walletProvider enum that we can use in typescript from Prisma's schema
