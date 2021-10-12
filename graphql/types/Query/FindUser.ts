@@ -5,7 +5,7 @@ export const FindUser = extendType({
   type: 'Query',
   definition(t) {
     t.field('findUser', {
-      type: 'User',
+      type: 'UserResult',
       description: 'Find an user by handle',
       args: { handle: nonNull(stringArg()) },
       resolve: async (_, args, ctx: Context) => {
@@ -13,9 +13,9 @@ export const FindUser = extendType({
           where: { handle: args.handle },
         });
         if (res) {
-          return res;
+          return { Users: [res] };
         } else {
-          throw new Error(`Couldn't find a user with handle '${args.handle}'`);
+          return { ClientErrorUserNotFound: { message: `Couldn't find user with handle ${args.handle}` } }
         }
       },
     });

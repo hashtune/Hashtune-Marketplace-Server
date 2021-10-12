@@ -4,12 +4,23 @@ exports[`Test artwork mutations should create an artwork 1`] = `
 Object {
   "data": Object {
     "addArtwork": Object {
-      "creator": Object {
-        "fullName": "user 1",
-      },
-      "description": "Art",
-      "saleType": "auction",
-      "title": "strstrstr",
+      "Artworks": Array [
+        Object {
+          "creator": Object {
+            "fullName": "user 1",
+          },
+          "description": "Art",
+          "owner": Object {
+            "fullName": "user 1",
+          },
+          "saleType": "auction",
+          "title": "strstrstr",
+        },
+      ],
+      "ClientErrorArgumentsConflict": null,
+      "ClientErrorArtworkNotFound": null,
+      "ClientErrorUnknown": null,
+      "ClientErrorUserUnauthorized": null,
     },
   },
   "errors": undefined,
@@ -22,13 +33,17 @@ Object {
 }
 `;
 
-exports[`Test artwork mutations should delete an artork with an existing id 1`] = `
+exports[`Test artwork mutations should fail to create an artwork because the user is not an approved creator 1`] = `
 Object {
   "data": Object {
-    "deleteArtwork": Object {
-      "description": "song description",
-      "listed": true,
-      "title": "amazingsongT1itle",
+    "addArtwork": Object {
+      "Artworks": null,
+      "ClientErrorArgumentsConflict": null,
+      "ClientErrorArtworkNotFound": null,
+      "ClientErrorUnknown": null,
+      "ClientErrorUserUnauthorized": Object {
+        "message": "Not approved or non-existing creator",
+      },
     },
   },
   "errors": undefined,
@@ -43,10 +58,19 @@ Object {
 
 exports[`Test artwork mutations should fail to create an artwork with fixed sale type and reserve price set 1`] = `
 Object {
-  "data": null,
-  "errors": Array [
-    [GraphQLError: Argument conflict. Fixed sale requires a price arg and no reservePrice arg],
-  ],
+  "data": Object {
+    "addArtwork": Object {
+      "Artworks": null,
+      "ClientErrorArgumentsConflict": Object {
+        "message": "Argument conflict.",
+        "path": "Fixed sale requires a price arg and no reservePrice arg",
+      },
+      "ClientErrorArtworkNotFound": null,
+      "ClientErrorUnknown": null,
+      "ClientErrorUserUnauthorized": null,
+    },
+  },
+  "errors": undefined,
   "extensions": undefined,
   "http": Object {
     "headers": Headers {

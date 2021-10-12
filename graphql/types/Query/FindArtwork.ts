@@ -5,7 +5,7 @@ export const FindArtwork = extendType({
   type: 'Query',
   definition(t) {
     t.field('findArtwork', {
-      type: 'Artwork',
+      type: 'ArtworkResult',
       description: 'Find an artwork by id',
       args: { id: nonNull(stringArg()) },
       resolve: async (_, args, ctx: Context) => {
@@ -13,9 +13,9 @@ export const FindArtwork = extendType({
           where: { id: args.id },
         });
         if (res) {
-          return res;
+          return { Artworks: [res] };
         } else {
-          throw new Error(`Couldn't find an artwork with id '${args.id}'`);
+          return { ClientErrorArtworkNotFound: { message: "Couldn't find artwork" } }
         }
       },
     });

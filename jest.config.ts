@@ -11,7 +11,10 @@ const config: InitialOptionsTsJest = {
   setupFilesAfterEnv: ['<rootDir>/__tests__/server.ts'],
   globalTeardown: '<rootDir>/__tests__/teardown.ts',
   reporters: ['default', '<rootDir>/__tests__/customReporter.ts'],
-  globals: { 'ts-jest': {} },
+  globals: {
+    'ts-jest': {},
+    'testData': {}
+  },
   coverageThreshold: {
     global: {
       branches: 0,

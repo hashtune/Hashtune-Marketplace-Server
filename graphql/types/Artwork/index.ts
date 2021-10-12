@@ -1,5 +1,6 @@
 import { objectType } from 'nexus';
 import { Context } from '../../context';
+import * as errorTypes from '../Errors';
 
 export const Artwork = objectType({
   name: 'Artwork',
@@ -72,7 +73,6 @@ export const Artwork = objectType({
         return true;
       },
     });
-    // TODO: Handle null and int return types
     t.field('creator', {
       type: 'User',
       resolve: async (artwork, _, ctx: Context) => {
@@ -95,7 +95,6 @@ export const Artwork = objectType({
       },
     });
     t.nullable.field('owner', {
-      // TODO: Allow multiple types
       type: 'User',
       // TODO: stop having to have to explicitly define context
       async resolve(artwork, _, ctx: Context) {
@@ -108,8 +107,23 @@ export const Artwork = objectType({
           },
           rejectOnNotFound: true,
         });
-        return res.currentOwner;
+        if (res) {
+          return res.currentOwner;
+        } else {
+          throw new Error("Couldn't find user");
+        }
       },
     });
   },
 });
+
+export const ArtworkResult = objectType({
+  name: "ArtworkResult",
+  definition(t) {
+    t.nullable.list.field("Artworks", { type: 'Artwork' });
+    t.nullable.field("ClientErrorArtworkNotFound", { type: errorTypes.ClientErrorArtworkNotFound });
+    t.nullable.field("ClientErrorArgumentsConflict", { type: errorTypes.ClientErrorArgumentsConflict });
+    t.nullable.field("ClientErrorUserUnauthorized", { type: errorTypes.ClientErrorUserUnauthorized });
+    t.nullable.field("ClientErrorUnknown", { type: errorTypes.ClientErrorUnknown });
+  }
+})

@@ -1,37 +1,46 @@
-import { User } from '@prisma/client';
 import { prisma } from '../../singletons/prisma';
+import getGlobalData from '../../utils/getGlobalData';
 import reset from '../../utils/reset';
 import seed from '../../utils/seed';
 import server from '../server';
 
 describe('Test artwork mutations', () => {
-  let createdId: string;
+
   beforeAll(async () => {
     await reset();
     await seed();
+    global.testData = await getGlobalData();
   });
-  const ADD_ARTWORK_MUTATION = `
-        mutation AddArtwork($addArtworkInputType: CreateArtworkInput) {
-            addArtwork(InputType: $addArtworkInputType) {
-                title
-                description
-                saleType
-                creator {
-                    fullName
-                }
-            }
-        }
-    `;
 
-  const DELETE_ARTWORK_MUTATION = `
-        mutation DeleteArtworkMutation($deleteArtworkId: String!) {
-            deleteArtwork(id: $deleteArtworkId) {
-                title
-                description
-                listed
-            }
+  const ADD_ARTWORK_MUTATION = `
+    mutation Mutation($addArtworkInputType: CreateArtworkInput) {
+      addArtwork(InputType: $addArtworkInputType) {
+        Artworks {
+          title
+          description
+          saleType
+          creator {
+            fullName
+          }
+          owner {
+            fullName
+          }
         }
-        `;
+        ClientErrorArtworkNotFound {
+          message
+        }
+        ClientErrorArgumentsConflict {
+          message
+          path
+        }
+        ClientErrorUserUnauthorized {
+          message
+        }
+        ClientErrorUnknown {
+          message
+        }
+      }
+    }`;
 
   const exampleArgs = {
     handle: 'something',
@@ -43,42 +52,54 @@ describe('Test artwork mutations', () => {
   };
 
   it('should create an artwork', async () => {
-    const approvedCreators: User[] = await prisma.user.findMany({});
-    // TODO: Attach all users to the global jest context for easier access
-    if (!approvedCreators) throw new Error('Error fetching the test user');
+    const user1 = global.testData.users.filter(u => u.handle === 'user1')[0];
     const res = await server.executeOperation({
       query: ADD_ARTWORK_MUTATION,
       variables: {
         addArtworkInputType: {
           ...exampleArgs,
-          currentOwner: approvedCreators[0].id,
-          creator: approvedCreators[0].id,
+          currentOwner: user1.id,
+          creator: user1.id,
+          saleType: 'auction',
+          reservePrice: 50,
+        }
+      }
+    });
+    const artwork = await prisma.artwork.findUnique({
+      where: {
+        handle: "something"
+      }
+    });
+    if (!artwork) throw new Error('Error fetching the created artwork');
+    expect(res).toMatchSnapshot();
+  });
+
+  it('should fail to create an artwork because the user is not an approved creator', async () => {
+    const unapprovedCreator = global.testData.users[2];
+    const res = await server.executeOperation({
+      query: ADD_ARTWORK_MUTATION,
+      variables: {
+        addArtworkInputType: {
+          ...exampleArgs,
+          currentOwner: unapprovedCreator.id,
+          creator: unapprovedCreator.id,
           saleType: 'auction',
           reservePrice: 50,
         },
       },
     });
-    const artwork = await prisma.artwork.findMany({
-      orderBy: {
-        createdAt: 'asc',
-      },
-    });
-    if (!artwork) throw new Error('Error fetching the created artwork');
-    createdId = artwork[0].id;
-    expect(res).toMatchSnapshot();
+    expect(res).toMatchSnapshot()
   });
 
-  // TODO: Add test for non approved creator
   it('should fail to create an artwork with fixed sale type and reserve price set', async () => {
-    const approvedCreators: User[] = await prisma.user.findMany({});
-    if (!approvedCreators) throw new Error('Error fetching the test user');
+    const approvedCreator = global.testData.users[0];
     const res = await server.executeOperation({
       query: ADD_ARTWORK_MUTATION,
       variables: {
         addArtworkInputType: {
           ...exampleArgs,
-          currentOwner: approvedCreators[0].id,
-          creator: approvedCreators[0].id,
+          currentOwner: approvedCreator.id,
+          creator: approvedCreator.id,
           saleType: 'fixed',
           reservePrice: 50,
         },
@@ -87,17 +108,7 @@ describe('Test artwork mutations', () => {
     expect(res).toMatchSnapshot();
   });
 
-  it('should delete an artork with an existing id', async () => {
-    const res = await server.executeOperation({
-      query: DELETE_ARTWORK_MUTATION,
-      variables: {
-        deleteArtworkId: createdId,
-      },
-    });
-    expect(res).toMatchSnapshot();
-  });
-  // TODO: Test for trying to delete an artwork that doesn't exist
-  // TODO: Test for trying to delete an artwork that the user doesnt own and did not create
 });
 
-export {};
+export { };
+

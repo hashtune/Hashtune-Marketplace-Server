@@ -1,4 +1,4 @@
-import { prisma } from '../../singletons/prisma';
+import getGlobalData from '../../utils/getGlobalData';
 import reset from '../../utils/reset';
 import seed from '../../utils/seed';
 import server from '../server';
@@ -6,23 +6,40 @@ import server from '../server';
 beforeAll(async () => {
   await reset();
   await seed();
+  global.testData = await getGlobalData();
 });
 
 describe('Test users query', () => {
   const USERS_QUERY = `
     query Query {
       listCreators {
-        handle
+        Users {
+          handle
+        }
+        ClientErrorUserNotFound {
+          message
+        }
+        ClientErrorUnknown {
+          message
+        }
       }
     }
 `;
 
   const FIND_USER_QUERY = `
-    query Query($findUserHandle: String!) {
-      findUser(handle: $findUserHandle) {
+  query Query($findUserHandle: String!) {
+    findUser(handle: $findUserHandle) {
+      Users {
         handle
       }
+      ClientErrorUserNotFound {
+        message
+      }
+      ClientErrorUnknown {
+        message
+      }
     }
+  }
   `;
 
   it('should query the all the users', async () => {
@@ -33,10 +50,9 @@ describe('Test users query', () => {
   });
 
   it('should find a user by handle', async () => {
-    const userHandle = await prisma.user.findMany({});
     const res = await server.executeOperation({
       query: FIND_USER_QUERY,
-      variables: { findUserHandle: userHandle[0].handle },
+      variables: { findUserHandle: global.testData.users[0].handle },
     });
     expect(res).toMatchSnapshot();
   });
@@ -44,10 +60,11 @@ describe('Test users query', () => {
   it('should not find a user by handle and throw an error', async () => {
     const res = await server.executeOperation({
       query: FIND_USER_QUERY,
-      variables: { findUserHandle: 'user1' },
+      variables: { findUserHandle: 'hgyujghf8989y89' },
     });
     expect(res).toMatchSnapshot();
   });
 });
 
-export {};
+export { };
+

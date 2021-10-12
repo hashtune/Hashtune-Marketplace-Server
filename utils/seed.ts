@@ -3,21 +3,16 @@ import cryptoRandomString from 'crypto-random-string';
 
 export default async function seed() {
   try {
-    const publicKeyLength = 12;
-    const wallet1 = await prisma.wallet.create({
-      data: {
-        provider: 'metamask',
-        publicKey: cryptoRandomString(publicKeyLength),
-      },
-    });
-    const wallet2 = await prisma.wallet.create({
-      data: {
-        provider: 'metamask',
-        publicKey: cryptoRandomString(publicKeyLength),
-      },
-    });
-
-    if (!wallet1 || !wallet2) throw new Error('No Wallets');
+    const generateWallet = async () => {
+      const wallet = await prisma.wallet.create({
+        data: {
+          provider: 'metamask',
+          publicKey: cryptoRandomString(20),
+        },
+      });
+      console.log('+1 Wallet generated successfully 🎉', wallet.publicKey);
+      return wallet;
+    };
 
     const user1 = await prisma.user.create({
       data: {
@@ -28,7 +23,7 @@ export default async function seed() {
         isApprovedCreator: true,
         wallet: {
           connect: {
-            id: wallet1.id,
+            id: (await generateWallet()).id,
           },
         },
       },
@@ -42,7 +37,7 @@ export default async function seed() {
         isApprovedCreator: true,
         wallet: {
           connect: {
-            id: wallet2.id,
+            id: (await generateWallet()).id,
           },
         },
         owned: {
@@ -67,7 +62,22 @@ export default async function seed() {
         owned: true,
       },
     });
-    if (!user1 || !user2) throw new Error('no Userss');
+    const user3 = await prisma.user.create({
+      data: {
+        fullName: 'user 3',
+        email: 'mr3@dgfhjj.com',
+        handle: 'user3',
+        bio: "Hey I'm not an approved creator and I love cryptooo..",
+        isApprovedCreator: false,
+        wallet: {
+          connect: {
+            id: (await generateWallet()).id,
+          },
+        },
+      },
+    });
+
+    if (!user1 || !user2 || !user3) throw new Error('no Userss');
 
     const one = await prisma.artwork.create({
       data: {

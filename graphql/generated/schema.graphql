@@ -105,14 +105,39 @@ export interface NexusGenScalars {
 
 export interface NexusGenObjects {
   Artwork: PrismaClient.Artwork;
+  ArtworkResult: { // root type
+    Artworks?: NexusGenRootTypes['Artwork'][] | null; // [Artwork!]
+    ClientErrorArgumentsConflict?: NexusGenRootTypes['ClientErrorArgumentsConflict'] | null; // ClientErrorArgumentsConflict
+    ClientErrorArtworkNotFound?: NexusGenRootTypes['ClientErrorArtworkNotFound'] | null; // ClientErrorArtworkNotFound
+    ClientErrorUnknown?: NexusGenRootTypes['ClientErrorUnknown'] | null; // ClientErrorUnknown
+    ClientErrorUserUnauthorized?: NexusGenRootTypes['ClientErrorUserUnauthorized'] | null; // ClientErrorUserUnauthorized
+  }
   Auction: PrismaClient.Auction;
   Bid: PrismaClient.Bid;
-  ClientError: { // root type
-    given: string; // String!
+  ClientErrorArgumentsConflict: { // root type
+    message?: string | null; // String
+    path?: string | null; // String
+  }
+  ClientErrorArtworkNotFound: { // root type
+    message?: string | null; // String
+  }
+  ClientErrorUnknown: { // root type
+    message: string; // String!
+  }
+  ClientErrorUserNotFound: { // root type
+    message?: string | null; // String
+  }
+  ClientErrorUserUnauthorized: { // root type
+    message?: string | null; // String
   }
   Mutation: {};
   Query: {};
   User: PrismaClient.User;
+  UserResult: { // root type
+    ClientErrorUnknown?: NexusGenRootTypes['ClientErrorUnknown'] | null; // ClientErrorUnknown
+    ClientErrorUserNotFound?: NexusGenRootTypes['ClientErrorUserNotFound'] | null; // ClientErrorUserNotFound
+    Users?: NexusGenRootTypes['User'][] | null; // [User!]
+  }
   Wallet: PrismaClient.Wallet;
 }
 
@@ -144,6 +169,13 @@ export interface NexusGenFieldTypes {
     saleType: string; // String!
     title: string; // String!
   }
+  ArtworkResult: { // field return type
+    Artworks: NexusGenRootTypes['Artwork'][] | null; // [Artwork!]
+    ClientErrorArgumentsConflict: NexusGenRootTypes['ClientErrorArgumentsConflict'] | null; // ClientErrorArgumentsConflict
+    ClientErrorArtworkNotFound: NexusGenRootTypes['ClientErrorArtworkNotFound'] | null; // ClientErrorArtworkNotFound
+    ClientErrorUnknown: NexusGenRootTypes['ClientErrorUnknown'] | null; // ClientErrorUnknown
+    ClientErrorUserUnauthorized: NexusGenRootTypes['ClientErrorUserUnauthorized'] | null; // ClientErrorUserUnauthorized
+  }
   Auction: { // field return type
     artworkId: string; // String!
     bids: NexusGenRootTypes['Bid'][]; // [Bid!]!
@@ -154,19 +186,31 @@ export interface NexusGenFieldTypes {
   Bid: { // field return type
     id: string; // String!
   }
-  ClientError: { // field return type
-    given: string; // String!
+  ClientErrorArgumentsConflict: { // field return type
+    message: string | null; // String
+    path: string | null; // String
+  }
+  ClientErrorArtworkNotFound: { // field return type
+    message: string | null; // String
+  }
+  ClientErrorUnknown: { // field return type
+    message: string; // String!
+  }
+  ClientErrorUserNotFound: { // field return type
+    message: string | null; // String
+  }
+  ClientErrorUserUnauthorized: { // field return type
+    message: string | null; // String
   }
   Mutation: { // field return type
-    addArtwork: NexusGenRootTypes['Artwork']; // Artwork!
-    deleteArtwork: NexusGenRootTypes['Artwork']; // Artwork!
+    addArtwork: NexusGenRootTypes['ArtworkResult']; // ArtworkResult!
     registerUser: NexusGenRootTypes['User']; // User!
   }
   Query: { // field return type
-    findArtwork: NexusGenRootTypes['Artwork']; // Artwork!
-    findUser: NexusGenRootTypes['User']; // User!
-    listArtworks: NexusGenRootTypes['Artwork'][]; // [Artwork!]!
-    listCreators: NexusGenRootTypes['User'][]; // [User!]!
+    findArtwork: NexusGenRootTypes['ArtworkResult']; // ArtworkResult!
+    findUser: NexusGenRootTypes['UserResult']; // UserResult!
+    listArtworks: NexusGenRootTypes['ArtworkResult']; // ArtworkResult!
+    listCreators: NexusGenRootTypes['UserResult']; // UserResult!
   }
   User: { // field return type
     bio: string; // String!
@@ -179,6 +223,11 @@ export interface NexusGenFieldTypes {
     isApprovedCreator: boolean; // Boolean!
     owned: NexusGenRootTypes['Artwork'][]; // [Artwork!]!
     wallet: NexusGenRootTypes['Wallet']; // Wallet!
+  }
+  UserResult: { // field return type
+    ClientErrorUnknown: NexusGenRootTypes['ClientErrorUnknown'] | null; // ClientErrorUnknown
+    ClientErrorUserNotFound: NexusGenRootTypes['ClientErrorUserNotFound'] | null; // ClientErrorUserNotFound
+    Users: NexusGenRootTypes['User'][] | null; // [User!]
   }
   Wallet: { // field return type
     createdAt: string; // String!
@@ -207,6 +256,13 @@ export interface NexusGenFieldTypeNames {
     saleType: 'String'
     title: 'String'
   }
+  ArtworkResult: { // field return type name
+    Artworks: 'Artwork'
+    ClientErrorArgumentsConflict: 'ClientErrorArgumentsConflict'
+    ClientErrorArtworkNotFound: 'ClientErrorArtworkNotFound'
+    ClientErrorUnknown: 'ClientErrorUnknown'
+    ClientErrorUserUnauthorized: 'ClientErrorUserUnauthorized'
+  }
   Auction: { // field return type name
     artworkId: 'String'
     bids: 'Bid'
@@ -217,19 +273,31 @@ export interface NexusGenFieldTypeNames {
   Bid: { // field return type name
     id: 'String'
   }
-  ClientError: { // field return type name
-    given: 'String'
+  ClientErrorArgumentsConflict: { // field return type name
+    message: 'String'
+    path: 'String'
+  }
+  ClientErrorArtworkNotFound: { // field return type name
+    message: 'String'
+  }
+  ClientErrorUnknown: { // field return type name
+    message: 'String'
+  }
+  ClientErrorUserNotFound: { // field return type name
+    message: 'String'
+  }
+  ClientErrorUserUnauthorized: { // field return type name
+    message: 'String'
   }
   Mutation: { // field return type name
-    addArtwork: 'Artwork'
-    deleteArtwork: 'Artwork'
+    addArtwork: 'ArtworkResult'
     registerUser: 'User'
   }
   Query: { // field return type name
-    findArtwork: 'Artwork'
-    findUser: 'User'
-    listArtworks: 'Artwork'
-    listCreators: 'User'
+    findArtwork: 'ArtworkResult'
+    findUser: 'UserResult'
+    listArtworks: 'ArtworkResult'
+    listCreators: 'UserResult'
   }
   User: { // field return type name
     bio: 'String'
@@ -242,6 +310,11 @@ export interface NexusGenFieldTypeNames {
     isApprovedCreator: 'Boolean'
     owned: 'Artwork'
     wallet: 'Wallet'
+  }
+  UserResult: { // field return type name
+    ClientErrorUnknown: 'ClientErrorUnknown'
+    ClientErrorUserNotFound: 'ClientErrorUserNotFound'
+    Users: 'User'
   }
   Wallet: { // field return type name
     createdAt: 'String'
@@ -256,9 +329,6 @@ export interface NexusGenArgTypes {
   Mutation: {
     addArtwork: { // args
       InputType?: NexusGenInputs['CreateArtworkInput'] | null; // CreateArtworkInput
-    }
-    deleteArtwork: { // args
-      id: string; // String!
     }
     registerUser: { // args
       InputType?: NexusGenInputs['RegisterUserInput'] | null; // RegisterUserInput
