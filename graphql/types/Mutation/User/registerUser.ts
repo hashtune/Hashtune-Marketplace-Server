@@ -3,7 +3,7 @@ import { Context } from '../../../context';
 
 const InputType = inputObjectType({
   name: 'RegisterUserInput',
-  description: 'User input',
+  description: 'Input for registering a new user',
   definition(t) {
     t.string('fullName');
     t.nonNull.string('handle');
