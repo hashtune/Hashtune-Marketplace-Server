@@ -1,6 +1,7 @@
 import reset from '../../utils/reset';
 import seed from '../../utils/seed';
 import server from '../server';
+import cryptoRandomString from 'crypto-random-string';
 
 describe('Test user mutations', () => {
   beforeAll(async () => {
@@ -30,7 +31,7 @@ describe('Test user mutations', () => {
     image: '734q6utyfouivygioq.jpg',
     bio: 'All things Crypto, reflection level 1009%',
     isApprovedCreator: false,
-    walletId: 'ckuk9a7uu0000a2hf1rxoiasp',
+    walletId: cryptoRandomString(17),
   };
 
   it('should create a user', async () => {

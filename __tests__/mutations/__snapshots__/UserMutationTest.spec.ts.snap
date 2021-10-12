@@ -2,20 +2,14 @@
 
 exports[`Test user mutations should create a user 1`] = `
 Object {
-  "data": Object {
-    "registerUser": Object {
-      "bio": "All things Crypto, reflection level 1009%",
-      "email": "test@hashtune.co",
-      "fullName": "Humam Abo Alraja",
-      "handle": "humam",
-      "image": "734q6utyfouivygioq.jpg",
-      "isApprovedCreator": false,
-      "wallet": Object {
-        "id": "ckuk9a7uu0000a2hf1rxoiasp",
-      },
-    },
-  },
-  "errors": undefined,
+  "data": null,
+  "errors": Array [
+    [GraphQLError: 
+Invalid \`prisma.user.create()\` invocation:
+
+
+  Foreign key constraint failed on the field: \`User_walletId_fkey (index)\`],
+  ],
   "extensions": undefined,
   "http": Object {
     "headers": Headers {
