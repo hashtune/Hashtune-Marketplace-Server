@@ -76,6 +76,15 @@ export interface NexusGenInputs {
     saleType: string; // String!
     title: string; // String!
   }
+  RegisterUserInput: { // input type
+    bio?: string | null; // String
+    email: string; // String!
+    fullName?: string | null; // String
+    handle: string; // String!
+    image?: string | null; // String
+    isApprovedCreator?: boolean | null; // Boolean
+    wallet: string; // String!
+  }
 }
 
 export interface NexusGenEnums {
@@ -104,6 +113,7 @@ export interface NexusGenObjects {
   Mutation: {};
   Query: {};
   User: PrismaClient.User;
+  Wallet: PrismaClient.Wallet;
 }
 
 export interface NexusGenInterfaces {
@@ -139,6 +149,7 @@ export interface NexusGenFieldTypes {
     bids: NexusGenRootTypes['Bid'][]; // [Bid!]!
     currentHigh: NexusGenScalars['BigInt']; // BigInt!
     id: string; // String!
+    liveAt: NexusGenScalars['DateTime'] | null; // DateTime
   }
   Bid: { // field return type
     id: string; // String!
@@ -149,10 +160,11 @@ export interface NexusGenFieldTypes {
   Mutation: { // field return type
     addArtwork: NexusGenRootTypes['Artwork']; // Artwork!
     deleteArtwork: NexusGenRootTypes['Artwork']; // Artwork!
+    registerUser: NexusGenRootTypes['User']; // User!
   }
   Query: { // field return type
     findArtwork: NexusGenRootTypes['Artwork']; // Artwork!
-    findUser: NexusGenRootTypes['Artwork']; // Artwork!
+    findUser: NexusGenRootTypes['User']; // User!
     listArtworks: NexusGenRootTypes['Artwork'][]; // [Artwork!]!
     listCreators: NexusGenRootTypes['User'][]; // [User!]!
   }
@@ -166,6 +178,14 @@ export interface NexusGenFieldTypes {
     image: string | null; // String
     isApprovedCreator: boolean; // Boolean!
     owned: NexusGenRootTypes['Artwork'][]; // [Artwork!]!
+    wallet: NexusGenRootTypes['Wallet']; // Wallet!
+  }
+  Wallet: { // field return type
+    createdAt: string; // String!
+    id: string; // String!
+    provider: string; // String!
+    publicKey: string; // String!
+    updatedAt: string; // String!
   }
 }
 
@@ -192,6 +212,7 @@ export interface NexusGenFieldTypeNames {
     bids: 'Bid'
     currentHigh: 'BigInt'
     id: 'String'
+    liveAt: 'DateTime'
   }
   Bid: { // field return type name
     id: 'String'
@@ -202,10 +223,11 @@ export interface NexusGenFieldTypeNames {
   Mutation: { // field return type name
     addArtwork: 'Artwork'
     deleteArtwork: 'Artwork'
+    registerUser: 'User'
   }
   Query: { // field return type name
     findArtwork: 'Artwork'
-    findUser: 'Artwork'
+    findUser: 'User'
     listArtworks: 'Artwork'
     listCreators: 'User'
   }
@@ -219,6 +241,14 @@ export interface NexusGenFieldTypeNames {
     image: 'String'
     isApprovedCreator: 'Boolean'
     owned: 'Artwork'
+    wallet: 'Wallet'
+  }
+  Wallet: { // field return type name
+    createdAt: 'String'
+    id: 'String'
+    provider: 'String'
+    publicKey: 'String'
+    updatedAt: 'String'
   }
 }
 
@@ -230,13 +260,16 @@ export interface NexusGenArgTypes {
     deleteArtwork: { // args
       id: string; // String!
     }
+    registerUser: { // args
+      InputType?: NexusGenInputs['RegisterUserInput'] | null; // RegisterUserInput
+    }
   }
   Query: {
     findArtwork: { // args
       id: string; // String!
     }
     findUser: { // args
-      id: string; // String!
+      handle: string; // String!
     }
     listArtworks: { // args
       auction?: boolean | null; // Boolean
