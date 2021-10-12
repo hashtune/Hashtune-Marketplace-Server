@@ -4,15 +4,15 @@ exports[`Test artwork queries should find an artwork by id 1`] = `
 Object {
   "data": Object {
     "findArtwork": Object {
-      "ArtworkArgumentsConflict": null,
-      "ArtworkNotFound": null,
       "Artworks": Array [
         Object {
           "title": "amazingsongT1itle",
         },
       ],
-      "ClientError": null,
-      "UserUnauthorized": null,
+      "ClientErrorArgumentsConflict": null,
+      "ClientErrorArtworkNotFound": null,
+      "ClientErrorUnknown": null,
+      "ClientErrorUserUnauthorized": null,
     },
   },
   "errors": undefined,
@@ -29,13 +29,13 @@ exports[`Test artwork queries should not find an artwork by id and throw an erro
 Object {
   "data": Object {
     "findArtwork": Object {
-      "ArtworkArgumentsConflict": null,
-      "ArtworkNotFound": Object {
+      "Artworks": null,
+      "ClientErrorArgumentsConflict": null,
+      "ClientErrorArtworkNotFound": Object {
         "message": "Couldn't find artwork",
       },
-      "Artworks": null,
-      "ClientError": null,
-      "UserUnauthorized": null,
+      "ClientErrorUnknown": null,
+      "ClientErrorUserUnauthorized": null,
     },
   },
   "errors": undefined,
@@ -52,8 +52,6 @@ exports[`Test artwork queries should query both auctions and fixed 1`] = `
 Object {
   "data": Object {
     "listArtworks": Object {
-      "ArtworkArgumentsConflict": null,
-      "ArtworkNotFound": null,
       "Artworks": Array [
         Object {
           "handle": "4",
@@ -80,8 +78,10 @@ Object {
           "saleType": "auction",
         },
       ],
-      "ClientError": null,
-      "UserUnauthorized": null,
+      "ClientErrorArgumentsConflict": null,
+      "ClientErrorArtworkNotFound": null,
+      "ClientErrorUnknown": null,
+      "ClientErrorUserUnauthorized": null,
     },
   },
   "errors": undefined,
@@ -98,8 +98,6 @@ exports[`Test artwork queries should query only auctions  1`] = `
 Object {
   "data": Object {
     "listArtworks": Object {
-      "ArtworkArgumentsConflict": null,
-      "ArtworkNotFound": null,
       "Artworks": Array [
         Object {
           "handle": "3",
@@ -118,8 +116,10 @@ Object {
           "saleType": "auction",
         },
       ],
-      "ClientError": null,
-      "UserUnauthorized": null,
+      "ClientErrorArgumentsConflict": null,
+      "ClientErrorArtworkNotFound": null,
+      "ClientErrorUnknown": null,
+      "ClientErrorUserUnauthorized": null,
     },
   },
   "errors": undefined,
@@ -136,8 +136,6 @@ exports[`Test artwork queries should query only fixed sales  1`] = `
 Object {
   "data": Object {
     "listArtworks": Object {
-      "ArtworkArgumentsConflict": null,
-      "ArtworkNotFound": null,
       "Artworks": Array [
         Object {
           "handle": "5",
@@ -148,8 +146,10 @@ Object {
           "saleType": "fixed",
         },
       ],
-      "ClientError": null,
-      "UserUnauthorized": null,
+      "ClientErrorArgumentsConflict": null,
+      "ClientErrorArtworkNotFound": null,
+      "ClientErrorUnknown": null,
+      "ClientErrorUserUnauthorized": null,
     },
   },
   "errors": undefined,
@@ -166,8 +166,6 @@ exports[`Test artwork queries should query only fixed sales that are listed  1`]
 Object {
   "data": Object {
     "listArtworks": Object {
-      "ArtworkArgumentsConflict": null,
-      "ArtworkNotFound": null,
       "Artworks": Array [
         Object {
           "handle": "5",
@@ -178,8 +176,10 @@ Object {
           "saleType": "fixed",
         },
       ],
-      "ClientError": null,
-      "UserUnauthorized": null,
+      "ClientErrorArgumentsConflict": null,
+      "ClientErrorArtworkNotFound": null,
+      "ClientErrorUnknown": null,
+      "ClientErrorUserUnauthorized": null,
     },
   },
   "errors": undefined,

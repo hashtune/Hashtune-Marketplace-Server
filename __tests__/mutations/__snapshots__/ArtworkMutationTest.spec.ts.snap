@@ -4,8 +4,6 @@ exports[`Test artwork mutations should create an artwork 1`] = `
 Object {
   "data": Object {
     "addArtwork": Object {
-      "ArtworkArgumentsConflict": null,
-      "ArtworkNotFound": null,
       "Artworks": Array [
         Object {
           "creator": Object {
@@ -19,8 +17,10 @@ Object {
           "title": "strstrstr",
         },
       ],
-      "ClientError": null,
-      "UserUnauthorized": null,
+      "ClientErrorArgumentsConflict": null,
+      "ClientErrorArtworkNotFound": null,
+      "ClientErrorUnknown": null,
+      "ClientErrorUserUnauthorized": null,
     },
   },
   "errors": undefined,
@@ -37,11 +37,11 @@ exports[`Test artwork mutations should fail to create an artwork because the use
 Object {
   "data": Object {
     "addArtwork": Object {
-      "ArtworkArgumentsConflict": null,
-      "ArtworkNotFound": null,
       "Artworks": null,
-      "ClientError": null,
-      "UserUnauthorized": Object {
+      "ClientErrorArgumentsConflict": null,
+      "ClientErrorArtworkNotFound": null,
+      "ClientErrorUnknown": null,
+      "ClientErrorUserUnauthorized": Object {
         "message": "Not approved or non-existing creator",
       },
     },
@@ -60,14 +60,14 @@ exports[`Test artwork mutations should fail to create an artwork with fixed sale
 Object {
   "data": Object {
     "addArtwork": Object {
-      "ArtworkArgumentsConflict": Object {
+      "Artworks": null,
+      "ClientErrorArgumentsConflict": Object {
         "message": "Argument conflict.",
         "path": "Fixed sale requires a price arg and no reservePrice arg",
       },
-      "ArtworkNotFound": null,
-      "Artworks": null,
-      "ClientError": null,
-      "UserUnauthorized": null,
+      "ClientErrorArtworkNotFound": null,
+      "ClientErrorUnknown": null,
+      "ClientErrorUserUnauthorized": null,
     },
   },
   "errors": undefined,

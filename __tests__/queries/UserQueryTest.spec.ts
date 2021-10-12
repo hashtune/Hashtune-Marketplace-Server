@@ -16,10 +16,10 @@ describe('Test users query', () => {
         Users {
           handle
         }
-        UserNotFound {
+        ClientErrorUserNotFound {
           message
         }
-        ClientError {
+        ClientErrorUnknown {
           message
         }
       }
@@ -32,10 +32,10 @@ describe('Test users query', () => {
       Users {
         handle
       }
-      UserNotFound {
+      ClientErrorUserNotFound {
         message
       }
-      ClientError {
+      ClientErrorUnknown {
         message
       }
     }

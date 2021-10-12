@@ -17,17 +17,17 @@ describe('Test artwork queries', () => {
           saleType
           handle
         }
-        ArtworkNotFound {
+        ClientErrorArtworkNotFound {
           message
         }
-        ArtworkArgumentsConflict {
+        ClientErrorArgumentsConflict {
           message
           path
         }
-        UserUnauthorized {
+        ClientErrorUserUnauthorized {
           message
         }
-        ClientError {
+        ClientErrorUnknown {
           message
         }
       }
@@ -40,17 +40,17 @@ describe('Test artwork queries', () => {
         Artworks {
           title
         }
-        ArtworkNotFound {
+        ClientErrorArtworkNotFound {
           message
         }
-        ArtworkArgumentsConflict {
+        ClientErrorArgumentsConflict {
           message
           path
         }
-        UserUnauthorized {
+        ClientErrorUserUnauthorized {
           message
         }
-        ClientError {
+        ClientErrorUnknown {
           message
         }
       }

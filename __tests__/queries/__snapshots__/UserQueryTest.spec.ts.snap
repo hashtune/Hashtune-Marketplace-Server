@@ -4,8 +4,8 @@ exports[`Test users query should find a user by handle 1`] = `
 Object {
   "data": Object {
     "findUser": Object {
-      "ClientError": null,
-      "UserNotFound": null,
+      "ClientErrorUnknown": null,
+      "ClientErrorUserNotFound": null,
       "Users": Array [
         Object {
           "handle": "user1",
@@ -27,8 +27,8 @@ exports[`Test users query should not find a user by handle and throw an error 1`
 Object {
   "data": Object {
     "findUser": Object {
-      "ClientError": null,
-      "UserNotFound": Object {
+      "ClientErrorUnknown": null,
+      "ClientErrorUserNotFound": Object {
         "message": "Couldn't find user with handle hgyujghf8989y89",
       },
       "Users": null,
@@ -48,8 +48,8 @@ exports[`Test users query should query the all the users 1`] = `
 Object {
   "data": Object {
     "listCreators": Object {
-      "ClientError": null,
-      "UserNotFound": null,
+      "ClientErrorUnknown": null,
+      "ClientErrorUserNotFound": null,
       "Users": Array [
         Object {
           "handle": "user2",

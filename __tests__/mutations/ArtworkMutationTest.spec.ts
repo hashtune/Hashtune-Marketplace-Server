@@ -26,17 +26,17 @@ describe('Test artwork mutations', () => {
             fullName
           }
         }
-        ArtworkNotFound {
+        ClientErrorArtworkNotFound {
           message
         }
-        ArtworkArgumentsConflict {
+        ClientErrorArgumentsConflict {
           message
           path
         }
-        UserUnauthorized {
+        ClientErrorUserUnauthorized {
           message
         }
-        ClientError {
+        ClientErrorUnknown {
           message
         }
       }
