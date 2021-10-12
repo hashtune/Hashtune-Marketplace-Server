@@ -18,7 +18,7 @@ describe('Test user mutations', () => {
      bio
      isApprovedCreator
      wallet {
-       id
+       publicKey
      }
    }
  }
@@ -31,7 +31,7 @@ describe('Test user mutations', () => {
     image: '734q6utyfouivygioq.jpg',
     bio: 'All things Crypto, reflection level 1009%',
     isApprovedCreator: false,
-    walletId: cryptoRandomString(17),
+    wallet: 'ckuo1gjak0007wfhfqxk23q73',
   };
 
   it('should create a user', async () => {
