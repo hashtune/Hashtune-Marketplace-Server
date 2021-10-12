@@ -11,7 +11,7 @@ const InputType = inputObjectType({
     t.string('bio');
     t.nullable.string('image');
     t.boolean('isApprovedCreator', { default: false });
-    t.nonNull.string('walletId');
+    t.nonNull.string('wallet');
   },
 });
 
@@ -33,7 +33,11 @@ export const registerUser = extendType({
             image: args.image,
             bio: args.bio,
             isApprovedCreator: false,
-            walletId: args.walletId,
+            wallet: {
+              create: {
+                publicKey: args.wallet,
+              },
+            },
           },
         };
 
