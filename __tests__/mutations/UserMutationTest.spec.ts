@@ -37,7 +37,7 @@ describe('Test user mutations', () => {
     const res = await server.executeOperation({
       query: CREATE_USER_MUTATION,
       variables: {
-        addArtworkInputType: {
+        inputType: {
           ...exampleArgs,
         },
       },
