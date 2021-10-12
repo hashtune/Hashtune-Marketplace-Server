@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test user mutations should create a user 1`] = `
+Object {
+  "data": Object {
+    "registerUser": Object {
+      "bio": "All things Crypto, reflection level 1009%",
+      "email": "test@hashtune.co",
+      "fullName": "Humam Abo Alraja",
+      "handle": "humam",
+      "image": "734q6utyfouivygioq.jpg",
+      "isApprovedCreator": false,
+      "wallet": Object {
+        "publicKey": "ckuo1gjak0007wfhfqxk23q73",
+      },
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;

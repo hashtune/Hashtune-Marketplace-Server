@@ -9,7 +9,6 @@ CREATE TYPE "SaleType" AS ENUM ('auction', 'fixed');
 
 -- CreateEnum
 CREATE TYPE "WalletProvider" AS ENUM ('metamask');
-
 -- CreateTable
 CREATE TABLE "User" (
     "kind" "ModelKind" NOT NULL DEFAULT E'user',
@@ -23,6 +22,19 @@ CREATE TABLE "User" (
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "socialLinks" JSONB,
+    "walletId" TEXT NOT NULL,
+
+    PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Wallet" (
+    "kind" "ModelKind" NOT NULL DEFAULT E'wallet',
+    "id" TEXT NOT NULL,
+    "provider" "WalletProvider" NOT NULL,
+    "publicKey" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
 
     PRIMARY KEY ("id")
 );
@@ -93,19 +105,6 @@ CREATE TABLE "Bid" (
 );
 
 -- CreateTable
-CREATE TABLE "Wallet" (
-    "kind" "ModelKind" NOT NULL DEFAULT E'wallet',
-    "id" TEXT NOT NULL,
-    "provider" "WalletProvider" NOT NULL,
-    "publicKey" TEXT NOT NULL,
-    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" TIMESTAMP(3) NOT NULL,
-    "userId" TEXT NOT NULL,
-
-    PRIMARY KEY ("id")
-);
-
--- CreateTable
 CREATE TABLE "_features" (
     "A" TEXT NOT NULL,
     "B" TEXT NOT NULL
@@ -118,16 +117,22 @@ CREATE UNIQUE INDEX "User.handle_unique" ON "User"("handle");
 CREATE UNIQUE INDEX "User.email_unique" ON "User"("email");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Artwork.handle_unique" ON "Artwork"("handle");
+CREATE UNIQUE INDEX "User_walletId_unique" ON "User"("walletId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Wallet.publicKey_unique" ON "Wallet"("publicKey");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Artwork.handle_unique" ON "Artwork"("handle");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "_features_AB_unique" ON "_features"("A", "B");
 
 -- CreateIndex
 CREATE INDEX "_features_B_index" ON "_features"("B");
+
+-- AddForeignKey
+ALTER TABLE "User" ADD FOREIGN KEY ("walletId") REFERENCES "Wallet"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Artwork" ADD FOREIGN KEY ("ownerId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
@@ -149,9 +154,6 @@ ALTER TABLE "Bid" ADD FOREIGN KEY ("auctionId") REFERENCES "Auction"("id") ON DE
 
 -- AddForeignKey
 ALTER TABLE "Bid" ADD FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "Wallet" ADD FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "_features" ADD FOREIGN KEY ("A") REFERENCES "Artwork"("id") ON DELETE CASCADE ON UPDATE CASCADE;

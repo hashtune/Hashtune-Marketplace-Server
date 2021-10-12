@@ -1,6 +1,24 @@
 import { prisma } from '../singletons/prisma';
+import cryptoRandomString from 'crypto-random-string';
+
 export default async function seed() {
   try {
+    const publicKeyLength = 12;
+    const wallet1 = await prisma.wallet.create({
+      data: {
+        provider: 'metamask',
+        publicKey: cryptoRandomString(publicKeyLength),
+      },
+    });
+    const wallet2 = await prisma.wallet.create({
+      data: {
+        provider: 'metamask',
+        publicKey: cryptoRandomString(publicKeyLength),
+      },
+    });
+
+    if (!wallet1 || !wallet2) throw new Error('No Wallets');
+
     const user1 = await prisma.user.create({
       data: {
         fullName: 'user 1',
@@ -8,6 +26,11 @@ export default async function seed() {
         handle: 'user1',
         bio: "Hey I'm so and so. I've been makign artwork for x amount of years and I'm from blahblah. I love cryptooo..",
         isApprovedCreator: true,
+        wallet: {
+          connect: {
+            id: wallet1.id,
+          },
+        },
       },
     });
     const user2 = await prisma.user.create({
@@ -17,6 +40,11 @@ export default async function seed() {
         handle: 'user2',
         bio: "Hey I'm so an222d so. I've been makign artwork for x amount of years and I'm from blahblah. I love cryptooo..",
         isApprovedCreator: true,
+        wallet: {
+          connect: {
+            id: wallet2.id,
+          },
+        },
         owned: {
           create: {
             description: 'song description',

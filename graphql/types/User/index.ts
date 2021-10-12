@@ -11,6 +11,20 @@ export const UserType = objectType({
     t.string('bio');
     t.nullable.string('image');
     t.boolean('isApprovedCreator');
+    t.field('wallet', {
+      type: 'Wallet',
+      resolve: async (user, _, ctx) => {
+        const res = await ctx.prisma.user.findUnique({
+          where: {
+            id: user.id,
+          },
+          include: {
+            wallet: true,
+          },
+        });
+        return res.wallet;
+      },
+    });
     t.list.field('owned', {
       type: 'Artwork',
       resolve: async (user, _, ctx) => {
