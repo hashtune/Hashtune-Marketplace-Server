@@ -5,7 +5,7 @@ Object {
   "data": Object {
     "addArtwork": Object {
       "creator": Object {
-        "fullName": "user 1",
+        "fullName": "user 2",
       },
       "description": "Art",
       "saleType": "auction",
