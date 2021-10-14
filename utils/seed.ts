@@ -1,5 +1,5 @@
-import { prisma } from '../singletons/prisma';
 import cryptoRandomString from 'crypto-random-string';
+import { prisma } from '../singletons/prisma';
 
 export default async function seed() {
   try {
@@ -10,7 +10,6 @@ export default async function seed() {
           publicKey: cryptoRandomString(20),
         },
       });
-      console.log('+1 Wallet generated successfully 🎉', wallet.publicKey);
       return wallet;
     };
 
