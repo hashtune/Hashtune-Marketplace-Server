@@ -11,31 +11,20 @@ export const FindUser = extendType({
       resolve: async (_, args, ctx: Context) => {
 
         let res;
-        let errorMessage: string;
+        let errorMessage = "";
+
+        const getResult = async (query, error = "") => { res = query && await ctx.prisma.user.findUnique(query); errorMessage = error }
 
         if (args.handle && !args.publicKey) {
-          res = await ctx.prisma.user.findUnique({
-            where: { handle: args.handle },
-          });
-          errorMessage = `Couldn't find user with handle ${args.handle}`
+          await getResult({ where: { handle: args.handle } }, `Couldn't find user with handle ${args.handle}`)
         } else if (args.publicKey) {
           const wallet = await ctx.prisma.wallet.findUnique({ where: { publicKey: args.publicKey } })
-          res = wallet && await ctx.prisma.user.findUnique({
-            where: {
-              walletId: wallet.id
-            }
-          });
-          errorMessage = `Couldn't find user with publicKey ${args.publicKey}`
+          await getResult({ where: { walletId: wallet?.id } }, `Couldn't find user with publicKey ${args.publicKey}`)
         } else {
-          res = null;
-          errorMessage = `Please specify one of the optional fields.`
+          getResult(null, `Please specify one of the optional fields.`)
         }
 
-        if (res) {
-          return { Users: [res] };
-        } else {
-          return { ClientErrorUserNotFound: { message: errorMessage } }
-        }
+        return res ? ({ Users: [res] }) : ({ ClientErrorUserNotFound: { message: errorMessage } })
       },
     });
   },
