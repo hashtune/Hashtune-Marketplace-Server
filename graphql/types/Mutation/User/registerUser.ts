@@ -19,7 +19,7 @@ export const registerUser = extendType({
   type: 'Mutation',
   definition(t) {
     t.field('registerUser', {
-      type: 'User',
+      type: 'UserResult',
       description:
         'Register a user after they authenticate with the correct chain network',
       args: { InputType },
@@ -41,7 +41,8 @@ export const registerUser = extendType({
           },
         };
 
-        return await ctx.prisma.user.create(payload);
+        const res = await ctx.prisma.user.create(payload);
+        return res ? ({ Users: [res] }) : ({ ClientErrorUnknown: { message: "Error while creating the user" } })
         // TODO: Handling potential mutation errors
       },
     });
