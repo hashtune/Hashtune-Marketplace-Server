@@ -44,6 +44,29 @@ Object {
 }
 `;
 
+exports[`Test users query should query a user by publicKey 1`] = `
+Object {
+  "data": Object {
+    "findUser": Object {
+      "ClientErrorUnknown": null,
+      "ClientErrorUserNotFound": null,
+      "Users": Array [
+        Object {
+          "handle": "user1",
+        },
+      ],
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
 exports[`Test users query should query the all the users 1`] = `
 Object {
   "data": Object {
