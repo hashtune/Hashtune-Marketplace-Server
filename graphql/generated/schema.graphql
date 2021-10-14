@@ -204,7 +204,7 @@ export interface NexusGenFieldTypes {
   }
   Mutation: { // field return type
     addArtwork: NexusGenRootTypes['ArtworkResult']; // ArtworkResult!
-    registerUser: NexusGenRootTypes['User']; // User!
+    registerUser: NexusGenRootTypes['UserResult']; // UserResult!
   }
   Query: { // field return type
     findArtwork: NexusGenRootTypes['ArtworkResult']; // ArtworkResult!
@@ -291,7 +291,7 @@ export interface NexusGenFieldTypeNames {
   }
   Mutation: { // field return type name
     addArtwork: 'ArtworkResult'
-    registerUser: 'User'
+    registerUser: 'UserResult'
   }
   Query: { // field return type name
     findArtwork: 'ArtworkResult'
