@@ -27,8 +27,8 @@ describe('Test users query', () => {
 `;
 
   const FIND_USER_QUERY = `
-  query Query($findUserHandle: String!) {
-    findUser(handle: $findUserHandle) {
+  query Query($findUserHandle: String, $findUserPublicKey: String) {
+    findUser(handle: $findUserHandle, publicKey: $findUserPublicKey) {
       Users {
         handle
       }
@@ -52,7 +52,7 @@ describe('Test users query', () => {
   it('should find a user by handle', async () => {
     const res = await server.executeOperation({
       query: FIND_USER_QUERY,
-      variables: { findUserHandle: global.testData.users[0].handle },
+      variables: { findUserHandle: global.testData.users[0].handle, },
     });
     expect(res).toMatchSnapshot();
   });
@@ -60,7 +60,15 @@ describe('Test users query', () => {
   it('should not find a user by handle and throw an error', async () => {
     const res = await server.executeOperation({
       query: FIND_USER_QUERY,
-      variables: { findUserHandle: 'hgyujghf8989y89' },
+      variables: { findUserHandle: 'hgyujghf8989y89', },
+    });
+    expect(res).toMatchSnapshot();
+  });
+
+  it('should query a user by publicKey', async () => {
+    const res = await server.executeOperation({
+      query: FIND_USER_QUERY,
+      variables: { findUserPublicKey: global.testData.wallets[0].publicKey },
     });
     expect(res).toMatchSnapshot();
   });
