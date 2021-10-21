@@ -46,7 +46,7 @@ export const addAuction = extendType({
                     }
                 }
                 const res = ctx.prisma.auction.create(payload);
-                return res ? ({ "Auctions": [res] }) : ({ ClientErrorUnknown: { message: "Error while creating the user" } })
+                return res ? ({ "Auctions": [res] }) : ({ ClientErrorUnknown: { message: "Error while creating the auction" } })
 
             }
         })
