@@ -70,7 +70,7 @@ describe("test auction mutation", () => {
     })
 
     it("Should not create a new auction for this artwork because one already exists", async () => {
-        const res = await createAuction(users[1].id, artworks[0].id);
+        const res = await createAuction(users[0].id, artworks[3].id);
         expect(res).toMatchSnapshot()
     })
 })
