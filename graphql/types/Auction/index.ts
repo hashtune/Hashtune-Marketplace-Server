@@ -40,5 +40,7 @@ export const AuctionResult = objectType({
     t.nullable.field("ClientErrorUnknown", { type: errorTypes.ClientErrorUnknown });
     t.nullable.field("ClientErrorArtworkAlreadyExists", { type: errorTypes.ClientErrorAuctionAlreadyExists });
     t.nullable.field("ClientErrorArtworkNotAnAuction", { type: errorTypes.ClientErrorArtworkNotAnAuction });
+    t.nullable.field("ClientErrorAuctionNotFound", { type: errorTypes.ClientErrorAuctionNotFound });
+    t.nullable.field("ClientErrorAuctionNotDeletable", { type: errorTypes.ClientErrorAuctionNotDeletable });
   }
 })

@@ -7,8 +7,22 @@ export const ClientErrorAuctionAlreadyExists = objectType({
     },
 });
 
+export const ClientErrorAuctionNotFound = objectType({
+    name: 'ClientErrorAuctionNotFound',
+    definition(t) {
+        t.nullable.string('message');
+    },
+});
+
 export const ClientErrorArtworkNotAnAuction = objectType({
     name: 'ClientErrorArtworkNotAnAuction',
+    definition(t) {
+        t.nullable.string('message');
+    },
+});
+
+export const ClientErrorAuctionNotDeletable = objectType({
+    name: 'ClientErrorAuctionNotDeletable',
     definition(t) {
         t.nullable.string('message');
     },
