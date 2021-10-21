@@ -159,7 +159,13 @@ export interface NexusGenObjects {
   Auction: PrismaClient.Auction;
   AuctionResult: {
     // root type
-    Auction?: NexusGenRootTypes['Auction'] | null; // Auction
+    Auctions?: NexusGenRootTypes['Auction'][] | null; // [Auction!]
+    ClientErrorArtworkAlreadyExists?:
+      | NexusGenRootTypes['ClientErrorAuctionAlreadyExists']
+      | null; // ClientErrorAuctionAlreadyExists
+    ClientErrorArtworkNotFound?:
+      | NexusGenRootTypes['ClientErrorArtworkNotFound']
+      | null; // ClientErrorArtworkNotFound
     ClientErrorUnknown?: NexusGenRootTypes['ClientErrorUnknown'] | null; // ClientErrorUnknown
     ClientErrorUserUnauthorized?:
       | NexusGenRootTypes['ClientErrorUserUnauthorized']
@@ -172,6 +178,10 @@ export interface NexusGenObjects {
     path?: string | null; // String
   };
   ClientErrorArtworkNotFound: {
+    // root type
+    message?: string | null; // String
+  };
+  ClientErrorAuctionAlreadyExists: {
     // root type
     message?: string | null; // String
   };
@@ -252,7 +262,13 @@ export interface NexusGenFieldTypes {
   };
   AuctionResult: {
     // field return type
-    Auction: NexusGenRootTypes['Auction'] | null; // Auction
+    Auctions: NexusGenRootTypes['Auction'][] | null; // [Auction!]
+    ClientErrorArtworkAlreadyExists:
+      | NexusGenRootTypes['ClientErrorAuctionAlreadyExists']
+      | null; // ClientErrorAuctionAlreadyExists
+    ClientErrorArtworkNotFound:
+      | NexusGenRootTypes['ClientErrorArtworkNotFound']
+      | null; // ClientErrorArtworkNotFound
     ClientErrorUnknown: NexusGenRootTypes['ClientErrorUnknown'] | null; // ClientErrorUnknown
     ClientErrorUserUnauthorized:
       | NexusGenRootTypes['ClientErrorUserUnauthorized']
@@ -268,6 +284,10 @@ export interface NexusGenFieldTypes {
     path: string | null; // String
   };
   ClientErrorArtworkNotFound: {
+    // field return type
+    message: string | null; // String
+  };
+  ClientErrorAuctionAlreadyExists: {
     // field return type
     message: string | null; // String
   };
@@ -364,7 +384,9 @@ export interface NexusGenFieldTypeNames {
   };
   AuctionResult: {
     // field return type name
-    Auction: 'Auction';
+    Auctions: 'Auction';
+    ClientErrorArtworkAlreadyExists: 'ClientErrorAuctionAlreadyExists';
+    ClientErrorArtworkNotFound: 'ClientErrorArtworkNotFound';
     ClientErrorUnknown: 'ClientErrorUnknown';
     ClientErrorUserUnauthorized: 'ClientErrorUserUnauthorized';
   };
@@ -378,6 +400,10 @@ export interface NexusGenFieldTypeNames {
     path: 'String';
   };
   ClientErrorArtworkNotFound: {
+    // field return type name
+    message: 'String';
+  };
+  ClientErrorAuctionAlreadyExists: {
     // field return type name
     message: 'String';
   };
