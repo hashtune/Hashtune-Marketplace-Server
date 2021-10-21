@@ -109,6 +109,11 @@ export default async function seed() {
         title: 'amazingsongTitle',
         media: [{ title: 'amazingsongTitle', media: 'lala' }],
         saleType: 'auction',
+        auctions: {
+          createMany: {
+            data: [{}],
+          },
+        },
         currentOwner: {
           connect: {
             id: user2.id,
@@ -119,6 +124,9 @@ export default async function seed() {
             id: user2.id,
           },
         },
+      },
+      include: {
+        auctions: true,
       },
     });
     const three = await prisma.artwork.create({
