@@ -14,7 +14,9 @@ export const deleteAuction = extendType({
             resolve: async (_, args, ctx: Context) => {
                 const auctionData = await ctx.prisma.auction.findUnique({ where: { id: args.auctionId } });
                 if (!auctionData) return { ClientErrorAuctionNotFound: { message: "Couldn't find an auction with the specified id" } }
-                if (auctionData.currentHighBidder) return { CLientErrorAuctionNotDeletable: { message: "Cannot delete an auction with bids" } }
+
+                const bidsData = await ctx.prisma.bid.findMany({ where: { auctionId: auctionData.id } });
+                if (bidsData && bidsData.length > 0) return { ClientErrorAuctionNotDeletable: { message: "Cannot delete an auction with bids" } }
 
                 const artworkData = await ctx.prisma.artwork.findUnique({ where: { id: auctionData.artworkId } })
                 if (!artworkData) return { ClientErrorArtworkNotFound: { message: `Couldn't find an artwork with id ${args.artworkId}` } }
