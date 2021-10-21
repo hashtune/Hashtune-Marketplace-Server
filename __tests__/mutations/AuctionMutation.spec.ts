@@ -7,6 +7,7 @@ describe("test auction mutation", () => {
 
     let users;
     let artworks;
+    let auctions;
 
     beforeAll(async () => {
         await reset();
@@ -14,6 +15,7 @@ describe("test auction mutation", () => {
         global.testData = await getGlobalData();
         users = global.testData.users;
         artworks = global.testData.artworks;
+        auctions = global.testData.auctions;
     });
 
     const ADD_AUCTION_MUTATION = `
@@ -41,6 +43,30 @@ describe("test auction mutation", () => {
         }
     `
 
+    const DELETE_AUCTION_MUTATION = ` 
+        mutation DeleteAuction($userId: String!, $auctionId: String!) {
+            deleteAuction(userId: $userId, auctionId: $auctionId) {
+                Auctions {
+                    currentHigh
+                }
+                ClientErrorAuctionNotFound {
+                    message
+                }
+                ClientErrorUserUnauthorized {
+                    message
+                }
+                ClientErrorUnknown {
+                    message
+                }
+                ClientErrorArtworkNotFound {
+                    message
+                }
+                ClientErrorAuctionNotDeletable {
+                    message
+                  }
+            }
+        }
+    `
 
     const createAuction = async (userId, artworkId) => {
         return await server.executeOperation({
@@ -50,6 +76,15 @@ describe("test auction mutation", () => {
                     "artworkId": artworkId,
                     "live": true
                 }
+            }
+        })
+    }
+
+    const deleteAuction = async (userId, auctionId) => {
+        return await server.executeOperation({
+            query: DELETE_AUCTION_MUTATION, variables: {
+                "userId": userId,
+                "auctionId": auctionId,
             }
         })
     }
@@ -71,6 +106,28 @@ describe("test auction mutation", () => {
 
     it("Should not create a new auction for this artwork because one already exists", async () => {
         const res = await createAuction(users[0].id, artworks[3].id);
+        expect(res).toMatchSnapshot()
+    })
+
+    // delete auction tests
+
+    it("Should not find the auction", async () => {
+        const res = await deleteAuction(users[1].id, "noid");
+        expect(res).toMatchSnapshot()
+    })
+
+    it("Should fail to delete an auction with bids", async () => {
+        const res = await deleteAuction(users[0].id, auctions[1].id);
+        expect(res).toMatchSnapshot()
+    })
+
+    it("Should fail to delete an auction for an artwork that the user doesn't own", async () => {
+        const res = await deleteAuction(users[2].id, auctions[0].id);
+        expect(res).toMatchSnapshot()
+    })
+
+    it("Should delete an auction with no bids", async () => {
+        const res = await deleteAuction(users[1].id, auctions[0].id);
         expect(res).toMatchSnapshot()
     })
 })
