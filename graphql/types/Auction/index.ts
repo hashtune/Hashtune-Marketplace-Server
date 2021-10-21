@@ -34,8 +34,10 @@ export const Auction = objectType({
 export const AuctionResult = objectType({
   name: "AuctionResult",
   definition(t) {
-    t.nullable.field("Auction", { type: "Auction" })
+    t.nullable.list.field("Auctions", { type: "Auction" })
     t.nullable.field("ClientErrorUserUnauthorized", { type: errorTypes.ClientErrorUserUnauthorized });
+    t.nullable.field("ClientErrorArtworkNotFound", { type: errorTypes.ClientErrorArtworkNotFound });
     t.nullable.field("ClientErrorUnknown", { type: errorTypes.ClientErrorUnknown });
+    t.nullable.field("ClientErrorArtworkAlreadyExists", { type: errorTypes.ClientErrorAuctionAlreadyExists });
   }
 })
