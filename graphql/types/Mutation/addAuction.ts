@@ -29,33 +29,30 @@ export const addAuction = extendType({
                 const auctionData = await ctx.prisma.auction.findFirst({
                     where: { artworkId: args.artworkId },
                 });
+
                 if (auctionData) return { ClientErrorArtworkAlreadyExists: { message: `An auction for the artwork with id  ${args.artworkId} already exists` } }
+                if (!artworkData) return { ClientErrorArtworkNotFound: { message: `Couldn't find an artwork with id ${args.artworkId}` } }
+                if (artworkData.saleType !== 'auction') return { ClientErrorArtworkNotAnAuction: { message: `The artwork with id ${args.artworkId} is not of auction type` } }
+                if (artworkData.ownerId !== args.userId) return { ClientErrorUserUnauthorized: { message: `The user is not the owner of the artwork` } }
 
-                if (!artworkData) {
-                    return { ClientErrorArtworkNotFound: { message: `Couldn't find an artwork with id ${args.artworkId}` } }
-                }
-                else if (artworkData.ownerId !== args.userId) {
-                    return { ClientErrorUserUnauthorized: { message: `The user is not the owner of the artwork` } }
-
-                } else {
-                    const now = new Date();
-                    const payload = {
-                        data: {
-                            artworkId: args.artworkId,
-                            bids: {
-                                create: []
-                            },
-                            currentHigh: 0,
-                            live: args.live,
-                            liveAt: args.liveAt,
-                            createdAt: now,
-                            updatedAt: now,
-                            isFinalized: false
-                        }
+                const now = new Date();
+                const payload = {
+                    data: {
+                        artworkId: args.artworkId,
+                        bids: {
+                            create: []
+                        },
+                        currentHigh: 0,
+                        live: args.live,
+                        liveAt: args.liveAt,
+                        createdAt: now,
+                        updatedAt: now,
+                        isFinalized: false
                     }
-                    const res = ctx.prisma.auction.create(payload);
-                    return res ? ({ "Auctions": [res] }) : ({ ClientErrorUnknown: { message: "Error while creating the user" } })
                 }
+                const res = ctx.prisma.auction.create(payload);
+                return res ? ({ "Auctions": [res] }) : ({ ClientErrorUnknown: { message: "Error while creating the user" } })
+
             }
         })
     }
