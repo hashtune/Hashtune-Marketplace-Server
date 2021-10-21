@@ -30,9 +30,10 @@ export const addAuction = extendType({
                     where: { artworkId: args.artworkId },
                 });
 
-                if (auctionData) return { ClientErrorArtworkAlreadyExists: { message: `An auction for the artwork with id  ${args.artworkId} already exists` } }
+                if (auctionData) return { ClientErrorArtworkAlreadyExists: { message: `An auction for the specified artwork already exists` } }
                 if (!artworkData) return { ClientErrorArtworkNotFound: { message: `Couldn't find an artwork with id ${args.artworkId}` } }
-                if (artworkData.saleType !== 'auction') return { ClientErrorArtworkNotAnAuction: { message: `The artwork with id ${args.artworkId} is not of auction type` } }
+                //todo: decide if we want to allow users to change the type of an artwork
+                if (artworkData.saleType !== 'auction') return { ClientErrorArtworkNotAnAuction: { message: `The specified artwork is not of auction type` } }
                 if (artworkData.ownerId !== args.userId) return { ClientErrorUserUnauthorized: { message: `The user is not the owner of the artwork` } }
 
                 const now = new Date();
