@@ -118,12 +118,23 @@ export const Artwork = objectType({
 });
 
 export const ArtworkResult = objectType({
-  name: "ArtworkResult",
+  name: 'ArtworkResult',
   definition(t) {
-    t.nullable.list.field("Artworks", { type: 'Artwork' });
-    t.nullable.field("ClientErrorArtworkNotFound", { type: errorTypes.ClientErrorArtworkNotFound });
-    t.nullable.field("ClientErrorArgumentsConflict", { type: errorTypes.ClientErrorArgumentsConflict });
-    t.nullable.field("ClientErrorUserUnauthorized", { type: errorTypes.ClientErrorUserUnauthorized });
-    t.nullable.field("ClientErrorUnknown", { type: errorTypes.ClientErrorUnknown });
-  }
-})
+    t.nullable.list.field('Artworks', { type: 'Artwork' });
+    t.nullable.field('ClientErrorArtworkNotFound', {
+      type: errorTypes.ClientErrorArtworkNotFound,
+    });
+    t.nullable.field('ClientErrorArgumentsConflict', {
+      type: errorTypes.ClientErrorArgumentsConflict,
+    });
+    t.nullable.field('ClientErrorUserUnauthorized', {
+      type: errorTypes.ClientErrorUserUnauthorized,
+    });
+    t.nullable.field('ClientErrorUnknown', {
+      type: errorTypes.ClientErrorUnknown,
+    });
+    t.nullable.field('ExternalChainError', {
+      type: errorTypes.ExternalChainError,
+    });
+  },
+});

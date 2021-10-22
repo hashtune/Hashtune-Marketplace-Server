@@ -21,6 +21,7 @@ Object {
       "ClientErrorArtworkNotFound": null,
       "ClientErrorUnknown": null,
       "ClientErrorUserUnauthorized": null,
+      "ExternalChainError": null,
     },
   },
   "errors": undefined,
@@ -44,6 +45,7 @@ Object {
       "ClientErrorUserUnauthorized": Object {
         "message": "Not approved or non-existing creator",
       },
+      "ExternalChainError": null,
     },
   },
   "errors": undefined,
@@ -68,6 +70,7 @@ Object {
       "ClientErrorArtworkNotFound": null,
       "ClientErrorUnknown": null,
       "ClientErrorUserUnauthorized": null,
+      "ExternalChainError": null,
     },
   },
   "errors": undefined,

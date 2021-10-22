@@ -1,10 +1,11 @@
 import { extendType, inputObjectType } from 'nexus';
+import chain from '../../../singletons/chain';
 import { Context } from '../../context';
-
 const InputType = inputObjectType({
   name: 'CreateArtworkInput',
   description: 'Artwork input',
   definition(t) {
+    t.nonNull.string('txHash');
     t.nonNull.string('handle');
     t.nonNull.string('title');
     t.nonNull.string('image');
@@ -31,6 +32,8 @@ export const addArtwork = extendType({
         const creatorData = await ctx.prisma.user.findUnique({
           where: { id: args.creator },
         });
+        console.log({ args });
+        console.log({ creatorData });
         // TODO: Check that the creator creatorData.id is equal
         // to the session ID otherwise someone can
         // go around our UI, pass someone elses id and create
@@ -55,19 +58,42 @@ export const addArtwork = extendType({
           const isValidSale =
             args.saleType == 'fixed' && args.price && !args.reservePrice;
           if (isValidAuction || isValidSale) {
+            console.log('trying to create...');
+            // TODO move this to a constants file that maps the name to the string
+            // What if the creation on our database fails and the chain transaction went through? We need a listener for that.
+            try {
+              const maybeChainSuccess = await chain.checkSuccessLog(
+                'event TokenCreated(address by,uint256 tokenId,address[] creators,uint256[] creatorsRoyalty,uint8 status,bytes32 digest,uint8 hashFunction,uint8 size)',
+                args.txHash
+              );
+              console.log({ maybeChainSuccess });
+            } catch (e) {
+              console.log(e);
+              return {
+                ExternalChainError: {
+                  message: `Issue getting successful log from the chain ${e}`,
+                },
+              };
+            }
             return { Artworks: [ctx.prisma.artwork.create(payload)] };
           } else {
             return {
               ClientErrorArgumentsConflict: {
                 message: `Argument conflict.`,
-                path: `${args.saleType == 'auction' && args.price
-                  ? "Auction doesn't need a price arg"
-                  : 'Fixed sale requires a price arg and no reservePrice arg'}`,
-              }
-            }
+                path: `${
+                  args.saleType == 'auction' && args.price
+                    ? "Auction doesn't need a price arg"
+                    : 'Fixed sale requires a price arg and no reservePrice arg'
+                }`,
+              },
+            };
           }
         } else {
-          return { ClientErrorUserUnauthorized: { message: 'Not approved or non-existing creator' } };
+          return {
+            ClientErrorUserUnauthorized: {
+              message: 'Not approved or non-existing creator',
+            },
+          };
         }
       },
     });

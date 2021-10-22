@@ -1,11 +1,12 @@
+import chain from '../../singletons/chain';
 import { prisma } from '../../singletons/prisma';
 import getGlobalData from '../../utils/getGlobalData';
 import reset from '../../utils/reset';
 import seed from '../../utils/seed';
 import server from '../server';
-
 describe('Test artwork mutations', () => {
-
+  // Mock external service
+  chain.checkSuccessLog = jest.fn();
   beforeAll(async () => {
     await reset();
     await seed();
@@ -39,10 +40,14 @@ describe('Test artwork mutations', () => {
         ClientErrorUnknown {
           message
         }
+        ExternalChainError {
+          message
+        }
       }
     }`;
 
   const exampleArgs = {
+    txHash: '123',
     handle: 'something',
     title: 'strstrstr',
     image: 'Sun',
@@ -62,13 +67,13 @@ describe('Test artwork mutations', () => {
           creator: user1.id,
           saleType: 'auction',
           reservePrice: 50,
-        }
-      }
+        },
+      },
     });
     const artwork = await prisma.artwork.findUnique({
       where: {
-        handle: "something"
-      }
+        handle: 'something',
+      },
     });
     if (!artwork) throw new Error('Error fetching the created artwork');
     expect(res).toMatchSnapshot();
@@ -88,7 +93,7 @@ describe('Test artwork mutations', () => {
         },
       },
     });
-    expect(res).toMatchSnapshot()
+    expect(res).toMatchSnapshot();
   });
 
   it('should fail to create an artwork with fixed sale type and reserve price set', async () => {
@@ -107,8 +112,6 @@ describe('Test artwork mutations', () => {
     });
     expect(res).toMatchSnapshot();
   });
-
 });
 
-export { };
-
+export {};
