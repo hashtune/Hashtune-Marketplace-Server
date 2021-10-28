@@ -12,7 +12,7 @@ const server = createServer(app);
 
 export const apollo = new ApolloServer({
   schema,
-  introspection: false,
+  introspection: process.env.STAGE !== "production",
   apollo: {},
   context: createContext,
   validationRules: [depthLimit(5)]
