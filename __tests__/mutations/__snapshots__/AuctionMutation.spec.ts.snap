@@ -1,0 +1,197 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`test auction mutation Should create a new auction 1`] = `
+Object {
+  "data": Object {
+    "addAuction": Object {
+      "Auctions": Array [
+        Object {
+          "currentHigh": 0n,
+        },
+      ],
+      "ClientErrorArtworkAlreadyExists": null,
+      "ClientErrorArtworkNotAnAuction": null,
+      "ClientErrorArtworkNotFound": null,
+      "ClientErrorUnknown": null,
+      "ClientErrorUserUnauthorized": null,
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`test auction mutation Should delete an auction with no bids 1`] = `
+Object {
+  "data": Object {
+    "deleteAuction": Object {
+      "Auctions": Array [
+        Object {
+          "currentHigh": 0n,
+        },
+      ],
+      "ClientErrorArtworkNotFound": null,
+      "ClientErrorAuctionNotDeletable": null,
+      "ClientErrorAuctionNotFound": null,
+      "ClientErrorUnknown": null,
+      "ClientErrorUserUnauthorized": null,
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`test auction mutation Should fail to delete an auction for an artwork that the user doesn't own 1`] = `
+Object {
+  "data": Object {
+    "deleteAuction": Object {
+      "Auctions": null,
+      "ClientErrorArtworkNotFound": null,
+      "ClientErrorAuctionNotDeletable": null,
+      "ClientErrorAuctionNotFound": null,
+      "ClientErrorUnknown": null,
+      "ClientErrorUserUnauthorized": Object {
+        "message": "The user is not the owner of the artwork",
+      },
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`test auction mutation Should fail to delete an auction with bids 1`] = `
+Object {
+  "data": Object {
+    "deleteAuction": Object {
+      "Auctions": null,
+      "ClientErrorArtworkNotFound": null,
+      "ClientErrorAuctionNotDeletable": Object {
+        "message": "Cannot delete an auction with bids",
+      },
+      "ClientErrorAuctionNotFound": null,
+      "ClientErrorUnknown": null,
+      "ClientErrorUserUnauthorized": null,
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`test auction mutation Should not create a new auction for this artwork because one already exists 1`] = `
+Object {
+  "data": Object {
+    "addAuction": Object {
+      "Auctions": null,
+      "ClientErrorArtworkAlreadyExists": Object {
+        "message": "An auction for the specified artwork already exists",
+      },
+      "ClientErrorArtworkNotAnAuction": null,
+      "ClientErrorArtworkNotFound": null,
+      "ClientErrorUnknown": null,
+      "ClientErrorUserUnauthorized": null,
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`test auction mutation Should not find the auction 1`] = `
+Object {
+  "data": Object {
+    "deleteAuction": Object {
+      "Auctions": null,
+      "ClientErrorArtworkNotFound": null,
+      "ClientErrorAuctionNotDeletable": null,
+      "ClientErrorAuctionNotFound": Object {
+        "message": "Couldn't find an auction with the specified id",
+      },
+      "ClientErrorUnknown": null,
+      "ClientErrorUserUnauthorized": null,
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`test auction mutation Shouldn't let an unauthorized user create a new auction 1`] = `
+Object {
+  "data": Object {
+    "addAuction": Object {
+      "Auctions": null,
+      "ClientErrorArtworkAlreadyExists": null,
+      "ClientErrorArtworkNotAnAuction": null,
+      "ClientErrorArtworkNotFound": null,
+      "ClientErrorUnknown": null,
+      "ClientErrorUserUnauthorized": Object {
+        "message": "The user is not the owner of the artwork",
+      },
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`test auction mutation should fail because it cannot find the id 1`] = `
+Object {
+  "data": Object {
+    "addAuction": Object {
+      "Auctions": null,
+      "ClientErrorArtworkAlreadyExists": null,
+      "ClientErrorArtworkNotAnAuction": null,
+      "ClientErrorArtworkNotFound": Object {
+        "message": "Couldn't find an artwork with id noid",
+      },
+      "ClientErrorUnknown": null,
+      "ClientErrorUserUnauthorized": null,
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;

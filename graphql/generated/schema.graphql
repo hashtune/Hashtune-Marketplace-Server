@@ -63,6 +63,12 @@ declare global {
 }
 
 export interface NexusGenInputs {
+  AddAuctionInput: { // input type
+    artworkId: string; // String!
+    live: boolean; // Boolean!
+    liveAt?: string | null; // String
+    userId: string; // String!
+  }
   CreateArtworkInput: { // input type
     creator: string; // String!
     currentOwner: string; // String!
@@ -113,12 +119,34 @@ export interface NexusGenObjects {
     ClientErrorUserUnauthorized?: NexusGenRootTypes['ClientErrorUserUnauthorized'] | null; // ClientErrorUserUnauthorized
   }
   Auction: PrismaClient.Auction;
+  AuctionResult: { // root type
+    Auctions?: NexusGenRootTypes['Auction'][] | null; // [Auction!]
+    ClientErrorArtworkAlreadyExists?: NexusGenRootTypes['ClientErrorAuctionAlreadyExists'] | null; // ClientErrorAuctionAlreadyExists
+    ClientErrorArtworkNotAnAuction?: NexusGenRootTypes['ClientErrorArtworkNotAnAuction'] | null; // ClientErrorArtworkNotAnAuction
+    ClientErrorArtworkNotFound?: NexusGenRootTypes['ClientErrorArtworkNotFound'] | null; // ClientErrorArtworkNotFound
+    ClientErrorAuctionNotDeletable?: NexusGenRootTypes['ClientErrorAuctionNotDeletable'] | null; // ClientErrorAuctionNotDeletable
+    ClientErrorAuctionNotFound?: NexusGenRootTypes['ClientErrorAuctionNotFound'] | null; // ClientErrorAuctionNotFound
+    ClientErrorUnknown?: NexusGenRootTypes['ClientErrorUnknown'] | null; // ClientErrorUnknown
+    ClientErrorUserUnauthorized?: NexusGenRootTypes['ClientErrorUserUnauthorized'] | null; // ClientErrorUserUnauthorized
+  }
   Bid: PrismaClient.Bid;
   ClientErrorArgumentsConflict: { // root type
     message?: string | null; // String
     path?: string | null; // String
   }
+  ClientErrorArtworkNotAnAuction: { // root type
+    message?: string | null; // String
+  }
   ClientErrorArtworkNotFound: { // root type
+    message?: string | null; // String
+  }
+  ClientErrorAuctionAlreadyExists: { // root type
+    message?: string | null; // String
+  }
+  ClientErrorAuctionNotDeletable: { // root type
+    message?: string | null; // String
+  }
+  ClientErrorAuctionNotFound: { // root type
     message?: string | null; // String
   }
   ClientErrorUnknown: { // root type
@@ -183,6 +211,16 @@ export interface NexusGenFieldTypes {
     id: string; // String!
     liveAt: NexusGenScalars['DateTime'] | null; // DateTime
   }
+  AuctionResult: { // field return type
+    Auctions: NexusGenRootTypes['Auction'][] | null; // [Auction!]
+    ClientErrorArtworkAlreadyExists: NexusGenRootTypes['ClientErrorAuctionAlreadyExists'] | null; // ClientErrorAuctionAlreadyExists
+    ClientErrorArtworkNotAnAuction: NexusGenRootTypes['ClientErrorArtworkNotAnAuction'] | null; // ClientErrorArtworkNotAnAuction
+    ClientErrorArtworkNotFound: NexusGenRootTypes['ClientErrorArtworkNotFound'] | null; // ClientErrorArtworkNotFound
+    ClientErrorAuctionNotDeletable: NexusGenRootTypes['ClientErrorAuctionNotDeletable'] | null; // ClientErrorAuctionNotDeletable
+    ClientErrorAuctionNotFound: NexusGenRootTypes['ClientErrorAuctionNotFound'] | null; // ClientErrorAuctionNotFound
+    ClientErrorUnknown: NexusGenRootTypes['ClientErrorUnknown'] | null; // ClientErrorUnknown
+    ClientErrorUserUnauthorized: NexusGenRootTypes['ClientErrorUserUnauthorized'] | null; // ClientErrorUserUnauthorized
+  }
   Bid: { // field return type
     id: string; // String!
   }
@@ -190,7 +228,19 @@ export interface NexusGenFieldTypes {
     message: string | null; // String
     path: string | null; // String
   }
+  ClientErrorArtworkNotAnAuction: { // field return type
+    message: string | null; // String
+  }
   ClientErrorArtworkNotFound: { // field return type
+    message: string | null; // String
+  }
+  ClientErrorAuctionAlreadyExists: { // field return type
+    message: string | null; // String
+  }
+  ClientErrorAuctionNotDeletable: { // field return type
+    message: string | null; // String
+  }
+  ClientErrorAuctionNotFound: { // field return type
     message: string | null; // String
   }
   ClientErrorUnknown: { // field return type
@@ -204,6 +254,8 @@ export interface NexusGenFieldTypes {
   }
   Mutation: { // field return type
     addArtwork: NexusGenRootTypes['ArtworkResult']; // ArtworkResult!
+    addAuction: NexusGenRootTypes['AuctionResult']; // AuctionResult!
+    deleteAuction: NexusGenRootTypes['AuctionResult']; // AuctionResult!
     registerUser: NexusGenRootTypes['UserResult']; // UserResult!
   }
   Query: { // field return type
@@ -270,6 +322,16 @@ export interface NexusGenFieldTypeNames {
     id: 'String'
     liveAt: 'DateTime'
   }
+  AuctionResult: { // field return type name
+    Auctions: 'Auction'
+    ClientErrorArtworkAlreadyExists: 'ClientErrorAuctionAlreadyExists'
+    ClientErrorArtworkNotAnAuction: 'ClientErrorArtworkNotAnAuction'
+    ClientErrorArtworkNotFound: 'ClientErrorArtworkNotFound'
+    ClientErrorAuctionNotDeletable: 'ClientErrorAuctionNotDeletable'
+    ClientErrorAuctionNotFound: 'ClientErrorAuctionNotFound'
+    ClientErrorUnknown: 'ClientErrorUnknown'
+    ClientErrorUserUnauthorized: 'ClientErrorUserUnauthorized'
+  }
   Bid: { // field return type name
     id: 'String'
   }
@@ -277,7 +339,19 @@ export interface NexusGenFieldTypeNames {
     message: 'String'
     path: 'String'
   }
+  ClientErrorArtworkNotAnAuction: { // field return type name
+    message: 'String'
+  }
   ClientErrorArtworkNotFound: { // field return type name
+    message: 'String'
+  }
+  ClientErrorAuctionAlreadyExists: { // field return type name
+    message: 'String'
+  }
+  ClientErrorAuctionNotDeletable: { // field return type name
+    message: 'String'
+  }
+  ClientErrorAuctionNotFound: { // field return type name
     message: 'String'
   }
   ClientErrorUnknown: { // field return type name
@@ -291,6 +365,8 @@ export interface NexusGenFieldTypeNames {
   }
   Mutation: { // field return type name
     addArtwork: 'ArtworkResult'
+    addAuction: 'AuctionResult'
+    deleteAuction: 'AuctionResult'
     registerUser: 'UserResult'
   }
   Query: { // field return type name
@@ -329,6 +405,13 @@ export interface NexusGenArgTypes {
   Mutation: {
     addArtwork: { // args
       InputType?: NexusGenInputs['CreateArtworkInput'] | null; // CreateArtworkInput
+    }
+    addAuction: { // args
+      InputType?: NexusGenInputs['AddAuctionInput'] | null; // AddAuctionInput
+    }
+    deleteAuction: { // args
+      auctionId: string; // String!
+      userId: string; // String!
     }
     registerUser: { // args
       InputType?: NexusGenInputs['RegisterUserInput'] | null; // RegisterUserInput
