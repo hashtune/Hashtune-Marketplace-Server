@@ -2,6 +2,7 @@ import { LogDescription } from '@ethersproject/abi';
 import { Provider } from '@ethersproject/abstract-provider';
 import { Contract } from '@ethersproject/contracts';
 import { ethers } from 'ethers';
+import { contractAddress } from '../constants';
 import * as abi from '../SongOrAlbumNFT.json';
 class Chain {
   contract!: Contract;
@@ -16,10 +17,7 @@ class Chain {
       ethersProvider = new ethers.providers.JsonRpcProvider({
         url: 'https://data-seed-prebsc-1-s1.binance.org:8545',
       });
-      const contract = new ethers.Contract(
-        '0xAf266B3D45B11D8B3f28dc2427745c3970B0368C',
-        abi.abi
-      );
+      const contract = new ethers.Contract(contractAddress, abi.abi);
       this.contract = contract;
       this.ethersProvider = ethersProvider;
     } catch (e) {
@@ -75,17 +73,6 @@ class Chain {
       }
     }
     return log;
-  }
-
-  /**
-   *
-   * @param txHash Transaction hash to check the success for
-   */
-  async checkSuccessLogCron() {
-    // query all the artworks that have pending...
-    // Call checkSuccessLog
-    // If created at > 24hrs and pending = true, remove it.
-    // run this every hour.
   }
 }
 

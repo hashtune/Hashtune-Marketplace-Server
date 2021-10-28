@@ -1,4 +1,5 @@
 import { extendType, inputObjectType } from 'nexus';
+import { createEvent } from '../../../constants';
 import chain from '../../../singletons/chain';
 import { Context } from '../../context';
 const InputType = inputObjectType({
@@ -61,7 +62,7 @@ export const addArtwork = extendType({
           if (isValidAuction || isValidSale) {
             // TODO move this to a constants file that maps the name to the string
             const result = await chain.checkSuccessLog(
-              'event TokenCreated(address by,uint256 tokenId,address[] creators,uint256[] creatorsRoyalty,uint8 status,bytes32 digest,uint8 hashFunction,uint8 size)',
+              createEvent,
               args.txHash
             );
             console.log({ result });
