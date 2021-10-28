@@ -1,6 +1,7 @@
 import { ApolloServer } from 'apollo-server-express';
 import express from 'express';
 import { createServer } from 'http';
+import depthLimit from 'graphql-depth-limit'
 import { createContext } from './context';
 import { schema } from './schema';
 
@@ -14,6 +15,7 @@ export const apollo = new ApolloServer({
   introspection: true,
   apollo: {},
   context: createContext,
+  validationRules: [depthLimit(3)]
 });
 
 export async function main() {
