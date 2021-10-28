@@ -125,4 +125,12 @@ describe('Test artwork queries', () => {
     });
     expect(res).toMatchSnapshot();
   });
+
+  it('should never return a pending artwork in a findUnique or findMany query', async () => {
+    const res = await server.executeOperation({
+      query: ARTWORKS_QUERY,
+      variables: { listArtworksAuction: undefined },
+    });
+    expect(res).toMatchSnapshot();
+  });
 });

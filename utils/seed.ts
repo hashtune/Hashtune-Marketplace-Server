@@ -226,6 +226,39 @@ export default async function seed() {
         },
       },
     });
+    const seven = await prisma.artwork.create({
+      data: {
+        description: 'song description',
+        handle: '6',
+        image: 'blahblah2',
+        link: 'blahblah',
+        txHash: 'abc123',
+        title: 'pending',
+        media: [{ title: 'amazingsongTitle', media: 'lala' }],
+        saleType: 'fixed',
+        price: 100,
+        sales: {
+          createMany: {
+            data: [
+              {
+                price: 100,
+                userId: user1.id,
+              },
+            ],
+          },
+        },
+        currentOwner: {
+          connect: {
+            id: user1.id,
+          },
+        },
+        creator: {
+          connect: {
+            id: user1.id,
+          },
+        },
+      },
+    });
   } catch (e) {
     throw new Error(`${e}`);
   }
