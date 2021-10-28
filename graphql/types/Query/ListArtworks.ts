@@ -1,5 +1,5 @@
-import { booleanArg, extendType } from 'nexus';
-import { Artwork } from "../../../node_modules/.prisma/client/index";
+import { booleanArg, extendType, stringArg } from 'nexus';
+import { Artwork } from '../../../node_modules/.prisma/client/index';
 import { Context } from '../../context';
 
 export const ListArtworks = extendType({
@@ -35,13 +35,42 @@ export const ListArtworks = extendType({
             },
           });
         } else {
-          res = await ctx.prisma.artwork.findMany({ orderBy: { saleType: 'desc' } });
+          res = await ctx.prisma.artwork.findMany({
+            orderBy: { saleType: 'desc' },
+          });
         }
 
         if (res) {
-          return { Artworks: res }
+          return { Artworks: res };
         } else {
-          return { ClientErrorUnknown: { message: "Error fetching the artworks" } }
+          return {
+            ClientErrorUnknown: { message: 'Error fetching the artworks' },
+          };
+        }
+      },
+    });
+  },
+});
+
+export const CheckFree = extendType({
+  type: 'Query',
+  definition(t) {
+    t.field('handle', {
+      type: 'Boolean',
+      description: 'Checks whether the give handle is free or not.',
+      args: {
+        handle: stringArg(),
+      },
+      resolve: async (_, args, ctx: Context) => {
+        const maybeHandleTaken = await ctx.prisma.artwork.findUnique({
+          where: {
+            handle: args.handle,
+          },
+        });
+        if (maybeHandleTaken) {
+          return false;
+        } else {
+          return true;
         }
       },
     });

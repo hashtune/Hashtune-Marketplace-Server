@@ -43,6 +43,8 @@ export default async function seed() {
           create: {
             description: 'song description',
             handle: 'art 1',
+            txHash: 'abc123',
+            pending: false,
             image: 'blahblah',
             link: 'blahb1lah',
             title: 'amazingsongT1itle',
@@ -82,6 +84,8 @@ export default async function seed() {
       data: {
         description: 'song description',
         handle: '1',
+        txHash: 'abc123',
+        pending: false,
         image: 'blahblah',
         link: 'blahblah',
         title: 'amazingsongTitle',
@@ -104,6 +108,8 @@ export default async function seed() {
       data: {
         description: 'song description',
         handle: '2',
+        txHash: 'abc123',
+        pending: false,
         image: 'nothing',
         link: 'blahblah',
         title: 'amazingsongTitle',
@@ -125,6 +131,8 @@ export default async function seed() {
       data: {
         description: 'song description',
         handle: '3',
+        txHash: 'abc123',
+        pending: false,
         image: 'blahblah2',
         link: 'blahblah',
         title: 'amazingsongTitle',
@@ -155,6 +163,8 @@ export default async function seed() {
       data: {
         description: 'song description2',
         handle: '4',
+        txHash: 'abc123',
+        pending: false,
         image: 'blahblah2',
         link: 'blahblah2',
         title: 'amazingsongTitle2',
@@ -188,6 +198,8 @@ export default async function seed() {
         handle: '5',
         image: 'blahblah2',
         link: 'blahblah',
+        txHash: 'abc123',
+        pending: false,
         title: 'amazingsongTitle',
         media: [{ title: 'amazingsongTitle', media: 'lala' }],
         saleType: 'fixed',

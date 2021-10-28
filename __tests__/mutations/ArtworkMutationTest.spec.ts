@@ -20,6 +20,8 @@ describe('Test artwork mutations', () => {
           title
           description
           saleType
+          txHash
+          pending
           creator {
             fullName
           }

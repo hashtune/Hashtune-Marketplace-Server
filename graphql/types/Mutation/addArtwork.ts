@@ -32,8 +32,6 @@ export const addArtwork = extendType({
         const creatorData = await ctx.prisma.user.findUnique({
           where: { id: args.creator },
         });
-        console.log({ args });
-        console.log({ creatorData });
         // TODO: Check that the creator creatorData.id is equal
         // to the session ID otherwise someone can
         // go around our UI, pass someone elses id and create
@@ -43,8 +41,10 @@ export const addArtwork = extendType({
             data: {
               handle: args.handle,
               title: args.title,
+              txHash: args.txHash,
               image: args.image,
               link: args.link,
+              pending: false,
               media: args.media,
               saleType: args.saleType,
               price: args.price,
@@ -54,30 +54,54 @@ export const addArtwork = extendType({
               creator: { connect: { id: args.creator } },
             },
           };
+          console.log({ payload });
           const isValidAuction = args.saleType == 'auction' && !args.price;
           const isValidSale =
             args.saleType == 'fixed' && args.price && !args.reservePrice;
           if (isValidAuction || isValidSale) {
-            console.log('trying to create...');
             // TODO move this to a constants file that maps the name to the string
-            // What if the creation on our database fails and the chain transaction went through? We need a listener for that.
-            try {
-              const maybeChainSuccess = await chain.checkSuccessLog(
-                'event TokenCreated(address by,uint256 tokenId,address[] creators,uint256[] creatorsRoyalty,uint8 status,bytes32 digest,uint8 hashFunction,uint8 size)',
-                args.txHash
-              );
-              console.log({ maybeChainSuccess });
-            } catch (e) {
-              console.log(e);
+            const result = await chain.checkSuccessLog(
+              'event TokenCreated(address by,uint256 tokenId,address[] creators,uint256[] creatorsRoyalty,uint8 status,bytes32 digest,uint8 hashFunction,uint8 size)',
+              args.txHash
+            );
+            console.log({ result });
+            // The transaction failed
+            if (result === false) {
               return {
                 ExternalChainError: {
-                  message: `Issue getting successful log from the chain ${e}`,
+                  message: `Transaction to the chain failed`,
                 },
               };
             }
-            return { Artworks: [ctx.prisma.artwork.create(payload)] };
+            console.log('pending');
+            // The transaction is pending
+            if (result === null) {
+              payload.data.pending = true;
+            }
+            console.log('creating artwork in db');
+            // Create the artwork ... pending if we could not get the txHash log
+            const artwork = await ctx.prisma.artwork.create(payload);
+            if (artwork) {
+              if (result === null) {
+                return {
+                  ExternalChainErrorStillPending: {
+                    message:
+                      'Could not get the transaction receipt and status, we will try again for the next 24hours.',
+                  },
+                };
+              }
+              return { Artworks: [artwork] };
+            } else {
+              // May have worked on the chain and not in our database... Contact support in this case
+              return {
+                ExternalChainError: {
+                  message: `Issue creating the artwork in the database ${artwork}`,
+                },
+              };
+            }
           } else {
             return {
+              // May have worked on the chain and not in our database... Contact support in this case
               ClientErrorArgumentsConflict: {
                 message: `Argument conflict.`,
                 path: `${
@@ -90,6 +114,7 @@ export const addArtwork = extendType({
           }
         } else {
           return {
+            // May have worked on the chain and not in our database... Contact support in this case
             ClientErrorUserUnauthorized: {
               message: 'Not approved or non-existing creator',
             },

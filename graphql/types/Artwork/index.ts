@@ -13,6 +13,8 @@ export const Artwork = objectType({
     t.string('handle');
     t.string('title');
     t.string('image');
+    t.string('txHash');
+    t.boolean('pending');
     t.string('description');
     t.boolean('listed');
     t.nullable.field('price', {
@@ -135,6 +137,9 @@ export const ArtworkResult = objectType({
     });
     t.nullable.field('ExternalChainError', {
       type: errorTypes.ExternalChainError,
+    });
+    t.nullable.field('ExternalChainErrorStillPending', {
+      type: errorTypes.ExternalChainErrorStillPending,
     });
   },
 });

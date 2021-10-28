@@ -191,3 +191,33 @@ Object {
   },
 }
 `;
+
+exports[`Test artwork queries should return false if a handle is not available 1`] = `
+Object {
+  "data": Object {
+    "handle": false,
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`Test artwork queries should return true if a handle is available 1`] = `
+Object {
+  "data": Object {
+    "handle": true,
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;

@@ -13,8 +13,10 @@ Object {
           "owner": Object {
             "fullName": "user 1",
           },
+          "pending": false,
           "saleType": "auction",
           "title": "strstrstr",
+          "txHash": "123",
         },
       ],
       "ClientErrorArgumentsConflict": null,

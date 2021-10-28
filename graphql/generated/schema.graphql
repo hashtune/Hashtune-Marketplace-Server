@@ -150,6 +150,9 @@ export interface NexusGenObjects {
       | NexusGenRootTypes['ClientErrorUserUnauthorized']
       | null; // ClientErrorUserUnauthorized
     ExternalChainError?: NexusGenRootTypes['ExternalChainError'] | null; // ExternalChainError
+    ExternalChainErrorStillPending?:
+      | NexusGenRootTypes['ExternalChainErrorStillPending']
+      | null; // ExternalChainErrorStillPending
   };
   Auction: PrismaClient.Auction;
   Bid: PrismaClient.Bid;
@@ -175,6 +178,10 @@ export interface NexusGenObjects {
     message?: string | null; // String
   };
   ExternalChainError: {
+    // root type
+    message: string; // String!
+  };
+  ExternalChainErrorStillPending: {
     // root type
     message: string; // String!
   };
@@ -214,10 +221,12 @@ export interface NexusGenFieldTypes {
     latestAuction: NexusGenRootTypes['Auction'] | null; // Auction
     listed: boolean; // Boolean!
     owner: NexusGenRootTypes['User'] | null; // User
+    pending: boolean; // Boolean!
     price: NexusGenScalars['BigInt'] | null; // BigInt
     reservePrice: NexusGenScalars['BigInt'] | null; // BigInt
     saleType: string; // String!
     title: string; // String!
+    txHash: string; // String!
   };
   ArtworkResult: {
     // field return type
@@ -233,6 +242,9 @@ export interface NexusGenFieldTypes {
       | NexusGenRootTypes['ClientErrorUserUnauthorized']
       | null; // ClientErrorUserUnauthorized
     ExternalChainError: NexusGenRootTypes['ExternalChainError'] | null; // ExternalChainError
+    ExternalChainErrorStillPending:
+      | NexusGenRootTypes['ExternalChainErrorStillPending']
+      | null; // ExternalChainErrorStillPending
   };
   Auction: {
     // field return type
@@ -271,6 +283,10 @@ export interface NexusGenFieldTypes {
     // field return type
     message: string; // String!
   };
+  ExternalChainErrorStillPending: {
+    // field return type
+    message: string; // String!
+  };
   Mutation: {
     // field return type
     addArtwork: NexusGenRootTypes['ArtworkResult']; // ArtworkResult!
@@ -280,6 +296,7 @@ export interface NexusGenFieldTypes {
     // field return type
     findArtwork: NexusGenRootTypes['ArtworkResult']; // ArtworkResult!
     findUser: NexusGenRootTypes['UserResult']; // UserResult!
+    handle: boolean; // Boolean!
     listArtworks: NexusGenRootTypes['ArtworkResult']; // ArtworkResult!
     listCreators: NexusGenRootTypes['UserResult']; // UserResult!
   };
@@ -328,10 +345,12 @@ export interface NexusGenFieldTypeNames {
     latestAuction: 'Auction';
     listed: 'Boolean';
     owner: 'User';
+    pending: 'Boolean';
     price: 'BigInt';
     reservePrice: 'BigInt';
     saleType: 'String';
     title: 'String';
+    txHash: 'String';
   };
   ArtworkResult: {
     // field return type name
@@ -341,6 +360,7 @@ export interface NexusGenFieldTypeNames {
     ClientErrorUnknown: 'ClientErrorUnknown';
     ClientErrorUserUnauthorized: 'ClientErrorUserUnauthorized';
     ExternalChainError: 'ExternalChainError';
+    ExternalChainErrorStillPending: 'ExternalChainErrorStillPending';
   };
   Auction: {
     // field return type name
@@ -379,6 +399,10 @@ export interface NexusGenFieldTypeNames {
     // field return type name
     message: 'String';
   };
+  ExternalChainErrorStillPending: {
+    // field return type name
+    message: 'String';
+  };
   Mutation: {
     // field return type name
     addArtwork: 'ArtworkResult';
@@ -388,6 +412,7 @@ export interface NexusGenFieldTypeNames {
     // field return type name
     findArtwork: 'ArtworkResult';
     findUser: 'UserResult';
+    handle: 'Boolean';
     listArtworks: 'ArtworkResult';
     listCreators: 'UserResult';
   };
@@ -440,6 +465,10 @@ export interface NexusGenArgTypes {
       // args
       handle?: string | null; // String
       publicKey?: string | null; // String
+    };
+    handle: {
+      // args
+      handle?: string | null; // String
     };
     listArtworks: {
       // args

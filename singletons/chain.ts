@@ -30,14 +30,15 @@ class Chain {
   /**
    *
    * @param txHash Transaction hash to listen for
+   * returns LogDescription if the result was successful and the log was fetched
+   * returns false if the result was unsuccessful
+   * returns null if the result was successful but the log could not be fetched. That sould be added to the cron
    */
   async checkSuccessLog(
     eventName: string,
     txHash: string
-  ): Promise<LogDescription | null> {
-    let receipt;
-    let interact;
-    let log = null;
+  ): Promise<LogDescription | false | null> {
+    let log: LogDescription | false | null = null;
     let tries = 0;
     let interval = 5000;
     let MAX_TRIES = 6; // Intervals of 5s, fail after 30s
@@ -47,10 +48,14 @@ class Chain {
       // wait
       await sleep(interval);
       try {
-        // TODO create map of each input type and name plus object name and type.
-        receipt = await this.ethersProvider.getTransactionReceipt(txHash);
+        let receipt = await this.ethersProvider.getTransactionReceipt(txHash);
         let abi = [eventName];
-        interact = new ethers.utils.Interface(abi);
+        let interact = new ethers.utils.Interface(abi);
+        // Transaction failed
+        console.log(receipt.status);
+        if (receipt && receipt.status === 0) {
+          return false;
+        }
         if (receipt) {
           receipt.logs.forEach((el, i) => {
             try {
@@ -58,25 +63,43 @@ class Chain {
             } catch (e) {}
           });
           if (log) {
+            // Transaction successful
             break;
           }
         }
       } catch (e) {
         if (tries === MAX_TRIES) {
-          throw new Error(
-            `Tried for ${
-              (interval * MAX_TRIES) / 1000
-            } seconds and could not retrieve the log ${e}`
-          );
+          // Transaction pending
+          return null;
         }
       }
     }
     return log;
   }
+
+  /**
+   *
+   * @param txHash Transaction hash to check the success for
+   */
+  async checkSuccessLogCron() {
+    // query all the artworks that have pending...
+    // Call checkSuccessLog
+    // If created at > 24hrs and pending = true, remove it.
+    // run this every hour.
+  }
 }
 
 const chain = new Chain();
 export default chain;
+
+// async function main() {
+//   const res = await chain.checkSuccessLog(
+//     'event TokenCreated(address by,uint256 tokenId,address[] creators,uint256[] creatorsRoyalty,uint8 status,bytes32 digest,uint8 hashFunction,uint8 size)',
+//     '0xcffe94a346fbe00ee2b87852ccb6ad15055a0d7be41fe4ac8521e137b6dfebe6'
+//   );
+//   console.log({ res });
+// }
+// main();
 
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));

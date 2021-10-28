@@ -15,3 +15,10 @@ export const ExternalChainError = objectType({
     t.string('message');
   },
 });
+
+export const ExternalChainErrorStillPending = objectType({
+  name: 'ExternalChainErrorStillPending',
+  definition(t) {
+    t.string('message');
+  },
+});
