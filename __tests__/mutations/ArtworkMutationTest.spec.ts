@@ -22,8 +22,10 @@ describe('Test artwork mutations', () => {
           saleType
           txHash
           pending
+          reservePrice
+          price
           Auctions {
-            id
+            currentHigh
           }
           creator {
             fullName

@@ -8,7 +8,7 @@ Object {
         Object {
           "Auctions": Array [
             Object {
-              "id": "ckvcffgb80170few0s5m54mv1",
+              "currentHigh": 0n,
             },
           ],
           "creator": Object {
@@ -19,6 +19,8 @@ Object {
             "fullName": "user 1",
           },
           "pending": false,
+          "price": null,
+          "reservePrice": 50n,
           "saleType": "auction",
           "title": "strstrstr",
           "txHash": "123",
@@ -49,7 +51,7 @@ Object {
         Object {
           "Auctions": Array [
             Object {
-              "id": "ckvcffgfk0241few02e6730jd",
+              "currentHigh": 0n,
             },
           ],
           "creator": Object {
@@ -60,6 +62,8 @@ Object {
             "fullName": "user 1",
           },
           "pending": false,
+          "price": null,
+          "reservePrice": null,
           "saleType": "auction",
           "title": "strstrstr",
           "txHash": "123",
@@ -97,6 +101,8 @@ Object {
             "fullName": "user 1",
           },
           "pending": false,
+          "price": 50n,
+          "reservePrice": null,
           "saleType": "fixed",
           "title": "strstrstr",
           "txHash": "123",
