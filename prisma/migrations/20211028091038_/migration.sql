@@ -7,8 +7,6 @@ CREATE TYPE "ArtworkRole" AS ENUM ('creator', 'feature', 'owner');
 -- CreateEnum
 CREATE TYPE "SaleType" AS ENUM ('auction', 'fixed');
 
--- CreateEnum
-CREATE TYPE "WalletProvider" AS ENUM ('metamask');
 -- CreateTable
 CREATE TABLE "User" (
     "kind" "ModelKind" NOT NULL DEFAULT E'user',
@@ -31,7 +29,7 @@ CREATE TABLE "User" (
 CREATE TABLE "Wallet" (
     "kind" "ModelKind" NOT NULL DEFAULT E'wallet',
     "id" TEXT NOT NULL,
-    "provider" "WalletProvider" NOT NULL,
+    "provider" TEXT NOT NULL DEFAULT E'metamask',
     "publicKey" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
@@ -44,6 +42,8 @@ CREATE TABLE "Artwork" (
     "kind" "ModelKind" NOT NULL DEFAULT E'artwork',
     "id" TEXT NOT NULL,
     "handle" TEXT NOT NULL,
+    "txHash" TEXT NOT NULL,
+    "pending" BOOLEAN NOT NULL DEFAULT true,
     "title" TEXT NOT NULL,
     "image" TEXT NOT NULL,
     "description" TEXT NOT NULL,
@@ -117,7 +117,7 @@ CREATE UNIQUE INDEX "User.handle_unique" ON "User"("handle");
 CREATE UNIQUE INDEX "User.email_unique" ON "User"("email");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "User_walletId_unique" ON "User"("walletId");
+CREATE UNIQUE INDEX "User.walletId_unique" ON "User"("walletId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Wallet.publicKey_unique" ON "Wallet"("publicKey");

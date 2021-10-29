@@ -66,6 +66,8 @@ model Artwork {
   kind         ModelKind @default(artwork)
   id           String    @id @default(cuid())
   handle       String    @unique
+  txHash       String    
+  pending      Boolean   @default(true)
   title        String
   image        String
   description  String
