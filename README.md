@@ -18,6 +18,8 @@ Also add a `.env.test` file with a DATABASE_URL corresponding to the postgres DB
 
 `yarn dev` to start the server on port 5000. Optionally override the port in .env
 
+`yarn cron` to start the hourly cron that will be run in prod to sync chain and artworks in another terminal
+
 `http://localhost:5000/graphql` for the playground
 
 `yarn data:seed` to create some seed data (same data used in API tests)
@@ -29,3 +31,5 @@ Also add a `.env.test` file with a DATABASE_URL corresponding to the postgres DB
 `yarn test:watch` to run API integration tests in watch mode while writing them
 
 `yarn test:api` to run API integration tests
+
+`yarn test:api -u` to update API integration test snapshots

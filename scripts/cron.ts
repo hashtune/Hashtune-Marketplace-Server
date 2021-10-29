@@ -1,9 +1,11 @@
-import { createEvent } from '~/constants';
-import chain from '~/singletons/chain';
-import { prisma } from '~/singletons/prisma';
+import { createEvent } from '../constants';
+import chain from '../singletons/chain';
+import { prisma } from '../singletons/prisma';
 const cron = require('node-cron');
 
+// We should make a back up before running the cron
 cron.schedule('*/59 * * * *', async () => {
+  console.log('RUNNING ARTWORK CRON');
   const pendingArtworks = await prisma.artwork.findMany({
     where: {
       pending: true,
@@ -11,6 +13,7 @@ cron.schedule('*/59 * * * *', async () => {
   });
 
   // Delete artworks that are > 24hours old
+  console.log('DELETING OLD ARTWORKS');
   pendingArtworks.forEach(async art => {
     const oneDay = 24 * 60 * 60 * 1000;
     const yesterday = new Date().getTime();
@@ -22,8 +25,18 @@ cron.schedule('*/59 * * * *', async () => {
         },
       });
     }
+  });
 
-    // Check chain for event again
+  // Query the updated artworks
+  const updatedPendingArtworks = await prisma.artwork.findMany({
+    where: {
+      pending: true,
+    },
+  });
+
+  // Check chain for event again
+  console.log('CHECKING CHAIN FOR PENDING WORKS');
+  updatedPendingArtworks.forEach(async art => {
     const tx = await chain.checkSuccessLog(createEvent, art.txHash);
     if (tx !== null && tx !== false) {
       await prisma.artwork.update({
