@@ -10,6 +10,9 @@ cron.schedule('*/59 * * * *', async () => {
     where: {
       pending: true,
     },
+    include: {
+      auctions: true,
+    },
   });
 
   // Delete artworks that are > 24hours old
@@ -19,6 +22,14 @@ cron.schedule('*/59 * * * *', async () => {
     const yesterday = new Date().getTime();
     const createdAt = new Date(art.createdAt).getTime();
     if (yesterday - createdAt > oneDay) {
+      // If there's an auction attached we need to delete that first
+      if (art.auctions && art.auctions.length > 0) {
+        await prisma.auction.delete({
+          where: {
+            id: art.auctions[0].id,
+          },
+        });
+      }
       await prisma.artwork.delete({
         where: {
           id: art.id,

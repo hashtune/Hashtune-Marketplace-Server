@@ -22,6 +22,9 @@ describe('Test artwork mutations', () => {
           saleType
           txHash
           pending
+          Auctions {
+            id
+          }
           creator {
             fullName
           }
@@ -65,6 +68,7 @@ describe('Test artwork mutations', () => {
       variables: {
         addArtworkInputType: {
           ...exampleArgs,
+          handle: 'something1',
           currentOwner: user1.id,
           creator: user1.id,
           saleType: 'auction',
@@ -74,8 +78,59 @@ describe('Test artwork mutations', () => {
     });
     const artwork = await prisma.artwork.findUnique({
       where: {
-        handle: 'something',
+        handle: 'something1',
       },
+      include: { auctions: true },
+    });
+    if (!artwork) throw new Error('Error fetching the created artwork');
+    expect(res).toMatchSnapshot();
+  });
+
+  it('should create an artwork without an auction if fixed sale is specified', async () => {
+    const user1 = global.testData.users.filter(u => u.handle === 'user1')[0];
+    const res = await server.executeOperation({
+      query: ADD_ARTWORK_MUTATION,
+      variables: {
+        addArtworkInputType: {
+          ...exampleArgs,
+          handle: 'something2',
+          currentOwner: user1.id,
+          creator: user1.id,
+          saleType: 'fixed',
+          salePrice: 50,
+        },
+      },
+    });
+    const artwork = await prisma.artwork.findUnique({
+      where: {
+        handle: 'something2',
+      },
+      include: { auctions: true },
+    });
+    if (!artwork) throw new Error('Error fetching the created artwork');
+    expect(res).toMatchSnapshot();
+  });
+
+  it('should create an artwork with no reserve price of auction is specified and reserve price is 0', async () => {
+    const user1 = global.testData.users.filter(u => u.handle === 'user1')[0];
+    const res = await server.executeOperation({
+      query: ADD_ARTWORK_MUTATION,
+      variables: {
+        addArtworkInputType: {
+          ...exampleArgs,
+          handle: 'something3',
+          currentOwner: user1.id,
+          creator: user1.id,
+          saleType: 'auction',
+          reservePrice: 0,
+        },
+      },
+    });
+    const artwork = await prisma.artwork.findUnique({
+      where: {
+        handle: 'something3',
+      },
+      include: { auctions: true },
     });
     if (!artwork) throw new Error('Error fetching the created artwork');
     expect(res).toMatchSnapshot();

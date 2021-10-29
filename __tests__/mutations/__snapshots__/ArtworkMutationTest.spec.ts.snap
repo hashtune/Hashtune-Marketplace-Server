@@ -6,6 +6,11 @@ Object {
     "addArtwork": Object {
       "Artworks": Array [
         Object {
+          "Auctions": Array [
+            Object {
+              "id": "ckvcffgb80170few0s5m54mv1",
+            },
+          ],
           "creator": Object {
             "fullName": "user 1",
           },
@@ -15,6 +20,84 @@ Object {
           },
           "pending": false,
           "saleType": "auction",
+          "title": "strstrstr",
+          "txHash": "123",
+        },
+      ],
+      "ClientErrorArgumentsConflict": null,
+      "ClientErrorArtworkNotFound": null,
+      "ClientErrorUnknown": null,
+      "ClientErrorUserUnauthorized": null,
+      "ExternalChainError": null,
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`Test artwork mutations should create an artwork with no reserve price of auction is specified and reserve price is 0 1`] = `
+Object {
+  "data": Object {
+    "addArtwork": Object {
+      "Artworks": Array [
+        Object {
+          "Auctions": Array [
+            Object {
+              "id": "ckvcffgfk0241few02e6730jd",
+            },
+          ],
+          "creator": Object {
+            "fullName": "user 1",
+          },
+          "description": "Art",
+          "owner": Object {
+            "fullName": "user 1",
+          },
+          "pending": false,
+          "saleType": "auction",
+          "title": "strstrstr",
+          "txHash": "123",
+        },
+      ],
+      "ClientErrorArgumentsConflict": null,
+      "ClientErrorArtworkNotFound": null,
+      "ClientErrorUnknown": null,
+      "ClientErrorUserUnauthorized": null,
+      "ExternalChainError": null,
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`Test artwork mutations should create an artwork without an auction if fixed sale is specified 1`] = `
+Object {
+  "data": Object {
+    "addArtwork": Object {
+      "Artworks": Array [
+        Object {
+          "Auctions": Array [],
+          "creator": Object {
+            "fullName": "user 1",
+          },
+          "description": "Art",
+          "owner": Object {
+            "fullName": "user 1",
+          },
+          "pending": false,
+          "saleType": "fixed",
           "title": "strstrstr",
           "txHash": "123",
         },
