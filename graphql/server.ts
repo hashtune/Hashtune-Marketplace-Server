@@ -2,6 +2,7 @@ import { ApolloServer } from 'apollo-server-express';
 // import EthSigUtil from 'eth-sig-util';
 import express from 'express';
 import { createServer } from 'http';
+import jwt from 'jsonwebtoken';
 import passport from 'passport';
 import { createContext } from './context';
 import { schema } from './schema';
@@ -68,6 +69,22 @@ app.post('/login', (req: any, res: any, next: any) => {
       // already logged in then redirect to home
       //return next(user);
     }
+    const token = jwt.sign(
+      {
+        user: {
+          id: '123',
+        },
+      },
+      secret,
+      {
+        expiresIn: '1d',
+      }
+    );
+    res.cookie('jwt', token, {
+      httpOnly: true,
+      secure: false, // true in prod,
+      sameSite: 'strict',
+    });
     return res.json('signature and public key did not match');
   })(req, res, next);
 });
