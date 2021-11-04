@@ -27,6 +27,12 @@ describe('Test user mutations', () => {
      ClientErrorUnknown {
       message
      }
+     ClientErrorHandleAlreadyExists {
+       message
+     }
+     ClientErrorInvalidHandle {
+       message
+     }
    }
  }
     `;
@@ -52,7 +58,54 @@ describe('Test user mutations', () => {
     });
     expect(res).toMatchSnapshot();
   });
+  it('should not create a user if the handle is capitalized', async () => {
+    const res = await server.executeOperation({
+      query: CREATE_USER_MUTATION,
+      variables: {
+        inputType: {
+          ...exampleArgs,
+          handle: 'HUMAM',
+        },
+      },
+    });
+    expect(res).toMatchSnapshot();
+  });
+  it('should not create a user if the handle contains non alphanumric characters', async () => {
+    const res = await server.executeOperation({
+      query: CREATE_USER_MUTATION,
+      variables: {
+        inputType: {
+          ...exampleArgs,
+          handle: '*****',
+        },
+      },
+    });
+    expect(res).toMatchSnapshot();
+  });
+  it('should not create a user if the handle contains over 30 characters', async () => {
+    const res = await server.executeOperation({
+      query: CREATE_USER_MUTATION,
+      variables: {
+        inputType: {
+          ...exampleArgs,
+          handle: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        },
+      },
+    });
+    expect(res).toMatchSnapshot();
+  });
+  it('should not create a user if the handle is already taken', async () => {
+    const res = await server.executeOperation({
+      query: CREATE_USER_MUTATION,
+      variables: {
+        inputType: {
+          ...exampleArgs,
+          handle: 'humam',
+        },
+      },
+    });
+    expect(res).toMatchSnapshot();
+  });
 });
 
-export { };
-
+export {};
