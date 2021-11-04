@@ -96,8 +96,6 @@ export interface NexusGenInputs {
     artworkId: string; // String!
     reservePrice?: NexusGenScalars['BigInt'] | null; // BigInt
     salePrice?: NexusGenScalars['BigInt'] | null; // BigInt
-    txHash: string; // String!
-    userId: string; // String!
   }
 }
 
