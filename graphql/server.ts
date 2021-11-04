@@ -43,8 +43,6 @@ export const apollo = new ApolloServer({
   validationRules: [depthLimit(5), ComplexityLimitRule]
 });
 
-console.log(process.env.STAGE !== "production")
-
 export async function main() {
   await apollo.start();
   apollo.applyMiddleware({ app, cors: corsOptions });
