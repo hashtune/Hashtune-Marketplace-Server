@@ -3,47 +3,32 @@
  * Do not make changes to this file directly
  */
 
-import type * as PrismaClient from '.prisma/client';
-import type { Context } from './../context';
-import type { core } from 'nexus';
+import type * as PrismaClient from ".prisma/client"
+import type { Context } from "./../context"
+import type { core } from "nexus"
 declare global {
   interface NexusGenCustomInputMethods<TypeName extends string> {
     /**
      * The `BigInt` scalar type represents non-fractional signed whole numeric values.
      * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt
      */
-    bigInt<FieldName extends string>(
-      fieldName: FieldName,
-      opts?: core.CommonInputFieldConfig<TypeName, FieldName>
-    ): void; // "BigInt";
+    bigInt<FieldName extends string>(fieldName: FieldName, opts?: core.CommonInputFieldConfig<TypeName, FieldName>): void // "BigInt";
     /**
      * The `Byte` scalar type represents byte value as a Buffer
      */
-    bytes<FieldName extends string>(
-      fieldName: FieldName,
-      opts?: core.CommonInputFieldConfig<TypeName, FieldName>
-    ): void; // "Bytes";
+    bytes<FieldName extends string>(fieldName: FieldName, opts?: core.CommonInputFieldConfig<TypeName, FieldName>): void // "Bytes";
     /**
      * A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.
      */
-    dateTime<FieldName extends string>(
-      fieldName: FieldName,
-      opts?: core.CommonInputFieldConfig<TypeName, FieldName>
-    ): void; // "DateTime";
+    dateTime<FieldName extends string>(fieldName: FieldName, opts?: core.CommonInputFieldConfig<TypeName, FieldName>): void // "DateTime";
     /**
      * An arbitrary-precision Decimal type
      */
-    decimal<FieldName extends string>(
-      fieldName: FieldName,
-      opts?: core.CommonInputFieldConfig<TypeName, FieldName>
-    ): void; // "Decimal";
+    decimal<FieldName extends string>(fieldName: FieldName, opts?: core.CommonInputFieldConfig<TypeName, FieldName>): void // "Decimal";
     /**
      * The `JSONObject` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
      */
-    json<FieldName extends string>(
-      fieldName: FieldName,
-      opts?: core.CommonInputFieldConfig<TypeName, FieldName>
-    ): void; // "Json";
+    json<FieldName extends string>(fieldName: FieldName, opts?: core.CommonInputFieldConfig<TypeName, FieldName>): void // "Json";
   }
 }
 declare global {
@@ -52,55 +37,39 @@ declare global {
      * The `BigInt` scalar type represents non-fractional signed whole numeric values.
      * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt
      */
-    bigInt<FieldName extends string>(
-      fieldName: FieldName,
-      ...opts: core.ScalarOutSpread<TypeName, FieldName>
-    ): void; // "BigInt";
+    bigInt<FieldName extends string>(fieldName: FieldName, ...opts: core.ScalarOutSpread<TypeName, FieldName>): void // "BigInt";
     /**
      * The `Byte` scalar type represents byte value as a Buffer
      */
-    bytes<FieldName extends string>(
-      fieldName: FieldName,
-      ...opts: core.ScalarOutSpread<TypeName, FieldName>
-    ): void; // "Bytes";
+    bytes<FieldName extends string>(fieldName: FieldName, ...opts: core.ScalarOutSpread<TypeName, FieldName>): void // "Bytes";
     /**
      * A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.
      */
-    dateTime<FieldName extends string>(
-      fieldName: FieldName,
-      ...opts: core.ScalarOutSpread<TypeName, FieldName>
-    ): void; // "DateTime";
+    dateTime<FieldName extends string>(fieldName: FieldName, ...opts: core.ScalarOutSpread<TypeName, FieldName>): void // "DateTime";
     /**
      * An arbitrary-precision Decimal type
      */
-    decimal<FieldName extends string>(
-      fieldName: FieldName,
-      ...opts: core.ScalarOutSpread<TypeName, FieldName>
-    ): void; // "Decimal";
+    decimal<FieldName extends string>(fieldName: FieldName, ...opts: core.ScalarOutSpread<TypeName, FieldName>): void // "Decimal";
     /**
      * The `JSONObject` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
      */
-    json<FieldName extends string>(
-      fieldName: FieldName,
-      ...opts: core.ScalarOutSpread<TypeName, FieldName>
-    ): void; // "Json";
+    json<FieldName extends string>(fieldName: FieldName, ...opts: core.ScalarOutSpread<TypeName, FieldName>): void // "Json";
   }
 }
+
 
 declare global {
   interface NexusGen extends NexusGenTypes {}
 }
 
 export interface NexusGenInputs {
-  AddAuctionInput: {
-    // input type
+  AddAuctionInput: { // input type
     artworkId: string; // String!
     live: boolean; // Boolean!
     liveAt?: string | null; // String
     userId: string; // String!
-  };
-  CreateArtworkInput: {
-    // input type
+  }
+  CreateArtworkInput: { // input type
     creator: string; // String!
     currentOwner: string; // String!
     description: string; // String!
@@ -113,9 +82,8 @@ export interface NexusGenInputs {
     saleType: string; // String!
     title: string; // String!
     txHash: string; // String!
-  };
-  RegisterUserInput: {
-    // input type
+  }
+  RegisterUserInput: { // input type
     bio?: string | null; // String
     email: string; // String!
     fullName?: string | null; // String
@@ -123,153 +91,118 @@ export interface NexusGenInputs {
     image?: string | null; // String
     isApprovedCreator?: boolean | null; // Boolean
     wallet: string; // String!
-  };
+  }
+  UpdateArtworkInput: { // input type
+    artworkId: string; // String!
+    reservePrice?: NexusGenScalars['BigInt'] | null; // BigInt
+    salePrice?: NexusGenScalars['BigInt'] | null; // BigInt
+  }
 }
 
-export interface NexusGenEnums {}
+export interface NexusGenEnums {
+}
 
 export interface NexusGenScalars {
-  String: string;
-  Int: number;
-  Float: number;
-  Boolean: boolean;
-  ID: string;
-  BigInt: any;
-  Bytes: any;
-  DateTime: any;
-  Decimal: any;
-  Json: any;
+  String: string
+  Int: number
+  Float: number
+  Boolean: boolean
+  ID: string
+  BigInt: any
+  Bytes: any
+  DateTime: any
+  Decimal: any
+  Json: any
 }
 
 export interface NexusGenObjects {
   Artwork: PrismaClient.Artwork;
-  ArtworkResult: {
-    // root type
+  ArtworkResult: { // root type
     Artworks?: NexusGenRootTypes['Artwork'][] | null; // [Artwork!]
-    ClientErrorArgumentsConflict?:
-      | NexusGenRootTypes['ClientErrorArgumentsConflict']
-      | null; // ClientErrorArgumentsConflict
-    ClientErrorArtworkNotFound?:
-      | NexusGenRootTypes['ClientErrorArtworkNotFound']
-      | null; // ClientErrorArtworkNotFound
+    ClientErrorArgumentsConflict?: NexusGenRootTypes['ClientErrorArgumentsConflict'] | null; // ClientErrorArgumentsConflict
+    ClientErrorArtworkNotFound?: NexusGenRootTypes['ClientErrorArtworkNotFound'] | null; // ClientErrorArtworkNotFound
     ClientErrorUnknown?: NexusGenRootTypes['ClientErrorUnknown'] | null; // ClientErrorUnknown
-    ClientErrorUserUnauthorized?:
-      | NexusGenRootTypes['ClientErrorUserUnauthorized']
-      | null; // ClientErrorUserUnauthorized
+    ClientErrorUserUnauthorized?: NexusGenRootTypes['ClientErrorUserUnauthorized'] | null; // ClientErrorUserUnauthorized
     ExternalChainError?: NexusGenRootTypes['ExternalChainError'] | null; // ExternalChainError
-    ExternalChainErrorStillPending?:
-      | NexusGenRootTypes['ExternalChainErrorStillPending']
-      | null; // ExternalChainErrorStillPending
-  };
+    ExternalChainErrorStillPending?: NexusGenRootTypes['ExternalChainErrorStillPending'] | null; // ExternalChainErrorStillPending
+  }
   Auction: PrismaClient.Auction;
-  AuctionResult: {
-    // root type
+  AuctionResult: { // root type
     Auctions?: NexusGenRootTypes['Auction'][] | null; // [Auction!]
-    ClientErrorArtworkAlreadyExists?:
-      | NexusGenRootTypes['ClientErrorAuctionAlreadyExists']
-      | null; // ClientErrorAuctionAlreadyExists
-    ClientErrorArtworkNotAnAuction?:
-      | NexusGenRootTypes['ClientErrorArtworkNotAnAuction']
-      | null; // ClientErrorArtworkNotAnAuction
-    ClientErrorArtworkNotFound?:
-      | NexusGenRootTypes['ClientErrorArtworkNotFound']
-      | null; // ClientErrorArtworkNotFound
-    ClientErrorAuctionNotDeletable?:
-      | NexusGenRootTypes['ClientErrorAuctionNotDeletable']
-      | null; // ClientErrorAuctionNotDeletable
-    ClientErrorAuctionNotFound?:
-      | NexusGenRootTypes['ClientErrorAuctionNotFound']
-      | null; // ClientErrorAuctionNotFound
+    ClientErrorArtworkAlreadyExists?: NexusGenRootTypes['ClientErrorAuctionAlreadyExists'] | null; // ClientErrorAuctionAlreadyExists
+    ClientErrorArtworkNotAnAuction?: NexusGenRootTypes['ClientErrorArtworkNotAnAuction'] | null; // ClientErrorArtworkNotAnAuction
+    ClientErrorArtworkNotFound?: NexusGenRootTypes['ClientErrorArtworkNotFound'] | null; // ClientErrorArtworkNotFound
+    ClientErrorAuctionNotDeletable?: NexusGenRootTypes['ClientErrorAuctionNotDeletable'] | null; // ClientErrorAuctionNotDeletable
+    ClientErrorAuctionNotFound?: NexusGenRootTypes['ClientErrorAuctionNotFound'] | null; // ClientErrorAuctionNotFound
     ClientErrorUnknown?: NexusGenRootTypes['ClientErrorUnknown'] | null; // ClientErrorUnknown
-    ClientErrorUserUnauthorized?:
-      | NexusGenRootTypes['ClientErrorUserUnauthorized']
-      | null; // ClientErrorUserUnauthorized
-  };
+    ClientErrorUserUnauthorized?: NexusGenRootTypes['ClientErrorUserUnauthorized'] | null; // ClientErrorUserUnauthorized
+  }
   Bid: PrismaClient.Bid;
-  ClientErrorArgumentsConflict: {
-    // root type
+  ClientErrorArgumentsConflict: { // root type
     message?: string | null; // String
     path?: string | null; // String
-  };
-  ClientErrorArtworkNotAnAuction: {
-    // root type
+  }
+  ClientErrorArtworkNotAnAuction: { // root type
     message?: string | null; // String
-  };
-  ClientErrorArtworkNotFound: {
-    // root type
+  }
+  ClientErrorArtworkNotFound: { // root type
     message?: string | null; // String
-  };
-  ClientErrorAuctionAlreadyExists: {
-    // root type
+  }
+  ClientErrorAuctionAlreadyExists: { // root type
     message?: string | null; // String
-  };
-  ClientErrorAuctionNotDeletable: {
-    // root type
+  }
+  ClientErrorAuctionNotDeletable: { // root type
     message?: string | null; // String
-  };
-  ClientErrorAuctionNotFound: {
-    // root type
+  }
+  ClientErrorAuctionNotFound: { // root type
     message?: string | null; // String
-  };
-  ClientErrorHandleAlreadyExists: {
-    // root type
+  }
+  ClientErrorHandleAlreadyExists: { // root type
     message?: string | null; // String
-  };
-  ClientErrorInvalidHandle: {
-    // root type
+  }
+  ClientErrorInvalidHandle: { // root type
     message?: string | null; // String
-  };
-  ClientErrorUnknown: {
-    // root type
+  }
+  ClientErrorUnknown: { // root type
     message: string; // String!
-  };
-  ClientErrorUserNotFound: {
-    // root type
+  }
+  ClientErrorUserNotFound: { // root type
     message?: string | null; // String
-  };
-  ClientErrorUserUnauthorized: {
-    // root type
+  }
+  ClientErrorUserUnauthorized: { // root type
     message?: string | null; // String
-  };
-  ExternalChainError: {
-    // root type
+  }
+  ExternalChainError: { // root type
     message: string; // String!
-  };
-  ExternalChainErrorStillPending: {
-    // root type
+  }
+  ExternalChainErrorStillPending: { // root type
     message: string; // String!
-  };
+  }
   Mutation: {};
   Query: {};
   User: PrismaClient.User;
-  UserResult: {
-    // root type
-    ClientErrorHandleAlreadyExists?:
-      | NexusGenRootTypes['ClientErrorHandleAlreadyExists']
-      | null; // ClientErrorHandleAlreadyExists
-    ClientErrorInvalidHandle?:
-      | NexusGenRootTypes['ClientErrorInvalidHandle']
-      | null; // ClientErrorInvalidHandle
+  UserResult: { // root type
+    ClientErrorHandleAlreadyExists?: NexusGenRootTypes['ClientErrorHandleAlreadyExists'] | null; // ClientErrorHandleAlreadyExists
+    ClientErrorInvalidHandle?: NexusGenRootTypes['ClientErrorInvalidHandle'] | null; // ClientErrorInvalidHandle
     ClientErrorUnknown?: NexusGenRootTypes['ClientErrorUnknown'] | null; // ClientErrorUnknown
-    ClientErrorUserNotFound?:
-      | NexusGenRootTypes['ClientErrorUserNotFound']
-      | null; // ClientErrorUserNotFound
+    ClientErrorUserNotFound?: NexusGenRootTypes['ClientErrorUserNotFound'] | null; // ClientErrorUserNotFound
     Users?: NexusGenRootTypes['User'][] | null; // [User!]
-  };
+  }
   Wallet: PrismaClient.Wallet;
 }
 
-export interface NexusGenInterfaces {}
+export interface NexusGenInterfaces {
+}
 
-export interface NexusGenUnions {}
+export interface NexusGenUnions {
+}
 
-export type NexusGenRootTypes = NexusGenObjects;
+export type NexusGenRootTypes = NexusGenObjects
 
-export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars;
+export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars
 
 export interface NexusGenFieldTypes {
-  Artwork: {
-    // field return type
+  Artwork: { // field return type
     Auctions: NexusGenRootTypes['Auction'][]; // [Auction!]!
     auctionWithNoReservePriceAndNoBids: boolean; // Boolean!
     creator: NexusGenRootTypes['User']; // User!
@@ -287,130 +220,91 @@ export interface NexusGenFieldTypes {
     saleType: string; // String!
     title: string; // String!
     txHash: string; // String!
-  };
-  ArtworkResult: {
-    // field return type
+  }
+  ArtworkResult: { // field return type
     Artworks: NexusGenRootTypes['Artwork'][] | null; // [Artwork!]
-    ClientErrorArgumentsConflict:
-      | NexusGenRootTypes['ClientErrorArgumentsConflict']
-      | null; // ClientErrorArgumentsConflict
-    ClientErrorArtworkNotFound:
-      | NexusGenRootTypes['ClientErrorArtworkNotFound']
-      | null; // ClientErrorArtworkNotFound
+    ClientErrorArgumentsConflict: NexusGenRootTypes['ClientErrorArgumentsConflict'] | null; // ClientErrorArgumentsConflict
+    ClientErrorArtworkNotFound: NexusGenRootTypes['ClientErrorArtworkNotFound'] | null; // ClientErrorArtworkNotFound
     ClientErrorUnknown: NexusGenRootTypes['ClientErrorUnknown'] | null; // ClientErrorUnknown
-    ClientErrorUserUnauthorized:
-      | NexusGenRootTypes['ClientErrorUserUnauthorized']
-      | null; // ClientErrorUserUnauthorized
+    ClientErrorUserUnauthorized: NexusGenRootTypes['ClientErrorUserUnauthorized'] | null; // ClientErrorUserUnauthorized
     ExternalChainError: NexusGenRootTypes['ExternalChainError'] | null; // ExternalChainError
-    ExternalChainErrorStillPending:
-      | NexusGenRootTypes['ExternalChainErrorStillPending']
-      | null; // ExternalChainErrorStillPending
-  };
-  Auction: {
-    // field return type
+    ExternalChainErrorStillPending: NexusGenRootTypes['ExternalChainErrorStillPending'] | null; // ExternalChainErrorStillPending
+  }
+  Auction: { // field return type
     artworkId: string; // String!
     bids: NexusGenRootTypes['Bid'][]; // [Bid!]!
     currentHigh: NexusGenScalars['BigInt']; // BigInt!
     id: string; // String!
     liveAt: NexusGenScalars['DateTime'] | null; // DateTime
-  };
-  AuctionResult: {
-    // field return type
+  }
+  AuctionResult: { // field return type
     Auctions: NexusGenRootTypes['Auction'][] | null; // [Auction!]
-    ClientErrorArtworkAlreadyExists:
-      | NexusGenRootTypes['ClientErrorAuctionAlreadyExists']
-      | null; // ClientErrorAuctionAlreadyExists
-    ClientErrorArtworkNotAnAuction:
-      | NexusGenRootTypes['ClientErrorArtworkNotAnAuction']
-      | null; // ClientErrorArtworkNotAnAuction
-    ClientErrorArtworkNotFound:
-      | NexusGenRootTypes['ClientErrorArtworkNotFound']
-      | null; // ClientErrorArtworkNotFound
-    ClientErrorAuctionNotDeletable:
-      | NexusGenRootTypes['ClientErrorAuctionNotDeletable']
-      | null; // ClientErrorAuctionNotDeletable
-    ClientErrorAuctionNotFound:
-      | NexusGenRootTypes['ClientErrorAuctionNotFound']
-      | null; // ClientErrorAuctionNotFound
+    ClientErrorArtworkAlreadyExists: NexusGenRootTypes['ClientErrorAuctionAlreadyExists'] | null; // ClientErrorAuctionAlreadyExists
+    ClientErrorArtworkNotAnAuction: NexusGenRootTypes['ClientErrorArtworkNotAnAuction'] | null; // ClientErrorArtworkNotAnAuction
+    ClientErrorArtworkNotFound: NexusGenRootTypes['ClientErrorArtworkNotFound'] | null; // ClientErrorArtworkNotFound
+    ClientErrorAuctionNotDeletable: NexusGenRootTypes['ClientErrorAuctionNotDeletable'] | null; // ClientErrorAuctionNotDeletable
+    ClientErrorAuctionNotFound: NexusGenRootTypes['ClientErrorAuctionNotFound'] | null; // ClientErrorAuctionNotFound
     ClientErrorUnknown: NexusGenRootTypes['ClientErrorUnknown'] | null; // ClientErrorUnknown
-    ClientErrorUserUnauthorized:
-      | NexusGenRootTypes['ClientErrorUserUnauthorized']
-      | null; // ClientErrorUserUnauthorized
-  };
-  Bid: {
-    // field return type
+    ClientErrorUserUnauthorized: NexusGenRootTypes['ClientErrorUserUnauthorized'] | null; // ClientErrorUserUnauthorized
+  }
+  Bid: { // field return type
     id: string; // String!
-  };
-  ClientErrorArgumentsConflict: {
-    // field return type
+  }
+  ClientErrorArgumentsConflict: { // field return type
     message: string | null; // String
     path: string | null; // String
-  };
-  ClientErrorArtworkNotAnAuction: {
-    // field return type
+  }
+  ClientErrorArtworkNotAnAuction: { // field return type
     message: string | null; // String
-  };
-  ClientErrorArtworkNotFound: {
-    // field return type
+  }
+  ClientErrorArtworkNotFound: { // field return type
     message: string | null; // String
-  };
-  ClientErrorAuctionAlreadyExists: {
-    // field return type
+  }
+  ClientErrorAuctionAlreadyExists: { // field return type
     message: string | null; // String
-  };
-  ClientErrorAuctionNotDeletable: {
-    // field return type
+  }
+  ClientErrorAuctionNotDeletable: { // field return type
     message: string | null; // String
-  };
-  ClientErrorAuctionNotFound: {
-    // field return type
+  }
+  ClientErrorAuctionNotFound: { // field return type
     message: string | null; // String
-  };
-  ClientErrorHandleAlreadyExists: {
-    // field return type
+  }
+  ClientErrorHandleAlreadyExists: { // field return type
     message: string | null; // String
-  };
-  ClientErrorInvalidHandle: {
-    // field return type
+  }
+  ClientErrorInvalidHandle: { // field return type
     message: string | null; // String
-  };
-  ClientErrorUnknown: {
-    // field return type
+  }
+  ClientErrorUnknown: { // field return type
     message: string; // String!
-  };
-  ClientErrorUserNotFound: {
-    // field return type
+  }
+  ClientErrorUserNotFound: { // field return type
     message: string | null; // String
-  };
-  ClientErrorUserUnauthorized: {
-    // field return type
+  }
+  ClientErrorUserUnauthorized: { // field return type
     message: string | null; // String
-  };
-  ExternalChainError: {
-    // field return type
+  }
+  ExternalChainError: { // field return type
     message: string; // String!
-  };
-  ExternalChainErrorStillPending: {
-    // field return type
+  }
+  ExternalChainErrorStillPending: { // field return type
     message: string; // String!
-  };
-  Mutation: {
-    // field return type
+  }
+  Mutation: { // field return type
     addArtwork: NexusGenRootTypes['ArtworkResult']; // ArtworkResult!
     addAuction: NexusGenRootTypes['AuctionResult']; // AuctionResult!
     deleteAuction: NexusGenRootTypes['AuctionResult']; // AuctionResult!
     registerUser: NexusGenRootTypes['UserResult']; // UserResult!
-  };
-  Query: {
-    // field return type
+    updateArtwork: NexusGenRootTypes['ArtworkResult']; // ArtworkResult!
+  }
+  Query: { // field return type
     findArtwork: NexusGenRootTypes['ArtworkResult']; // ArtworkResult!
     findUser: NexusGenRootTypes['UserResult']; // UserResult!
     handle: boolean; // Boolean!
     listArtworks: NexusGenRootTypes['ArtworkResult']; // ArtworkResult!
     listCreators: NexusGenRootTypes['UserResult']; // UserResult!
-  };
-  User: {
-    // field return type
+  }
+  User: { // field return type
     bio: string; // String!
     created: NexusGenRootTypes['Artwork'][]; // [Artwork!]!
     email: string; // String!
@@ -421,229 +315,196 @@ export interface NexusGenFieldTypes {
     isApprovedCreator: boolean; // Boolean!
     owned: NexusGenRootTypes['Artwork'][]; // [Artwork!]!
     wallet: NexusGenRootTypes['Wallet']; // Wallet!
-  };
-  UserResult: {
-    // field return type
-    ClientErrorHandleAlreadyExists:
-      | NexusGenRootTypes['ClientErrorHandleAlreadyExists']
-      | null; // ClientErrorHandleAlreadyExists
-    ClientErrorInvalidHandle:
-      | NexusGenRootTypes['ClientErrorInvalidHandle']
-      | null; // ClientErrorInvalidHandle
+  }
+  UserResult: { // field return type
+    ClientErrorHandleAlreadyExists: NexusGenRootTypes['ClientErrorHandleAlreadyExists'] | null; // ClientErrorHandleAlreadyExists
+    ClientErrorInvalidHandle: NexusGenRootTypes['ClientErrorInvalidHandle'] | null; // ClientErrorInvalidHandle
     ClientErrorUnknown: NexusGenRootTypes['ClientErrorUnknown'] | null; // ClientErrorUnknown
-    ClientErrorUserNotFound:
-      | NexusGenRootTypes['ClientErrorUserNotFound']
-      | null; // ClientErrorUserNotFound
+    ClientErrorUserNotFound: NexusGenRootTypes['ClientErrorUserNotFound'] | null; // ClientErrorUserNotFound
     Users: NexusGenRootTypes['User'][] | null; // [User!]
-  };
-  Wallet: {
-    // field return type
+  }
+  Wallet: { // field return type
     createdAt: string; // String!
     id: string; // String!
     provider: string; // String!
     publicKey: string; // String!
     updatedAt: string; // String!
-  };
+  }
 }
 
 export interface NexusGenFieldTypeNames {
-  Artwork: {
-    // field return type name
-    Auctions: 'Auction';
-    auctionWithNoReservePriceAndNoBids: 'Boolean';
-    creator: 'User';
-    description: 'String';
-    handle: 'String';
-    id: 'ID';
-    image: 'String';
-    kind: 'String';
-    latestAuction: 'Auction';
-    listed: 'Boolean';
-    owner: 'User';
-    pending: 'Boolean';
-    price: 'BigInt';
-    reservePrice: 'BigInt';
-    saleType: 'String';
-    title: 'String';
-    txHash: 'String';
-  };
-  ArtworkResult: {
-    // field return type name
-    Artworks: 'Artwork';
-    ClientErrorArgumentsConflict: 'ClientErrorArgumentsConflict';
-    ClientErrorArtworkNotFound: 'ClientErrorArtworkNotFound';
-    ClientErrorUnknown: 'ClientErrorUnknown';
-    ClientErrorUserUnauthorized: 'ClientErrorUserUnauthorized';
-    ExternalChainError: 'ExternalChainError';
-    ExternalChainErrorStillPending: 'ExternalChainErrorStillPending';
-  };
-  Auction: {
-    // field return type name
-    artworkId: 'String';
-    bids: 'Bid';
-    currentHigh: 'BigInt';
-    id: 'String';
-    liveAt: 'DateTime';
-  };
-  AuctionResult: {
-    // field return type name
-    Auctions: 'Auction';
-    ClientErrorArtworkAlreadyExists: 'ClientErrorAuctionAlreadyExists';
-    ClientErrorArtworkNotAnAuction: 'ClientErrorArtworkNotAnAuction';
-    ClientErrorArtworkNotFound: 'ClientErrorArtworkNotFound';
-    ClientErrorAuctionNotDeletable: 'ClientErrorAuctionNotDeletable';
-    ClientErrorAuctionNotFound: 'ClientErrorAuctionNotFound';
-    ClientErrorUnknown: 'ClientErrorUnknown';
-    ClientErrorUserUnauthorized: 'ClientErrorUserUnauthorized';
-  };
-  Bid: {
-    // field return type name
-    id: 'String';
-  };
-  ClientErrorArgumentsConflict: {
-    // field return type name
-    message: 'String';
-    path: 'String';
-  };
-  ClientErrorArtworkNotAnAuction: {
-    // field return type name
-    message: 'String';
-  };
-  ClientErrorArtworkNotFound: {
-    // field return type name
-    message: 'String';
-  };
-  ClientErrorAuctionAlreadyExists: {
-    // field return type name
-    message: 'String';
-  };
-  ClientErrorAuctionNotDeletable: {
-    // field return type name
-    message: 'String';
-  };
-  ClientErrorAuctionNotFound: {
-    // field return type name
-    message: 'String';
-  };
-  ClientErrorHandleAlreadyExists: {
-    // field return type name
-    message: 'String';
-  };
-  ClientErrorInvalidHandle: {
-    // field return type name
-    message: 'String';
-  };
-  ClientErrorUnknown: {
-    // field return type name
-    message: 'String';
-  };
-  ClientErrorUserNotFound: {
-    // field return type name
-    message: 'String';
-  };
-  ClientErrorUserUnauthorized: {
-    // field return type name
-    message: 'String';
-  };
-  ExternalChainError: {
-    // field return type name
-    message: 'String';
-  };
-  ExternalChainErrorStillPending: {
-    // field return type name
-    message: 'String';
-  };
-  Mutation: {
-    // field return type name
-    addArtwork: 'ArtworkResult';
-    addAuction: 'AuctionResult';
-    deleteAuction: 'AuctionResult';
-    registerUser: 'UserResult';
-  };
-  Query: {
-    // field return type name
-    findArtwork: 'ArtworkResult';
-    findUser: 'UserResult';
-    handle: 'Boolean';
-    listArtworks: 'ArtworkResult';
-    listCreators: 'UserResult';
-  };
-  User: {
-    // field return type name
-    bio: 'String';
-    created: 'Artwork';
-    email: 'String';
-    fullName: 'String';
-    handle: 'String';
-    id: 'String';
-    image: 'String';
-    isApprovedCreator: 'Boolean';
-    owned: 'Artwork';
-    wallet: 'Wallet';
-  };
-  UserResult: {
-    // field return type name
-    ClientErrorHandleAlreadyExists: 'ClientErrorHandleAlreadyExists';
-    ClientErrorInvalidHandle: 'ClientErrorInvalidHandle';
-    ClientErrorUnknown: 'ClientErrorUnknown';
-    ClientErrorUserNotFound: 'ClientErrorUserNotFound';
-    Users: 'User';
-  };
-  Wallet: {
-    // field return type name
-    createdAt: 'String';
-    id: 'String';
-    provider: 'String';
-    publicKey: 'String';
-    updatedAt: 'String';
-  };
+  Artwork: { // field return type name
+    Auctions: 'Auction'
+    auctionWithNoReservePriceAndNoBids: 'Boolean'
+    creator: 'User'
+    description: 'String'
+    handle: 'String'
+    id: 'ID'
+    image: 'String'
+    kind: 'String'
+    latestAuction: 'Auction'
+    listed: 'Boolean'
+    owner: 'User'
+    pending: 'Boolean'
+    price: 'BigInt'
+    reservePrice: 'BigInt'
+    saleType: 'String'
+    title: 'String'
+    txHash: 'String'
+  }
+  ArtworkResult: { // field return type name
+    Artworks: 'Artwork'
+    ClientErrorArgumentsConflict: 'ClientErrorArgumentsConflict'
+    ClientErrorArtworkNotFound: 'ClientErrorArtworkNotFound'
+    ClientErrorUnknown: 'ClientErrorUnknown'
+    ClientErrorUserUnauthorized: 'ClientErrorUserUnauthorized'
+    ExternalChainError: 'ExternalChainError'
+    ExternalChainErrorStillPending: 'ExternalChainErrorStillPending'
+  }
+  Auction: { // field return type name
+    artworkId: 'String'
+    bids: 'Bid'
+    currentHigh: 'BigInt'
+    id: 'String'
+    liveAt: 'DateTime'
+  }
+  AuctionResult: { // field return type name
+    Auctions: 'Auction'
+    ClientErrorArtworkAlreadyExists: 'ClientErrorAuctionAlreadyExists'
+    ClientErrorArtworkNotAnAuction: 'ClientErrorArtworkNotAnAuction'
+    ClientErrorArtworkNotFound: 'ClientErrorArtworkNotFound'
+    ClientErrorAuctionNotDeletable: 'ClientErrorAuctionNotDeletable'
+    ClientErrorAuctionNotFound: 'ClientErrorAuctionNotFound'
+    ClientErrorUnknown: 'ClientErrorUnknown'
+    ClientErrorUserUnauthorized: 'ClientErrorUserUnauthorized'
+  }
+  Bid: { // field return type name
+    id: 'String'
+  }
+  ClientErrorArgumentsConflict: { // field return type name
+    message: 'String'
+    path: 'String'
+  }
+  ClientErrorArtworkNotAnAuction: { // field return type name
+    message: 'String'
+  }
+  ClientErrorArtworkNotFound: { // field return type name
+    message: 'String'
+  }
+  ClientErrorAuctionAlreadyExists: { // field return type name
+    message: 'String'
+  }
+  ClientErrorAuctionNotDeletable: { // field return type name
+    message: 'String'
+  }
+  ClientErrorAuctionNotFound: { // field return type name
+    message: 'String'
+  }
+  ClientErrorHandleAlreadyExists: { // field return type name
+    message: 'String'
+  }
+  ClientErrorInvalidHandle: { // field return type name
+    message: 'String'
+  }
+  ClientErrorUnknown: { // field return type name
+    message: 'String'
+  }
+  ClientErrorUserNotFound: { // field return type name
+    message: 'String'
+  }
+  ClientErrorUserUnauthorized: { // field return type name
+    message: 'String'
+  }
+  ExternalChainError: { // field return type name
+    message: 'String'
+  }
+  ExternalChainErrorStillPending: { // field return type name
+    message: 'String'
+  }
+  Mutation: { // field return type name
+    addArtwork: 'ArtworkResult'
+    addAuction: 'AuctionResult'
+    deleteAuction: 'AuctionResult'
+    registerUser: 'UserResult'
+    updateArtwork: 'ArtworkResult'
+  }
+  Query: { // field return type name
+    findArtwork: 'ArtworkResult'
+    findUser: 'UserResult'
+    handle: 'Boolean'
+    listArtworks: 'ArtworkResult'
+    listCreators: 'UserResult'
+  }
+  User: { // field return type name
+    bio: 'String'
+    created: 'Artwork'
+    email: 'String'
+    fullName: 'String'
+    handle: 'String'
+    id: 'String'
+    image: 'String'
+    isApprovedCreator: 'Boolean'
+    owned: 'Artwork'
+    wallet: 'Wallet'
+  }
+  UserResult: { // field return type name
+    ClientErrorHandleAlreadyExists: 'ClientErrorHandleAlreadyExists'
+    ClientErrorInvalidHandle: 'ClientErrorInvalidHandle'
+    ClientErrorUnknown: 'ClientErrorUnknown'
+    ClientErrorUserNotFound: 'ClientErrorUserNotFound'
+    Users: 'User'
+  }
+  Wallet: { // field return type name
+    createdAt: 'String'
+    id: 'String'
+    provider: 'String'
+    publicKey: 'String'
+    updatedAt: 'String'
+  }
 }
 
 export interface NexusGenArgTypes {
   Mutation: {
-    addArtwork: {
-      // args
+    addArtwork: { // args
       InputType?: NexusGenInputs['CreateArtworkInput'] | null; // CreateArtworkInput
-    };
-    addAuction: {
-      // args
+    }
+    addAuction: { // args
       InputType?: NexusGenInputs['AddAuctionInput'] | null; // AddAuctionInput
-    };
-    deleteAuction: {
-      // args
+    }
+    deleteAuction: { // args
       auctionId: string; // String!
       userId: string; // String!
-    };
-    registerUser: {
-      // args
+    }
+    registerUser: { // args
       InputType?: NexusGenInputs['RegisterUserInput'] | null; // RegisterUserInput
-    };
-  };
+    }
+    updateArtwork: { // args
+      InputType?: NexusGenInputs['UpdateArtworkInput'] | null; // UpdateArtworkInput
+    }
+  }
   Query: {
-    findArtwork: {
-      // args
+    findArtwork: { // args
       id: string; // String!
-    };
-    findUser: {
-      // args
+    }
+    findUser: { // args
       handle?: string | null; // String
       publicKey?: string | null; // String
-    };
-    handle: {
-      // args
+    }
+    handle: { // args
       handle?: string | null; // String
-    };
-    listArtworks: {
-      // args
+    }
+    listArtworks: { // args
       auction?: boolean | null; // Boolean
       listed?: boolean | null; // Boolean
-    };
-  };
+    }
+  }
 }
 
-export interface NexusGenAbstractTypeMembers {}
+export interface NexusGenAbstractTypeMembers {
+}
 
-export interface NexusGenTypeInterfaces {}
+export interface NexusGenTypeInterfaces {
+}
 
 export type NexusGenObjectNames = keyof NexusGenObjects;
 
@@ -663,11 +524,11 @@ export type NexusGenAbstractsUsingStrategyResolveType = never;
 
 export type NexusGenFeaturesConfig = {
   abstractTypeStrategies: {
-    isTypeOf: true;
-    __typename: false;
-    resolveType: false;
-  };
-};
+    isTypeOf: true
+    __typename: false
+    resolveType: false
+  }
+}
 
 export interface NexusGenTypes {
   context: Context;
@@ -685,19 +546,9 @@ export interface NexusGenTypes {
   interfaceNames: NexusGenInterfaceNames;
   scalarNames: NexusGenScalarNames;
   unionNames: NexusGenUnionNames;
-  allInputTypes:
-    | NexusGenTypes['inputNames']
-    | NexusGenTypes['enumNames']
-    | NexusGenTypes['scalarNames'];
-  allOutputTypes:
-    | NexusGenTypes['objectNames']
-    | NexusGenTypes['enumNames']
-    | NexusGenTypes['unionNames']
-    | NexusGenTypes['interfaceNames']
-    | NexusGenTypes['scalarNames'];
-  allNamedTypes:
-    | NexusGenTypes['allInputTypes']
-    | NexusGenTypes['allOutputTypes'];
+  allInputTypes: NexusGenTypes['inputNames'] | NexusGenTypes['enumNames'] | NexusGenTypes['scalarNames'];
+  allOutputTypes: NexusGenTypes['objectNames'] | NexusGenTypes['enumNames'] | NexusGenTypes['unionNames'] | NexusGenTypes['interfaceNames'] | NexusGenTypes['scalarNames'];
+  allNamedTypes: NexusGenTypes['allInputTypes'] | NexusGenTypes['allOutputTypes']
   abstractTypes: NexusGenTypes['interfaceNames'] | NexusGenTypes['unionNames'];
   abstractTypeMembers: NexusGenAbstractTypeMembers;
   objectsUsingAbstractStrategyIsTypeOf: NexusGenObjectsUsingAbstractStrategyIsTypeOf;
@@ -705,17 +556,18 @@ export interface NexusGenTypes {
   features: NexusGenFeaturesConfig;
 }
 
+
 declare global {
-  interface NexusGenPluginTypeConfig<TypeName extends string> {}
-  interface NexusGenPluginInputTypeConfig<TypeName extends string> {}
-  interface NexusGenPluginFieldConfig<
-    TypeName extends string,
-    FieldName extends string
-  > {}
-  interface NexusGenPluginInputFieldConfig<
-    TypeName extends string,
-    FieldName extends string
-  > {}
-  interface NexusGenPluginSchemaConfig {}
-  interface NexusGenPluginArgConfig {}
+  interface NexusGenPluginTypeConfig<TypeName extends string> {
+  }
+  interface NexusGenPluginInputTypeConfig<TypeName extends string> {
+  }
+  interface NexusGenPluginFieldConfig<TypeName extends string, FieldName extends string> {
+  }
+  interface NexusGenPluginInputFieldConfig<TypeName extends string, FieldName extends string> {
+  }
+  interface NexusGenPluginSchemaConfig {
+  }
+  interface NexusGenPluginArgConfig {
+  }
 }
