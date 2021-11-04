@@ -23,13 +23,36 @@ Object {
 }
 `;
 
-exports[`Test users query should not find a user by handle and throw an error 1`] = `
+exports[`Test users query should find a user if the publicKey is valid 1`] = `
+Object {
+  "data": Object {
+    "findUser": Object {
+      "ClientErrorUnknown": null,
+      "ClientErrorUserNotFound": null,
+      "Users": Array [
+        Object {
+          "handle": "user1",
+        },
+      ],
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`Test users query should not find a user by handle if it does not exist 1`] = `
 Object {
   "data": Object {
     "findUser": Object {
       "ClientErrorUnknown": null,
       "ClientErrorUserNotFound": Object {
-        "message": "Couldn't find user with handle hgyujghf8989y89",
+        "message": "User does not exist",
       },
       "Users": null,
     },
@@ -44,17 +67,15 @@ Object {
 }
 `;
 
-exports[`Test users query should query a user by publicKey 1`] = `
+exports[`Test users query should not find a user if no arguments are passed in 1`] = `
 Object {
   "data": Object {
     "findUser": Object {
-      "ClientErrorUnknown": null,
+      "ClientErrorUnknown": Object {
+        "message": "Please specify either a handle or a public key",
+      },
       "ClientErrorUserNotFound": null,
-      "Users": Array [
-        Object {
-          "handle": "user1",
-        },
-      ],
+      "Users": null,
     },
   },
   "errors": undefined,

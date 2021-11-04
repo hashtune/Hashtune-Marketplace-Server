@@ -52,20 +52,28 @@ describe('Test users query', () => {
   it('should find a user by handle', async () => {
     const res = await server.executeOperation({
       query: FIND_USER_QUERY,
-      variables: { findUserHandle: global.testData.users[0].handle, },
+      variables: { findUserHandle: global.testData.users[0].handle },
     });
     expect(res).toMatchSnapshot();
   });
 
-  it('should not find a user by handle and throw an error', async () => {
+  it('should not find a user if no arguments are passed in', async () => {
     const res = await server.executeOperation({
       query: FIND_USER_QUERY,
-      variables: { findUserHandle: 'hgyujghf8989y89', },
+      variables: {},
     });
     expect(res).toMatchSnapshot();
   });
 
-  it('should query a user by publicKey', async () => {
+  it('should not find a user by handle if it does not exist', async () => {
+    const res = await server.executeOperation({
+      query: FIND_USER_QUERY,
+      variables: { findUserHandle: 'hgyujghf8989y89' },
+    });
+    expect(res).toMatchSnapshot();
+  });
+
+  it('should find a user if the publicKey is valid', async () => {
     const res = await server.executeOperation({
       query: FIND_USER_QUERY,
       variables: { findUserPublicKey: global.testData.wallets[0].publicKey },
@@ -74,5 +82,4 @@ describe('Test users query', () => {
   });
 });
 
-export { };
-
+export {};

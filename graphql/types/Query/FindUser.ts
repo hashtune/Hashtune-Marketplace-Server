@@ -9,22 +9,41 @@ export const FindUser = extendType({
       description: 'Find an user by handle or public key',
       args: { handle: stringArg(), publicKey: stringArg() },
       resolve: async (_, args, ctx: Context) => {
-
-        let res;
-        let errorMessage = "";
-
-        const getResult = async (query, error = "") => { res = query && await ctx.prisma.user.findUnique(query); errorMessage = error }
-
-        if (args.handle && !args.publicKey) {
-          await getResult({ where: { handle: args.handle } }, `Couldn't find user with handle ${args.handle}`)
-        } else if (args.publicKey) {
-          const wallet = await ctx.prisma.wallet.findUnique({ where: { publicKey: args.publicKey } })
-          await getResult({ where: { walletId: wallet?.id } }, `Couldn't find user with publicKey ${args.publicKey}`)
-        } else {
-          getResult(null, `Please specify one of the optional fields.`)
+        if (!args.handle && !args.publicKey) {
+          return {
+            ClientErrorUnknown: {
+              message: `Please specify either a handle or a public key`,
+            },
+          };
         }
-
-        return res ? ({ Users: [res] }) : ({ ClientErrorUserNotFound: { message: errorMessage } })
+        if (args.handle) {
+          const maybeExisting = await ctx.prisma.user.findUnique({
+            where: {
+              handle: args.handle,
+            },
+          });
+          if (!maybeExisting) {
+            return {
+              ClientErrorUserNotFound: { message: 'User does not exist' },
+            };
+          } else {
+            return { Users: [maybeExisting] };
+          }
+        } else {
+          const maybeExisting = await ctx.prisma.wallet.findUnique({
+            where: { publicKey: args.publicKey },
+            include: {
+              user: true,
+            },
+          });
+          if (!maybeExisting) {
+            return {
+              ClientErrorUserNotFound: { message: 'User does not exist' },
+            };
+          } else {
+            return { Users: [maybeExisting.user] };
+          }
+        }
       },
     });
   },
