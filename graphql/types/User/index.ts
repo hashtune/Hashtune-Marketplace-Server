@@ -57,10 +57,20 @@ export const UserType = objectType({
 });
 
 export const UserResult = objectType({
-  name: "UserResult",
+  name: 'UserResult',
   definition(t) {
-    t.nullable.list.field("Users", { type: "User" });
-    t.nullable.field("ClientErrorUserNotFound", { type: errorTypes.ClientErrorUserNotFound });
-    t.nullable.field("ClientErrorUnknown", { type: errorTypes.ClientErrorUnknown });
-  }
-})
+    t.nullable.list.field('Users', { type: 'User' });
+    t.nullable.field('ClientErrorUserNotFound', {
+      type: errorTypes.ClientErrorUserNotFound,
+    });
+    t.nullable.field('ClientErrorUnknown', {
+      type: errorTypes.ClientErrorUnknown,
+    });
+    t.nullable.field('ClientErrorInvalidHandle', {
+      type: errorTypes.ClientErrorInvalidHandle,
+    });
+    t.nullable.field('ClientErrorHandleAlreadyExists', {
+      type: errorTypes.ClientErrorHandleAlreadyExists,
+    });
+  },
+});
