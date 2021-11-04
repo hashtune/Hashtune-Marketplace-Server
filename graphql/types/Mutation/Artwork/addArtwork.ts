@@ -2,6 +2,7 @@ import { extendType, inputObjectType } from 'nexus';
 import { createEvent } from '../../../../constants';
 import chain from '../../../../singletons/chain';
 import { Context } from '../../../context';
+
 const InputType = inputObjectType({
   name: 'CreateArtworkInput',
   description: 'Artwork input',
@@ -53,7 +54,6 @@ export const addArtwork = extendType({
               createEvent,
               args.txHash
             );
-            console.log({ result });
             // The transaction failed
             if (result === false) {
               return {
@@ -62,12 +62,10 @@ export const addArtwork = extendType({
                 },
               };
             }
-            console.log('pending');
             // The transaction is pending
             if (result === null) {
               pending = true;
             }
-            console.log('creating artwork in db');
             // Create the artwork ... pending if we could not get the txHash log
             let artwork;
             if (args.saleType === 'fixed') {
@@ -137,8 +135,8 @@ export const addArtwork = extendType({
               ClientErrorArgumentsConflict: {
                 message: `Argument conflict.`,
                 path: `${args.saleType == 'auction' && args.salePrice
-                    ? "Auction doesn't need a price arg"
-                    : 'Fixed sale requires a price arg and no reservePrice arg'
+                  ? "Auction doesn't need a price arg"
+                  : 'Fixed sale requires a price arg and no reservePrice arg'
                   }`,
               },
             };
