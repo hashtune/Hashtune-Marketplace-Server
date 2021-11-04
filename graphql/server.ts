@@ -1,20 +1,28 @@
 import { ApolloServer } from 'apollo-server-express';
 import express from 'express';
 import depthLimit from 'graphql-depth-limit';
+import helmet from 'helmet';
 import { createServer } from 'http';
 import { createContext } from './context';
 import { schema } from './schema';
-import helmet from "helmet";
 
 const { PORT = 5000 } = process.env;
 
 const app = express();
-app.use(helmet());
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      ...helmet.contentSecurityPolicy.getDefaultDirectives(),
+      "img-src": ["'self'", "https://apollo-server-landing-page.cdn.apollographql.com/"],
+      "script-src": ["self", "https://apollo-server-landing-page.cdn.apollographql.com/"]
+    },
+  },
+}));
 
 const server = createServer(app);
 
 const corsOptions = {
-  origin: ["http://localhost:5000", "http://localhost:3000"],
+  origin: ["https://studio.apollographql.com", "http://localhost:5000", "http://localhost:3000"],
   credentials: true
 }
 
