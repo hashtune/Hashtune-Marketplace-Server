@@ -1,6 +1,4 @@
 import { extendType, inputObjectType } from 'nexus';
-import { createEvent } from '../../../../constants';
-import chain from '../../../../singletons/chain';
 import { Context } from '../../../context';
 
 const InputType = inputObjectType({
@@ -15,7 +13,7 @@ const InputType = inputObjectType({
     },
 });
 
-export const updateArtwork = extendType({
+export const updateArtworkPrices = extendType({
     type: "Mutation",
     definition(t) {
         t.field('updateArtwork', {
@@ -42,15 +40,6 @@ export const updateArtwork = extendType({
                 const fieldToUpdate = artworkData.saleType === 'auction' ? "reservePrice" : "price";
                 const newValue = artworkData.saleType === 'auction' ? args.reservePrice : args.salePrice;
 
-                let pending = false;
-                const result = await chain.checkSuccessLog(
-                    createEvent,
-                    args.txHash
-                );
-                if (result === false) return { ExternalChainError: { message: `Transaction to the chain failed` } };
-                if (result === null) pending = true;
-
-
                 const artwork = await ctx.prisma.artwork.update({
                     where: {
                         id: args.artworkId
@@ -61,12 +50,6 @@ export const updateArtwork = extendType({
                 })
 
                 if (artwork) {
-                    if (result === null) return {
-                        ExternalChainErrorStillPending: {
-                            message:
-                                'Could not get the transaction receipt and status, we will try again for the next 24hours.',
-                        },
-                    };
                     return { Artworks: [artwork] };
                 } else {
                     return {
