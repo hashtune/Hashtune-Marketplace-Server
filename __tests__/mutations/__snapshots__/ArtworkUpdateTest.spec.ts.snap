@@ -26,31 +26,6 @@ Object {
 }
 `;
 
-exports[`Test artwork update mutation Should throw an error because the user is not the owner of the Artwork 1`] = `
-Object {
-  "data": Object {
-    "updateArtwork": Object {
-      "Artworks": null,
-      "ClientErrorArgumentsConflict": null,
-      "ClientErrorArtworkNotFound": null,
-      "ClientErrorUnknown": null,
-      "ClientErrorUserUnauthorized": Object {
-        "message": "The user is not the owner of the artwork",
-      },
-      "ExternalChainError": null,
-      "ExternalChainErrorStillPending": null,
-    },
-  },
-  "errors": undefined,
-  "extensions": undefined,
-  "http": Object {
-    "headers": Headers {
-      Symbol(map): Object {},
-    },
-  },
-}
-`;
-
 exports[`Test artwork update mutation Should update the price 1`] = `
 Object {
   "data": Object {
