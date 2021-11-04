@@ -28,11 +28,11 @@ const corsOptions = {
   credentials: true
 }
 
-const ComplexityLimitRule = createComplexityLimitRule(1000, {
+const ComplexityLimitRule = createComplexityLimitRule(2000, {
   //TODO set costs for scalars, objects, and lists
   scalarCost: 1,
-  objectCost: 10,
-  listFactor: 20,
+  objectCost: 5,
+  listFactor: 10,
 })
 
 export const apollo = new ApolloServer({
@@ -42,6 +42,8 @@ export const apollo = new ApolloServer({
   context: createContext,
   validationRules: [depthLimit(5), ComplexityLimitRule]
 });
+
+console.log(process.env.STAGE !== "production")
 
 export async function main() {
   await apollo.start();
