@@ -36,7 +36,8 @@ export const UserType = objectType({
             owned: true,
           },
         });
-        return res.owned;
+        // Filter out pending
+        return res.owned.filter(art => art && art.pending === false);
       },
     });
     t.list.field('created', {
@@ -50,7 +51,8 @@ export const UserType = objectType({
             created: true,
           },
         });
-        return res.created;
+        // Filter out pending
+        return res.created.filter(art => art && art.pending === false);
       },
     });
   },

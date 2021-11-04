@@ -89,8 +89,6 @@ export const Artwork = objectType({
         // TODO: Refactoring conditionals
         if (res?.creator) {
           return res.creator;
-        } else if (res) {
-          throw new Error("Couldn't find Artwork");
         } else {
           throw new Error("Couldn't find a creator");
         }
