@@ -1,7 +1,7 @@
 import { extendType, inputObjectType } from 'nexus';
-import { createEvent } from '../../../constants';
-import chain from '../../../singletons/chain';
-import { Context } from '../../context';
+import { createEvent } from '../../../../constants';
+import chain from '../../../../singletons/chain';
+import { Context } from '../../../context';
 const InputType = inputObjectType({
   name: 'CreateArtworkInput',
   description: 'Artwork input',
@@ -136,11 +136,10 @@ export const addArtwork = extendType({
               // May have worked on the chain and not in our database... Contact support in this case
               ClientErrorArgumentsConflict: {
                 message: `Argument conflict.`,
-                path: `${
-                  args.saleType == 'auction' && args.salePrice
+                path: `${args.saleType == 'auction' && args.salePrice
                     ? "Auction doesn't need a price arg"
                     : 'Fixed sale requires a price arg and no reservePrice arg'
-                }`,
+                  }`,
               },
             };
           }
