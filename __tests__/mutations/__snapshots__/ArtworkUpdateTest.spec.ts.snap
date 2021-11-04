@@ -1,0 +1,110 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test artwork update mutation Should throw an error because price is not specified for a fixed sale 1`] = `
+Object {
+  "data": Object {
+    "updateArtwork": Object {
+      "Artworks": null,
+      "ClientErrorArgumentsConflict": Object {
+        "message": "Argument Conflict",
+        "path": "'price' is required for artworks of type 'fixed'",
+      },
+      "ClientErrorArtworkNotFound": null,
+      "ClientErrorUnknown": null,
+      "ClientErrorUserUnauthorized": null,
+      "ExternalChainError": null,
+      "ExternalChainErrorStillPending": null,
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`Test artwork update mutation Should throw an error because the user is not the owner of the Artwork 1`] = `
+Object {
+  "data": Object {
+    "updateArtwork": Object {
+      "Artworks": null,
+      "ClientErrorArgumentsConflict": null,
+      "ClientErrorArtworkNotFound": null,
+      "ClientErrorUnknown": null,
+      "ClientErrorUserUnauthorized": Object {
+        "message": "The user is not the owner of the artwork",
+      },
+      "ExternalChainError": null,
+      "ExternalChainErrorStillPending": null,
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`Test artwork update mutation Should update the price 1`] = `
+Object {
+  "data": Object {
+    "updateArtwork": Object {
+      "Artworks": Array [
+        Object {
+          "kind": "artwork",
+          "price": 80n,
+          "reservePrice": null,
+        },
+      ],
+      "ClientErrorArgumentsConflict": null,
+      "ClientErrorArtworkNotFound": null,
+      "ClientErrorUnknown": null,
+      "ClientErrorUserUnauthorized": null,
+      "ExternalChainError": null,
+      "ExternalChainErrorStillPending": null,
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`Test artwork update mutation Should update the reservePrice 1`] = `
+Object {
+  "data": Object {
+    "updateArtwork": Object {
+      "Artworks": Array [
+        Object {
+          "kind": "artwork",
+          "price": null,
+          "reservePrice": 13n,
+        },
+      ],
+      "ClientErrorArgumentsConflict": null,
+      "ClientErrorArtworkNotFound": null,
+      "ClientErrorUnknown": null,
+      "ClientErrorUserUnauthorized": null,
+      "ExternalChainError": null,
+      "ExternalChainErrorStillPending": null,
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
