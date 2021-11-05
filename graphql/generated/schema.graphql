@@ -92,6 +92,11 @@ export interface NexusGenInputs {
     isApprovedCreator?: boolean | null; // Boolean
     wallet: string; // String!
   }
+  UpdateArtworkInput: { // input type
+    artworkId: string; // String!
+    reservePrice?: NexusGenScalars['BigInt'] | null; // BigInt
+    salePrice?: NexusGenScalars['BigInt'] | null; // BigInt
+  }
 }
 
 export interface NexusGenEnums {
@@ -152,6 +157,12 @@ export interface NexusGenObjects {
   ClientErrorAuctionNotFound: { // root type
     message?: string | null; // String
   }
+  ClientErrorHandleAlreadyExists: { // root type
+    message?: string | null; // String
+  }
+  ClientErrorInvalidHandle: { // root type
+    message?: string | null; // String
+  }
   ClientErrorUnknown: { // root type
     message: string; // String!
   }
@@ -171,6 +182,8 @@ export interface NexusGenObjects {
   Query: {};
   User: PrismaClient.User;
   UserResult: { // root type
+    ClientErrorHandleAlreadyExists?: NexusGenRootTypes['ClientErrorHandleAlreadyExists'] | null; // ClientErrorHandleAlreadyExists
+    ClientErrorInvalidHandle?: NexusGenRootTypes['ClientErrorInvalidHandle'] | null; // ClientErrorInvalidHandle
     ClientErrorUnknown?: NexusGenRootTypes['ClientErrorUnknown'] | null; // ClientErrorUnknown
     ClientErrorUserNotFound?: NexusGenRootTypes['ClientErrorUserNotFound'] | null; // ClientErrorUserNotFound
     Users?: NexusGenRootTypes['User'][] | null; // [User!]
@@ -256,6 +269,12 @@ export interface NexusGenFieldTypes {
   ClientErrorAuctionNotFound: { // field return type
     message: string | null; // String
   }
+  ClientErrorHandleAlreadyExists: { // field return type
+    message: string | null; // String
+  }
+  ClientErrorInvalidHandle: { // field return type
+    message: string | null; // String
+  }
   ClientErrorUnknown: { // field return type
     message: string; // String!
   }
@@ -276,6 +295,7 @@ export interface NexusGenFieldTypes {
     addAuction: NexusGenRootTypes['AuctionResult']; // AuctionResult!
     deleteAuction: NexusGenRootTypes['AuctionResult']; // AuctionResult!
     registerUser: NexusGenRootTypes['UserResult']; // UserResult!
+    updateArtwork: NexusGenRootTypes['ArtworkResult']; // ArtworkResult!
   }
   Query: { // field return type
     findArtwork: NexusGenRootTypes['ArtworkResult']; // ArtworkResult!
@@ -297,6 +317,8 @@ export interface NexusGenFieldTypes {
     wallet: NexusGenRootTypes['Wallet']; // Wallet!
   }
   UserResult: { // field return type
+    ClientErrorHandleAlreadyExists: NexusGenRootTypes['ClientErrorHandleAlreadyExists'] | null; // ClientErrorHandleAlreadyExists
+    ClientErrorInvalidHandle: NexusGenRootTypes['ClientErrorInvalidHandle'] | null; // ClientErrorInvalidHandle
     ClientErrorUnknown: NexusGenRootTypes['ClientErrorUnknown'] | null; // ClientErrorUnknown
     ClientErrorUserNotFound: NexusGenRootTypes['ClientErrorUserNotFound'] | null; // ClientErrorUserNotFound
     Users: NexusGenRootTypes['User'][] | null; // [User!]
@@ -378,6 +400,12 @@ export interface NexusGenFieldTypeNames {
   ClientErrorAuctionNotFound: { // field return type name
     message: 'String'
   }
+  ClientErrorHandleAlreadyExists: { // field return type name
+    message: 'String'
+  }
+  ClientErrorInvalidHandle: { // field return type name
+    message: 'String'
+  }
   ClientErrorUnknown: { // field return type name
     message: 'String'
   }
@@ -398,6 +426,7 @@ export interface NexusGenFieldTypeNames {
     addAuction: 'AuctionResult'
     deleteAuction: 'AuctionResult'
     registerUser: 'UserResult'
+    updateArtwork: 'ArtworkResult'
   }
   Query: { // field return type name
     findArtwork: 'ArtworkResult'
@@ -419,6 +448,8 @@ export interface NexusGenFieldTypeNames {
     wallet: 'Wallet'
   }
   UserResult: { // field return type name
+    ClientErrorHandleAlreadyExists: 'ClientErrorHandleAlreadyExists'
+    ClientErrorInvalidHandle: 'ClientErrorInvalidHandle'
     ClientErrorUnknown: 'ClientErrorUnknown'
     ClientErrorUserNotFound: 'ClientErrorUserNotFound'
     Users: 'User'
@@ -446,6 +477,9 @@ export interface NexusGenArgTypes {
     }
     registerUser: { // args
       InputType?: NexusGenInputs['RegisterUserInput'] | null; // RegisterUserInput
+    }
+    updateArtwork: { // args
+      InputType?: NexusGenInputs['UpdateArtworkInput'] | null; // UpdateArtworkInput
     }
   }
   Query: {

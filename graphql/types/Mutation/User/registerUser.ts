@@ -1,4 +1,5 @@
 import { extendType, inputObjectType } from 'nexus';
+import { validateHandle } from '../../../../utils/validateHandle';
 import { Context } from '../../../context';
 
 const InputType = inputObjectType({
@@ -25,6 +26,27 @@ export const registerUser = extendType({
       args: { InputType },
       resolve: async (_, args, ctx: Context) => {
         args = args.InputType;
+        if (!validateHandle(args.handle)) {
+          return {
+            ClientErrorInvalidHandle: {
+              message:
+                'We only accept lower case alpha number (abc, 123) characters less than 60 characters',
+            },
+          };
+        }
+        // Check if handle is unique
+        const maybeExistingHandle = await ctx.prisma.user.findUnique({
+          where: {
+            handle: args.handle,
+          },
+        });
+        if (maybeExistingHandle)
+          return {
+            ClientErrorHandleAlreadyExists: {
+              message: 'This handle is already taken, please try a new one',
+            },
+          };
+
         const payload = {
           data: {
             fullName: args.fullName,
@@ -40,10 +62,14 @@ export const registerUser = extendType({
             },
           },
         };
-
-        const res = await ctx.prisma.user.create(payload);
-        return res ? ({ Users: [res] }) : ({ ClientErrorUnknown: { message: "Error while creating the user" } })
-        // TODO: Handling potential mutation errors
+        try {
+          const res = await ctx.prisma.user.create(payload);
+          return { Users: [res] };
+        } catch (e) {
+          return {
+            ClientErrorUnknown: { message: 'Error while creating the user' },
+          };
+        }
       },
     });
   },
