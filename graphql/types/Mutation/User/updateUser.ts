@@ -13,3 +13,34 @@ const InputType = inputObjectType({
     t.string('image');
   },
 });
+
+export const updateUser = extendType({
+  type: 'Mutation',
+  definition(t) {
+    t.field('updateUser', {
+      type: 'UserResult',
+      description: 'Edit user profile data',
+      args: { InputType },
+      resolve: async (_, args, ctx: Context) => {
+        args = args.InputType;
+        //TODO check that the user is authorized
+        const userData = await ctx.prisma.user.findUnique({
+          where: { id: args.userId },
+        });
+
+        const user = await ctx.prisma.user.update({
+          where: {
+            id: args.userId,
+          },
+          data: {
+            fullName: args.fullName,
+            handle: args.handle,
+            email: args.email,
+            bio: args.bio,
+            image: args.image,
+          },
+        });
+      },
+    });
+  },
+});
