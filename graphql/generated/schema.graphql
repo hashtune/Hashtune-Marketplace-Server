@@ -404,13 +404,13 @@ export interface NexusGenFieldTypes {
     // field return type
     addArtwork: NexusGenRootTypes['ArtworkResult']; // ArtworkResult!
     addAuction: NexusGenRootTypes['AuctionResult']; // AuctionResult!
+    cookie: string; // String!
     deleteAuction: NexusGenRootTypes['AuctionResult']; // AuctionResult!
     registerUser: NexusGenRootTypes['UserResult']; // UserResult!
     updateArtwork: NexusGenRootTypes['ArtworkResult']; // ArtworkResult!
   };
   Query: {
     // field return type
-    cookie: string; // String!
     findArtwork: NexusGenRootTypes['ArtworkResult']; // ArtworkResult!
     findUser: NexusGenRootTypes['UserResult']; // UserResult!
     handle: boolean; // Boolean!
@@ -565,13 +565,13 @@ export interface NexusGenFieldTypeNames {
     // field return type name
     addArtwork: 'ArtworkResult';
     addAuction: 'AuctionResult';
+    cookie: 'String';
     deleteAuction: 'AuctionResult';
     registerUser: 'UserResult';
     updateArtwork: 'ArtworkResult';
   };
   Query: {
     // field return type name
-    cookie: 'String';
     findArtwork: 'ArtworkResult';
     findUser: 'UserResult';
     handle: 'Boolean';
@@ -618,6 +618,12 @@ export interface NexusGenArgTypes {
     addAuction: {
       // args
       InputType?: NexusGenInputs['AddAuctionInput'] | null; // AddAuctionInput
+    };
+    cookie: {
+      // args
+      publicKey: string; // String!
+      signedMessage: string; // String!
+      typedData: string; // String!
     };
     deleteAuction: {
       // args

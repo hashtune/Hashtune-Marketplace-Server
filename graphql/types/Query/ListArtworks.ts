@@ -1,4 +1,3 @@
-import jwt from 'jsonwebtoken';
 import { booleanArg, extendType, stringArg } from 'nexus';
 import { Artwork } from '../../../node_modules/.prisma/client/index';
 import { Context } from '../../context';
@@ -74,35 +73,6 @@ export const CheckFree = extendType({
         } else {
           return true;
         }
-      },
-    });
-  },
-});
-
-export const SignIn = extendType({
-  type: 'Query',
-  definition(t) {
-    t.field('cookie', {
-      type: 'String',
-      description: 'Returns cookie if signing',
-      resolve: async (_, args, { req, res }) => {
-        const token = jwt.sign(
-          {
-            user: {
-              id: '123',
-            },
-          },
-          process.env.SERVER_SECRET ?? '',
-          {
-            expiresIn: '1d',
-          }
-        );
-        req.res.cookie('jwt', token, {
-          httpOnly: true,
-          secure: false, // true in prod,
-          sameSite: 'lax', // 'strict' in prod,
-        });
-        return 'done';
       },
     });
   },

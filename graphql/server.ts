@@ -1,5 +1,4 @@
 import { ApolloServer } from 'apollo-server-express';
-// import EthSigUtil from 'eth-sig-util';
 import express from 'express';
 import { createServer } from 'http';
 import { createContext } from './context';

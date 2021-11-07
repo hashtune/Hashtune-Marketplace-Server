@@ -1,7 +1,8 @@
-import { extendType, inputObjectType } from 'nexus';
+import { recoverTypedSignature_v4 } from 'eth-sig-util';
+import jwt from 'jsonwebtoken';
+import { extendType, inputObjectType, nonNull, stringArg } from 'nexus';
 import { validateHandle } from '../../../../utils/validateHandle';
 import { Context } from '../../../context';
-
 const InputType = inputObjectType({
   name: 'RegisterUserInput',
   description: 'Input for registering a new user',
@@ -70,6 +71,57 @@ export const registerUser = extendType({
             ClientErrorUnknown: { message: 'Error while creating the user' },
           };
         }
+      },
+    });
+  },
+});
+
+export const SignUp = extendType({
+  type: 'Mutation',
+  definition(t) {
+    t.field('cookie', {
+      type: 'String',
+      args: {
+        signedMessage: nonNull(stringArg()),
+        publicKey: nonNull(stringArg()),
+        typedData: nonNull(stringArg()),
+      },
+      description: 'Returns cookie if signing',
+      resolve: async (_, args, { req, res }) => {
+        // TODO proper errors
+        const { signedMessage, publicKey, typedData } = args;
+        // Extract public key
+        let extractedAddress: string = '';
+        try {
+          extractedAddress = recoverTypedSignature_v4({
+            data: JSON.parse(typedData),
+            sig: signedMessage,
+          });
+        } catch (e) {
+          console.log(e);
+          throw new Error('Issue recovering signature');
+        }
+
+        if (extractedAddress !== publicKey) {
+          throw new Error('Does not match');
+        }
+        const token = jwt.sign(
+          {
+            user: {
+              id: extractedAddress,
+            },
+          },
+          process.env.SERVER_SECRET ?? '',
+          {
+            expiresIn: '1d',
+          }
+        );
+        req.res.cookie('jwt', token, {
+          httpOnly: true,
+          secure: false, // true in prod,
+          sameSite: 'lax', // 'strict' in prod,
+        });
+        return token;
       },
     });
   },
