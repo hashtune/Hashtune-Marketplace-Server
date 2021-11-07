@@ -27,7 +27,12 @@ export const updateUser = extendType({
         const userData = await ctx.prisma.user.findUnique({
           where: { id: args.userId },
         });
-
+        if (!userData)
+          return {
+            ClientErrorUserNotFound: {
+              message: "Couldn't find the user",
+            },
+          };
         const user = await ctx.prisma.user.update({
           where: {
             id: args.userId,
@@ -40,6 +45,16 @@ export const updateUser = extendType({
             image: args.image,
           },
         });
+        if (user) {
+          return { Users: [user] };
+        } else {
+          return {
+            ClientErrorUnknown: {
+              message:
+                'Something went wrong while editing your profile details. Please contact our technical support',
+            },
+          };
+        }
       },
     });
   },
