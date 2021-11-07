@@ -97,6 +97,14 @@ export interface NexusGenInputs {
     reservePrice?: NexusGenScalars['BigInt'] | null; // BigInt
     salePrice?: NexusGenScalars['BigInt'] | null; // BigInt
   }
+  UpdateUserInput: { // input type
+    bio?: string | null; // String
+    email?: string | null; // String
+    fullName?: string | null; // String
+    handle?: string | null; // String
+    image?: string | null; // String
+    userId: string; // String!
+  }
 }
 
 export interface NexusGenEnums {
@@ -296,6 +304,7 @@ export interface NexusGenFieldTypes {
     deleteAuction: NexusGenRootTypes['AuctionResult']; // AuctionResult!
     registerUser: NexusGenRootTypes['UserResult']; // UserResult!
     updateArtwork: NexusGenRootTypes['ArtworkResult']; // ArtworkResult!
+    updateUser: NexusGenRootTypes['UserResult']; // UserResult!
   }
   Query: { // field return type
     findArtwork: NexusGenRootTypes['ArtworkResult']; // ArtworkResult!
@@ -427,6 +436,7 @@ export interface NexusGenFieldTypeNames {
     deleteAuction: 'AuctionResult'
     registerUser: 'UserResult'
     updateArtwork: 'ArtworkResult'
+    updateUser: 'UserResult'
   }
   Query: { // field return type name
     findArtwork: 'ArtworkResult'
@@ -480,6 +490,9 @@ export interface NexusGenArgTypes {
     }
     updateArtwork: { // args
       InputType?: NexusGenInputs['UpdateArtworkInput'] | null; // UpdateArtworkInput
+    }
+    updateUser: { // args
+      InputType?: NexusGenInputs['UpdateUserInput'] | null; // UpdateUserInput
     }
   }
   Query: {
