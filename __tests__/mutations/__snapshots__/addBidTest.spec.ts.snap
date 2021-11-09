@@ -1,0 +1,99 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`test bids mutations Should fail to create a bid because the user is the owner 1`] = `
+Object {
+  "data": Object {
+    "addBid": Object {
+      "Bids": null,
+      "ClientErrorArgumentsConflict": null,
+      "ClientErrorAuctionNotFound": null,
+      "ClientErrorAuctionNotLive": null,
+      "ClientErrorUnknown": null,
+      "ClientErrorUserUnauthorized": Object {
+        "message": "the owner cannot make bids",
+      },
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`test bids mutations Should fail to create a bid lower than the current high 1`] = `
+Object {
+  "data": Object {
+    "addBid": Object {
+      "Bids": null,
+      "ClientErrorArgumentsConflict": Object {
+        "message": "Your bid is lower than the current high",
+      },
+      "ClientErrorAuctionNotFound": null,
+      "ClientErrorAuctionNotLive": null,
+      "ClientErrorUnknown": null,
+      "ClientErrorUserUnauthorized": null,
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`test bids mutations Should fail to create a bid on an auction that is not live 1`] = `
+Object {
+  "data": Object {
+    "addBid": Object {
+      "Bids": null,
+      "ClientErrorArgumentsConflict": null,
+      "ClientErrorAuctionNotFound": null,
+      "ClientErrorAuctionNotLive": Object {
+        "message": "You cannot make bids on an auction that is not live",
+      },
+      "ClientErrorUnknown": null,
+      "ClientErrorUserUnauthorized": null,
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`test bids mutations Should make a bid 1`] = `
+Object {
+  "data": Object {
+    "addBid": Object {
+      "Bids": Array [
+        Object {
+          "offer": 40n,
+        },
+      ],
+      "ClientErrorArgumentsConflict": null,
+      "ClientErrorAuctionNotFound": null,
+      "ClientErrorAuctionNotLive": null,
+      "ClientErrorUnknown": null,
+      "ClientErrorUserUnauthorized": null,
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
