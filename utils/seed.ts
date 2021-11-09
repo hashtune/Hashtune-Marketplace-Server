@@ -149,7 +149,7 @@ export default async function seed() {
         reservePrice: 50,
         auctions: {
           createMany: {
-            data: [{}],
+            data: [{ live: true, currentHigh: 25 }],
           },
         },
         currentOwner: {
