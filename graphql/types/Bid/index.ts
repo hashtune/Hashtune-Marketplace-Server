@@ -27,6 +27,9 @@ export const BidResult = objectType({
     });
     t.nullable.field('ClientErrorAuctionNotLive', {
       type: errorTypes.ClientErrorAuctionNotLive
-    })
+    });
+    t.nullable.field('ExternalChainErrorStillPending', {
+      type: errorTypes.ExternalChainErrorStillPending,
+    });
   }
 })
