@@ -27,3 +27,10 @@ export const ClientErrorAuctionNotDeletable = objectType({
         t.nullable.string('message');
     },
 });
+
+export const ClientErrorAuctionNotLive = objectType({
+    name: 'ClientErrorAuctionNotLive',
+    definition(t) {
+        t.nullable.string('message');
+    },
+});
