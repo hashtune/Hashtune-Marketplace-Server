@@ -7,22 +7,19 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Deploy to DigitalOcean
+      - name: Deploy to DigitalOcean  
         uses: appleboy/ssh-action@v0.1.2
         with:
           host: ${{secrets.SSH_HOST}}
           key: ${{secrets.SSH_KEY}}
-          username: ${{secrets.SSH_USERNAME}}
-          
-          scripts:
+          username: ${{ secrets.SSH_USERNAME }}
+     
+          script: |
             git clone git@github.com:hashtune/Hashtune-Marketplace-Server.git
-            echo 'Succesfully deployed 🎉'
             cd Hashtune-Marketplace-Server
             yarn docker:up
-            yarn install
-            yarn ci:prisma:migrate
-            yarn ci:prisma:generate
+            yarn
             npx tsc
             pm2 kill
             pm2 start dist/graphql/server.js
-
+            echo 'Succesfully deployed 🎉'
