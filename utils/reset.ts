@@ -3,10 +3,10 @@ import { prisma } from '../singletons/prisma';
 export default async function reset() {
   try {
     const models: string[] = [
-      'Artwork',
-      'Sale',
-      'Auction',
       'Bid',
+      'Auction',
+      'Sale',
+      'Artwork',
       'User',
       'Wallet',
     ];
