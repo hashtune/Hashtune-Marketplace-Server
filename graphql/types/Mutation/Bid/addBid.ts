@@ -38,9 +38,6 @@ export const addBid = extendType({
                 if (auctionData.live === false) {
                     return newErr(`ClientErrorAuctionNotLive`, `You cannot make bids on an auction that is not live`)
                 }
-                if (auctionData.currentHighBidder === args.userId) {
-                    return newErr(`ClientErrorUserUnauthorized`, `You cannot make bids if you are already the current high bidder`)
-                }
                 if (auctionData.currentHigh >= args.offer) {
                     return newErr(`ClientErrorArgumentsConflict`, `Your bid is lower than the current high`)
                 }
@@ -57,9 +54,12 @@ export const addBid = extendType({
                 }
                 if (result === null) { pending = true; }
 
+                //TODO pass pending field once added
                 const bid = await ctx.prisma.bid.create({ data: { auctionId: args.auctionId, offer: args.offer, userId: args.userId } })
                 if (bid) {
                     if (pending) {
+                        //TODO add pending feild on bids
+                        //TODO add update event in chron.ts
                         return newErr(`ExternalChainErrorStillPending`, 'Could not get the transaction receipt and status, we will try again for the next 24hours.',)
                     }
                     const updatedAuction = await ctx.prisma.auction.update({
