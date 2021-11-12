@@ -23,3 +23,4 @@ jobs:
             pm2 kill
             pm2 start dist/graphql/server.js
             echo 'Succesfully deployed 🎉'
+            
