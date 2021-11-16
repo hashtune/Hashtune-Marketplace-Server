@@ -19,9 +19,7 @@ While developing Hashtune's marketplace server, we made security a top-level pri
     - [Limit GraphQL query complexity](#limit-graphql-query-complexity)
     - [Adding Request Security headers](#adding-request-security-headers)
     - [Logging and Monitoring](#logging-and-monitoring)
-    - [Security issues in dependencies](#security-issues-in-dependencies)
     - [SQL injection](#sql-injection)
-    - [Too verbose error messages](#too-verbose-error-messages)
   - [Footnotes](#footnotes)
 </details>
 
@@ -131,38 +129,20 @@ We added headers to protect our server from different kinds of attack
 * Response
 
 ### Logging and Monitoring
-
+John, Amy, or Sara do not want to be discovered while attacking the server.
 * Protection
-    - [ ]
+    - [ ] Setting up logging and monitoring service on database instance and graphql server
 * Detection
-    - [ ]
+    - [ ] Their attak will be registered by the logging and monitoring service
 * Response
-    - 
-
-### Security issues in dependencies
-
-* Protection
-    - [ ]
-* Detection
-    - [ ]
-* Response
-    - 
+    - Legal action is taken
 
 ### SQL injection
-
+John, Amy, or Sara wants to compromise the database by running an SQL injection attack.
 * Protection
-    - [ ]
+    - [x] Prisma sanitizes the input
 * Detection
-    - [ ]
-* Response
-    - 
-
-### Too verbose error messages
-
-* Protection
-    - [ ]
-* Detection
-    - [ ]
+    - [x] The malicious code will be logged 
 * Response
     - 
 
