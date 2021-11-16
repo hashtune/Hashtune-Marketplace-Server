@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test user update mutation Should update the user 1`] = `
+Object {
+  "data": Object {
+    "updateUser": Object {
+      "ClientErrorHandleAlreadyExists": null,
+      "ClientErrorInvalidHandle": null,
+      "ClientErrorUnknown": null,
+      "ClientErrorUserNotFound": null,
+      "Users": Array [
+        Object {
+          "bio": "A placeholder to test with",
+          "email": "humam@hashtune.co",
+          "fullName": "Humam Abo Alraja",
+          "handle": "humam",
+          "image": "IMAGE_URL",
+        },
+      ],
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;

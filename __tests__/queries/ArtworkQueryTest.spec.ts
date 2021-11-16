@@ -57,6 +57,12 @@ describe('Test artwork queries', () => {
     }
   `;
 
+  const CHECK_HANDLE_FREE = `
+  query Query($handleHandle: String) {
+    handle(handle: $handleHandle)
+  }
+`;
+
   it('should query only auctions ', async () => {
     const res = await server.executeOperation({
       query: ARTWORKS_QUERY,
@@ -101,6 +107,29 @@ describe('Test artwork queries', () => {
     const res = await server.executeOperation({
       query: FIND_ARTWORK_QUERY,
       variables: { findArtworkId: 'abc' },
+    });
+    expect(res).toMatchSnapshot();
+  });
+
+  it('should return false if a handle is not available', async () => {
+    const res = await server.executeOperation({
+      query: CHECK_HANDLE_FREE,
+      variables: { handleHandle: '1' },
+    });
+    expect(res).toMatchSnapshot();
+  });
+  it('should return true if a handle is available', async () => {
+    const res = await server.executeOperation({
+      query: CHECK_HANDLE_FREE,
+      variables: { handleHandle: 'askfjlsakfjslka' },
+    });
+    expect(res).toMatchSnapshot();
+  });
+
+  it('should never return a pending artwork in a findUnique or findMany query', async () => {
+    const res = await server.executeOperation({
+      query: ARTWORKS_QUERY,
+      variables: { listArtworksAuction: undefined },
     });
     expect(res).toMatchSnapshot();
   });

@@ -13,6 +13,8 @@ export const Artwork = objectType({
     t.string('handle');
     t.string('title');
     t.string('image');
+    t.string('txHash');
+    t.boolean('pending');
     t.string('description');
     t.boolean('listed');
     t.nullable.field('price', {
@@ -87,8 +89,6 @@ export const Artwork = objectType({
         // TODO: Refactoring conditionals
         if (res?.creator) {
           return res.creator;
-        } else if (res) {
-          throw new Error("Couldn't find Artwork");
         } else {
           throw new Error("Couldn't find a creator");
         }
@@ -118,12 +118,26 @@ export const Artwork = objectType({
 });
 
 export const ArtworkResult = objectType({
-  name: "ArtworkResult",
+  name: 'ArtworkResult',
   definition(t) {
-    t.nullable.list.field("Artworks", { type: 'Artwork' });
-    t.nullable.field("ClientErrorArtworkNotFound", { type: errorTypes.ClientErrorArtworkNotFound });
-    t.nullable.field("ClientErrorArgumentsConflict", { type: errorTypes.ClientErrorArgumentsConflict });
-    t.nullable.field("ClientErrorUserUnauthorized", { type: errorTypes.ClientErrorUserUnauthorized });
-    t.nullable.field("ClientErrorUnknown", { type: errorTypes.ClientErrorUnknown });
-  }
-})
+    t.nullable.list.field('Artworks', { type: 'Artwork' });
+    t.nullable.field('ClientErrorArtworkNotFound', {
+      type: errorTypes.ClientErrorArtworkNotFound,
+    });
+    t.nullable.field('ClientErrorArgumentsConflict', {
+      type: errorTypes.ClientErrorArgumentsConflict,
+    });
+    t.nullable.field('ClientErrorUserUnauthorized', {
+      type: errorTypes.ClientErrorUserUnauthorized,
+    });
+    t.nullable.field('ClientErrorUnknown', {
+      type: errorTypes.ClientErrorUnknown,
+    });
+    t.nullable.field('ExternalChainError', {
+      type: errorTypes.ExternalChainError,
+    });
+    t.nullable.field('ExternalChainErrorStillPending', {
+      type: errorTypes.ExternalChainErrorStillPending,
+    });
+  },
+});

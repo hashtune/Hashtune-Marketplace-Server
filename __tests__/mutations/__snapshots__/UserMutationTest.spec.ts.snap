@@ -4,6 +4,8 @@ exports[`Test user mutations should create a user 1`] = `
 Object {
   "data": Object {
     "registerUser": Object {
+      "ClientErrorHandleAlreadyExists": null,
+      "ClientErrorInvalidHandle": null,
       "ClientErrorUnknown": null,
       "ClientErrorUserNotFound": null,
       "Users": Array [
@@ -19,6 +21,98 @@ Object {
           },
         },
       ],
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`Test user mutations should not create a user if the handle contains non alphanumric characters 1`] = `
+Object {
+  "data": Object {
+    "registerUser": Object {
+      "ClientErrorHandleAlreadyExists": null,
+      "ClientErrorInvalidHandle": Object {
+        "message": "We only accept lower case alpha number (abc, 123) characters less than 60 characters",
+      },
+      "ClientErrorUnknown": null,
+      "ClientErrorUserNotFound": null,
+      "Users": null,
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`Test user mutations should not create a user if the handle contains over 30 characters 1`] = `
+Object {
+  "data": Object {
+    "registerUser": Object {
+      "ClientErrorHandleAlreadyExists": null,
+      "ClientErrorInvalidHandle": Object {
+        "message": "We only accept lower case alpha number (abc, 123) characters less than 60 characters",
+      },
+      "ClientErrorUnknown": null,
+      "ClientErrorUserNotFound": null,
+      "Users": null,
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`Test user mutations should not create a user if the handle is already taken 1`] = `
+Object {
+  "data": Object {
+    "registerUser": Object {
+      "ClientErrorHandleAlreadyExists": Object {
+        "message": "This handle is already taken, please try a new one",
+      },
+      "ClientErrorInvalidHandle": null,
+      "ClientErrorUnknown": null,
+      "ClientErrorUserNotFound": null,
+      "Users": null,
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`Test user mutations should not create a user if the handle is capitalized 1`] = `
+Object {
+  "data": Object {
+    "registerUser": Object {
+      "ClientErrorHandleAlreadyExists": null,
+      "ClientErrorInvalidHandle": Object {
+        "message": "We only accept lower case alpha number (abc, 123) characters less than 60 characters",
+      },
+      "ClientErrorUnknown": null,
+      "ClientErrorUserNotFound": null,
+      "Users": null,
     },
   },
   "errors": undefined,

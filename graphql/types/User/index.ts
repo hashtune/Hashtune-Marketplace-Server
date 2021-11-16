@@ -36,7 +36,8 @@ export const UserType = objectType({
             owned: true,
           },
         });
-        return res.owned;
+        // Filter out pending
+        return res.owned.filter(art => art && art.pending === false);
       },
     });
     t.list.field('created', {
@@ -50,17 +51,28 @@ export const UserType = objectType({
             created: true,
           },
         });
-        return res.created;
+        // Filter out pending
+        return res.created.filter(art => art && art.pending === false);
       },
     });
   },
 });
 
 export const UserResult = objectType({
-  name: "UserResult",
+  name: 'UserResult',
   definition(t) {
-    t.nullable.list.field("Users", { type: "User" });
-    t.nullable.field("ClientErrorUserNotFound", { type: errorTypes.ClientErrorUserNotFound });
-    t.nullable.field("ClientErrorUnknown", { type: errorTypes.ClientErrorUnknown });
-  }
-})
+    t.nullable.list.field('Users', { type: 'User' });
+    t.nullable.field('ClientErrorUserNotFound', {
+      type: errorTypes.ClientErrorUserNotFound,
+    });
+    t.nullable.field('ClientErrorUnknown', {
+      type: errorTypes.ClientErrorUnknown,
+    });
+    t.nullable.field('ClientErrorInvalidHandle', {
+      type: errorTypes.ClientErrorInvalidHandle,
+    });
+    t.nullable.field('ClientErrorHandleAlreadyExists', {
+      type: errorTypes.ClientErrorHandleAlreadyExists,
+    });
+  },
+});
