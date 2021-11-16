@@ -1,4 +1,5 @@
 import { ApolloServer } from 'apollo-server-express';
+import { ApolloServerPluginLandingPageDisabled } from 'apollo-server-core';
 import express from 'express';
 import depthLimit from 'graphql-depth-limit';
 import { createComplexityLimitRule } from 'graphql-validation-complexity';
@@ -11,36 +12,49 @@ const { PORT = 5000 } = process.env;
 
 const app = express();
 
-app.use(helmet({
-  contentSecurityPolicy: {
-    directives: {
-      ...helmet.contentSecurityPolicy.getDefaultDirectives(),
-      "img-src": ["'self'", "https://apollo-server-landing-page.cdn.apollographql.com/"],
-      "script-src": ["self", "https://apollo-server-landing-page.cdn.apollographql.com/"]
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        ...helmet.contentSecurityPolicy.getDefaultDirectives(),
+        'img-src': [
+          "'self'",
+          'https://apollo-server-landing-page.cdn.apollographql.com/',
+        ],
+        'script-src': [
+          'self',
+          'https://apollo-server-landing-page.cdn.apollographql.com/',
+        ],
+      },
     },
-  },
-}));
+  })
+);
 
 const server = createServer(app);
 
 const corsOptions = {
-  origin: ["https://studio.apollographql.com", "http://localhost:5000", "http://localhost:3000"],
-  credentials: true
-}
+  origin: [
+    'https://studio.apollographql.com',
+    'http://localhost:5000',
+    'http://localhost:3000',
+  ],
+  credentials: true,
+};
 
 const ComplexityLimitRule = createComplexityLimitRule(2000, {
   //TODO set costs for scalars, objects, and lists
   scalarCost: 1,
   objectCost: 5,
   listFactor: 10,
-})
+});
 
 export const apollo = new ApolloServer({
   schema,
-  introspection: process.env.STAGE !== "production",
+  introspection: process.env.STAGE !== 'production',
   apollo: {},
   context: createContext,
-  validationRules: [depthLimit(5), ComplexityLimitRule]
+  validationRules: [depthLimit(5), ComplexityLimitRule],
+  plugins: [ApolloServerPluginLandingPageDisabled()],
 });
 
 export async function main() {
@@ -52,4 +66,4 @@ export async function main() {
     );
   });
 }
-process.env.STAGE != "test" && main();
+process.env.STAGE != 'test' && main();
