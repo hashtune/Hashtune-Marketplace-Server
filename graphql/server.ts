@@ -1,8 +1,7 @@
-import { ApolloServer } from 'apollo-server-express';
 import { ApolloServerPluginLandingPageDisabled } from 'apollo-server-core';
+import { ApolloServer } from 'apollo-server-express';
 import express from 'express';
 import depthLimit from 'graphql-depth-limit';
-import { createComplexityLimitRule } from 'graphql-validation-complexity';
 import helmet from 'helmet';
 import { createServer } from 'http';
 import { createContext } from './context';
@@ -18,7 +17,7 @@ app.use(
       directives: {
         ...helmet.contentSecurityPolicy.getDefaultDirectives(),
         'img-src': [
-          "'self'",
+          'self',
           'https://apollo-server-landing-page.cdn.apollographql.com/',
         ],
         'script-src': [
@@ -41,19 +40,19 @@ const corsOptions = {
   credentials: true,
 };
 
-const ComplexityLimitRule = createComplexityLimitRule(2000, {
-  //TODO set costs for scalars, objects, and lists
-  scalarCost: 1,
-  objectCost: 5,
-  listFactor: 10,
-});
+// const ComplexityLimitRule = createComplexityLimitRule(2000, {
+//   //TODO set costs for scalars, objects, and lists
+//   scalarCost: 1,
+//   objectCost: 5,
+//   listFactor: 10,
+// });
 
 export const apollo = new ApolloServer({
   schema,
   introspection: process.env.STAGE !== 'production',
   apollo: {},
   context: createContext,
-  validationRules: [depthLimit(5), ComplexityLimitRule],
+  validationRules: [depthLimit(5)],
   plugins: [ApolloServerPluginLandingPageDisabled()],
 });
 
