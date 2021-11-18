@@ -2,9 +2,9 @@
 
 ## Development
 
-Make sure you have `.env.local` with a DATABASE_URL corresponding to the postgres DB from the docker-compose file, and STAGE="development".
+Make sure you have `.env.local` with a DATABASE_URL corresponding to the postgres DB from the docker-compose file, and STAGE="development", and ENVIRONMENT="development".
 
-Also add a `.env.test` file with a DATABASE_URL corresponding to the postgres DB from the docker-compose file, and STAGE="test".
+Also add a `.env.test` file with a DATABASE_URL corresponding to the postgres DB from the docker-compose file, and STAGE="test", and ENVIRONMENT="development".
 
 `yarn` Install dependencies
 
