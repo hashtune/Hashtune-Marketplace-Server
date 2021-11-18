@@ -8,7 +8,6 @@ import { createContext } from './context';
 import { schema } from './schema';
 var cors = require('cors');
 
-console.log(process.env.SERVER_SECRET);
 const cookieParser = require('cookie-parser');
 
 const { PORT = 5000 } = process.env;

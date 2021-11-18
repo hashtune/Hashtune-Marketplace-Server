@@ -14,7 +14,6 @@ export const ListArtworks = extendType({
         listed: booleanArg(),
       },
       resolve: async (_, args, ctx: Context) => {
-        console.log(ctx.user);
         let res: Artwork[];
         if (args.auction === true) {
           res = await ctx.prisma.artwork.findMany({

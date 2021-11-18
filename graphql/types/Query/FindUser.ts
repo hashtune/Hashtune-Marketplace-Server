@@ -48,7 +48,6 @@ export const FindUser = extendType({
             };
           } else {
             if (!ctx.user) {
-              console.log('usr backend', ctx.user);
               // user exists but jwt is invalid
               return {
                 ClientErrorJWTInvalid: { message: 'JWT invalid' },
