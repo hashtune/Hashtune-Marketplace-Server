@@ -65,6 +65,9 @@ export const UserResult = objectType({
     t.nullable.field('ClientErrorUserNotFound', {
       type: errorTypes.ClientErrorUserNotFound,
     });
+    t.nullable.field('ClientErrorJWTInvalid', {
+      type: errorTypes.ClientErrorJWTInvalid,
+    });
     t.nullable.field('ClientErrorUnknown', {
       type: errorTypes.ClientErrorUnknown,
     });

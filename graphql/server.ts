@@ -6,10 +6,29 @@ import helmet from 'helmet';
 import { createServer } from 'http';
 import { createContext } from './context';
 import { schema } from './schema';
+var cors = require('cors');
+
+const cookieParser = require('cookie-parser');
 
 const { PORT = 5000 } = process.env;
 
 const app = express();
+
+// TODO move to separate file ./auth/passport.c
+// TODO use this passport middleware in mutations
+// app.use(session({ secret: 'secret', resave: true, saveUninitialized: true }));
+app.use(cookieParser());
+
+app.use(
+  cors({
+    origin: 'http://localhost:3000',
+    credentials: true,
+  })
+);
+
+app.use(express.json());
+
+export const secret = process.env.SERVER_SECRET ?? '';
 
 app.use(
   helmet({
