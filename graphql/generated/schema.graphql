@@ -225,6 +225,10 @@ export interface NexusGenObjects {
     // root type
     message?: string | null; // String
   };
+  ClientErrorJWTInvalid: {
+    // root type
+    message?: string | null; // String
+  };
   ClientErrorUnknown: {
     // root type
     message: string; // String!
@@ -256,6 +260,7 @@ export interface NexusGenObjects {
     ClientErrorInvalidHandle?:
       | NexusGenRootTypes['ClientErrorInvalidHandle']
       | null; // ClientErrorInvalidHandle
+    ClientErrorJWTInvalid?: NexusGenRootTypes['ClientErrorJWTInvalid'] | null; // ClientErrorJWTInvalid
     ClientErrorUnknown?: NexusGenRootTypes['ClientErrorUnknown'] | null; // ClientErrorUnknown
     ClientErrorUserNotFound?:
       | NexusGenRootTypes['ClientErrorUserNotFound']
@@ -380,6 +385,10 @@ export interface NexusGenFieldTypes {
     // field return type
     message: string | null; // String
   };
+  ClientErrorJWTInvalid: {
+    // field return type
+    message: string | null; // String
+  };
   ClientErrorUnknown: {
     // field return type
     message: string; // String!
@@ -406,6 +415,7 @@ export interface NexusGenFieldTypes {
     addAuction: NexusGenRootTypes['AuctionResult']; // AuctionResult!
     cookie: string; // String!
     deleteAuction: NexusGenRootTypes['AuctionResult']; // AuctionResult!
+    disconnected: boolean; // Boolean!
     registerUser: NexusGenRootTypes['UserResult']; // UserResult!
     updateArtwork: NexusGenRootTypes['ArtworkResult']; // ArtworkResult!
   };
@@ -438,6 +448,7 @@ export interface NexusGenFieldTypes {
     ClientErrorInvalidHandle:
       | NexusGenRootTypes['ClientErrorInvalidHandle']
       | null; // ClientErrorInvalidHandle
+    ClientErrorJWTInvalid: NexusGenRootTypes['ClientErrorJWTInvalid'] | null; // ClientErrorJWTInvalid
     ClientErrorUnknown: NexusGenRootTypes['ClientErrorUnknown'] | null; // ClientErrorUnknown
     ClientErrorUserNotFound:
       | NexusGenRootTypes['ClientErrorUserNotFound']
@@ -541,6 +552,10 @@ export interface NexusGenFieldTypeNames {
     // field return type name
     message: 'String';
   };
+  ClientErrorJWTInvalid: {
+    // field return type name
+    message: 'String';
+  };
   ClientErrorUnknown: {
     // field return type name
     message: 'String';
@@ -567,6 +582,7 @@ export interface NexusGenFieldTypeNames {
     addAuction: 'AuctionResult';
     cookie: 'String';
     deleteAuction: 'AuctionResult';
+    disconnected: 'Boolean';
     registerUser: 'UserResult';
     updateArtwork: 'ArtworkResult';
   };
@@ -595,6 +611,7 @@ export interface NexusGenFieldTypeNames {
     // field return type name
     ClientErrorHandleAlreadyExists: 'ClientErrorHandleAlreadyExists';
     ClientErrorInvalidHandle: 'ClientErrorInvalidHandle';
+    ClientErrorJWTInvalid: 'ClientErrorJWTInvalid';
     ClientErrorUnknown: 'ClientErrorUnknown';
     ClientErrorUserNotFound: 'ClientErrorUserNotFound';
     Users: 'User';

@@ -14,6 +14,13 @@ export const ClientErrorUserNotFound = objectType({
   },
 });
 
+export const ClientErrorJWTInvalid = objectType({
+  name: 'ClientErrorJWTInvalid',
+  definition(t) {
+    t.nullable.string('message');
+  },
+});
+
 export const ClientErrorInvalidHandle = objectType({
   name: 'ClientErrorInvalidHandle',
   definition(t) {
