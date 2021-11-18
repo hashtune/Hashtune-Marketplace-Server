@@ -55,7 +55,7 @@ const corsOptions = {
     'https://studio.apollographql.com',
     'http://localhost:5000',
     'http://localhost:3000',
-    'https://hashtune.co/'
+    'https://hashtune.co'
   ],
   credentials: true,
 };
