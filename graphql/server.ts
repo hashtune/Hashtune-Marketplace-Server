@@ -6,7 +6,7 @@ import helmet from 'helmet';
 import { createServer } from 'http';
 import { createContext } from './context';
 import { schema } from './schema';
-var cors = require('cors');
+const cors = require('cors');
 
 const cookieParser = require('cookie-parser');
 
@@ -55,6 +55,7 @@ const corsOptions = {
     'https://studio.apollographql.com',
     'http://localhost:5000',
     'http://localhost:3000',
+    'https://hashtune.co/'
   ],
   credentials: true,
 };
