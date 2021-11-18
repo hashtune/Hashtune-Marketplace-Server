@@ -13,7 +13,7 @@ const config: InitialOptionsTsJest = {
   reporters: ['default', '<rootDir>/__tests__/customReporter.ts'],
   globals: {
     'ts-jest': {},
-    'testData': {}
+    testData: {},
   },
   coverageThreshold: {
     global: {
@@ -23,7 +23,7 @@ const config: InitialOptionsTsJest = {
       statements: 0,
     },
   },
-  moduleDirectories: ['src', 'node_modules'],
+  moduleDirectories: ['<rootDir>/src', 'node_modules'],
   testPathIgnorePatterns: ['<rootDir>/dist/', '<rootDir>/node_modules/'],
 };
 
