@@ -1,4 +1,4 @@
-import { createEvent } from '../constants';
+import { createTokenEvent } from '../constants';
 import chain from '../singletons/chain';
 import { prisma } from '../singletons/prisma';
 const cron = require('node-cron');
@@ -48,7 +48,7 @@ cron.schedule('*/59 * * * *', async () => {
   // Check chain for event again
   console.log('CHECKING CHAIN FOR PENDING WORKS');
   updatedPendingArtworks.forEach(async art => {
-    const tx = await chain.checkSuccessLog(createEvent, art.txHash);
+    const tx = await chain.checkSuccessLog(createTokenEvent, art.txHash);
     if (tx !== null && tx !== false) {
       await prisma.artwork.update({
         where: {

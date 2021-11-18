@@ -1,5 +1,5 @@
 import { extendType, inputObjectType } from 'nexus';
-import { createEvent } from '../../../../constants';
+import { createTokenEvent } from '../../../../constants';
 import chain from '../../../../singletons/chain';
 import { Context } from '../../../context';
 
@@ -51,7 +51,7 @@ export const addArtwork = extendType({
           if (isValidAuction || isValidSale) {
             // TODO move this to a constants file that maps the name to the string
             const result = await chain.checkSuccessLog(
-              createEvent,
+              createTokenEvent,
               args.txHash
             );
             // The transaction failed

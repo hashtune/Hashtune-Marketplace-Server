@@ -1,5 +1,5 @@
 import { extendType, inputObjectType } from 'nexus';
-import { createEvent } from '../../../../constants';
+import { createBidEvent } from '../../../../constants';
 import chain from '../../../../singletons/chain';
 import { Context } from '../../../context';
 
@@ -45,7 +45,7 @@ export const addBid = extendType({
                 let pending = false;
 
                 const result = await chain.checkSuccessLog(
-                    createEvent,
+                    createBidEvent,
                     args.txHash
                 );
 
