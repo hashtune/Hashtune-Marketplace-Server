@@ -189,3 +189,9 @@ You can find the most recent mutations in the Apollo Server Sanbox as we add mor
 
 <img src=".github/assets/images/diagram.png" width="80%" />
 </div>
+
+---
+
+## Contributions 
+
+Please refer to the [Sprint Board](https://github.com/orgs/hashtune/projects/1) and the [Pull Requests History](https://github.com/hashtune/Hashtune-Marketplace-Server/pulls?q=is%3Apr) for more information about contribution history.
