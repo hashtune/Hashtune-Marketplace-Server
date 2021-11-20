@@ -103,6 +103,11 @@ Defining the corresponding GraphQL Object Types, which contain identical informa
 
 Error Types are currently used to give the client more information about what went wrong in a request in case of error. We could remove these types for security reasons once we launch our product.
 
+<details>
+<summary><b>Error Types table</b></summary>
+  
+<br>
+
 | Name | Properties |
 |----|---|
 | ClientErrorArgumentsConflict | `path`: String, `message`: String|
@@ -119,12 +124,22 @@ Error Types are currently used to give the client more information about what we
 | ClientErrorUnkown | `message`: String|
 | externalChainError | `message`: String |  
 | externalChainErrorStillPending | `message`: String |
+  
+</details>
 
 ---
 
 #### Return Types
 
 Return Types are used to wrap and return Data Types and Error Types.
+
+
+| Name | Type | Errors Number |
+|----|---|--|
+| ArtworkResult | Artworks: Artwork[] | 6 |
+| AuctionResult | Auctions: Auction[] | 7 |
+| UserResult | Users: User[] | 5 | 
+
 
 ---
 
