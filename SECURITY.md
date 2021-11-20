@@ -72,7 +72,7 @@ John, Amy, or Sara wants to run a malicious mutation on the server
 - Detection
   - [ ] Logged to the log console.
 - Response
-  - [ ] We know who run the request and we would consider a ban
+  - We know who run the request and we would consider a ban
 
 ### Limiting Graphql queries depth
 
@@ -83,7 +83,7 @@ John, Amy, or Sara runs a malicious deeply nested query to overload the server
 - Detection
   - [ ] The malicious query is logged.
 - Response
-  - [ ] If the user tries to make too many malicious queries we temporarely ban them
+  - If the user tries to make too many malicious queries we temporarely ban them
 
 ### Limit GraphQL query complexity
 
@@ -95,7 +95,7 @@ John, Amy, or Sara can try to overload the the database instance by running mali
 - Detection
   - [ ] The malicious query is logged.
 - Response
-  - [ ]: If the user tries to make too many malicious queries we temporarely ban them
+  - If the user tries to make too many malicious queries we would temporarely ban them
 
 ### Adding Request Security headers
 
@@ -152,7 +152,7 @@ John, Amy, or Sara do not want to be discovered while attacking the server.
 - Detection
   - [ ] Their attak will be registered by the logging and monitoring service
 - Response
-  - [ ] Legal action would be taken
+  - Legal action would be taken
 
 ### SQL injection
 
@@ -163,7 +163,7 @@ John, Amy, or Sara wants to compromise the database by running an SQL injection 
 - Detection
   - [x] The malicious code will be logged
 - Response
-  -
+  - We would consider banning the user by ip
 
 ### Authorization
 
@@ -175,7 +175,7 @@ John wants to sell an artwork that belongs to Amy.
 - Detection
   - [x] The request will be logged
 - Response
-  - [ ] After detecting the malicious activity we would consider baning the user
+  - After detecting the malicious activity we would consider banning the user
 
 ## Footnotes
 
