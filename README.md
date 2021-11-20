@@ -116,7 +116,9 @@ Error Types are currently used to give the client more information about what we
 | ClientErrorJWTInvalid | `message`: String |
 | ClientErrorInvalidHandle| `message`: String|
 | ClientErrorHandleAlreadyExists | `message`: String |
-| ClientErrorUnkown | `message`: String, `externalChainError`: String, `externalChainErrorStillPending`: String |
+| ClientErrorUnkown | `message`: String|
+| externalChainError | `message`: String |  
+| externalChainErrorStillPending | `message`: String |
 
 ---
 
