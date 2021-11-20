@@ -1,11 +1,13 @@
-# Security concept 🔒
+![](.github/assets/images/cover.png)
+
+# Security concept 🕵️‍♂️
 
 While developing Hashtune's marketplace server, we made security a top-level priority.
 
-<details>
+<details open>
 <summary><b>Table of contents</b></summary>
 
-- [Security concept 🔒](#security-concept-)
+- [Security concept](#security-concept-)
   - [Goals](#goals)
   - [Approach](#approach)
   - [Personas](#personas)
@@ -31,7 +33,7 @@ In securing our system, we focused on two high-level goals:
 
 ## Approach
 
-To improve the security of our system in a structured approach we combine two methods: _Threat modelling_[¹](#footnotes) using the STRIDE framework and _Abuser stories_[²](#footnotes).
+To improve the security of our system in a structured approach we combine two methods: Threat modelling using the STRIDE framework and Abuser stories
 
 Additionally we checked the [OWASP Top Ten](https://owasp.org/www-project-top-ten/) to avoid common security risks.
 
@@ -179,5 +181,6 @@ John wants to sell an artwork that belongs to Amy.
 
 ## Footnotes
 
-1. "[R]isk-based approach to designing secure systems [...], based on identifying threats in order to develop mitigations to them." _([source](https://martinfowler.com/articles/agile-threat-modelling.html))_
-1. "[A] user story from the point of view of a malicious adversary" _([source](https://rietta.com/blog/what-is-an-abuser-story-software/))_, used to "identify how attackers may abuse the system and jeopardize stakeholders' assets." _([source](https://handouts.secappdev.org/handouts/2008/abuser%20stories.pdf))_
+- A Guide to Threat Modelling for Developers ([source](https://martinfowler.com/articles/agile-threat-modelling.html))
+- Agile Security Requirements Engineering [source](https://handouts.secappdev.org/handouts/2008/abuser%20stories.pdf)
+- What is an Abuser Story (Software) [Source](https://rietta.com/blog/what-is-an-abuser-story-software/)
