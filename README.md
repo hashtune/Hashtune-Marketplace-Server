@@ -155,12 +155,29 @@ All the input mentioned inputs that are optional have `?` sign
 | ListArtowrks | Finding artworks. Optionally filtered by their `saleType` or status | `auction` Boolean?, `listed` Boolean?, | `ArtworkResult` |
 | ListCreators | Returns users with the status of `approvedCreator` | N/A | `userResult` |
 
+You can find the most recent queries in the Apollo Server Sanbox as we add more
 
 
 
 ---
 
 ### Mutations
+
+Mutation are used to perform operation on our GraphQl resources
+
+> Input types aren't listed in this table, you can find them in teh Apollo Sanbox
+
+| Name  | Description | Return Value|
+|--------|----|---|
+| AddArtwork | Creating an artwork | `ArtworkResult` |
+| UpdateArtwork | Updating an artwork's data | `ArtworkResult`|
+| AddAuction | Creating a new auction | `AuctionResult` |
+| deleteAuction | Deletes an auction that has no active bids | `AuctionResult` |
+| registerUser | User registration | `UserResult` |
+| updateUser | Update a user's profile data | `UserResult` |
+
+You can find the most recent mutations in the Apollo Server Sanbox as we add more
+
 
 ---
 
