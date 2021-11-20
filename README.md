@@ -182,3 +182,10 @@ You can find the most recent mutations in the Apollo Server Sanbox as we add mor
 ---
 
 ## Database Entity-Relationship Model 📌
+
+<br>
+
+<div align="center">
+
+<img src=".github/assets/images/diagram.png" width="80%" />
+</div>
