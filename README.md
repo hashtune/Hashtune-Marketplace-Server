@@ -80,23 +80,53 @@ Data Types, Queries, and Mutations are defined in the `./graphql/types/` folder.
 
 We can differentiate between 3 kinds of types: Data Types, Error Types, and Return Types.
 
+---
+
 #### Data Types
 
 Data Types represent the models defined in the `schema.prisma` file.
 
-| Name | Description |
-|------|-------------|
-| Artwork | Returns the data relevant to the artwork |
+Defining the corresponding GraphQL Object Types, which contain identical informations that we have defined in our database schema
+
+| Name |
+|------|
+| Artwork |  
+| Auction | 
+| Bid | 
+| Errors|
+| User |
+| Wallet |
+
+---
 
 #### Error Types
 
 Error Types are currently used to give the client more information about what went wrong in a request in case of error. We could remove these types for security reasons once we launch our product.
 
+---
+
 #### Return Types
 
 Return Types are used to wrap and return Data Types and Error Types.
 
-### Queries
+---
+
+### Queries 
+
+All the input mentioned inputs that are optional have `?` sign
+
+
+| Name  | Description | Input | Return value | 
+|--------|----|---|---|
+| FindArtwork | Find an artwork by its unique ID | `id` STRING | `ArtworkResult` |
+| FindUser | Finding a user by their handle or wallet public key | `handle` String?, `publikKey` String? |  `UserResult` |
+| ListArtowrks | Finding artworks. Optionally filtered by their `saleType` or status | `auction` Boolean?, `listed` Boolean?, | `ArtworkResult` |
+| ListCreators | Returns users with the status of `approvedCreator` | N/A | `userResult` |
+
+
+
+
+---
 
 ### Mutations
 
