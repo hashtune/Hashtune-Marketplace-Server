@@ -103,6 +103,21 @@ Defining the corresponding GraphQL Object Types, which contain identical informa
 
 Error Types are currently used to give the client more information about what went wrong in a request in case of error. We could remove these types for security reasons once we launch our product.
 
+| Name | Properties |
+|----|---|
+| ClientErrorArgumentsConflict | `path`: String, `message`: String|
+| ClientErrorArtworkNotFound | `message`: String|
+| ClientErrorAuctionAlreadyExists | `message`: String|
+| ClientErrorArtworkNotAnAuction | `message`: String |
+| ClientErrorAuctionNotFound | `message`: String|
+| ClientErrorAuctionNotDeletable | `message`: String |
+| ClientErrorUserUnAuthorized | `message`: String|
+| ClientErrorUserNotFound | `message`: String|
+| ClientErrorJWTInvalid | `message`: String |
+| ClientErrorInvalidHandle| `message`: String|
+| ClientErrorHandleAlreadyExists | `message`: String |
+| ClientErrorUnkown | `message`: String, `externalChainError`: String, `externalChainErrorStillPending`: String |
+
 ---
 
 #### Return Types
