@@ -41,7 +41,14 @@ app.use(
 
 const server = createServer(app);
 
-const corsOrigin = isProduction ? 'https://hashtune.co' : ['https://studio.apollographql.com', 'http://localhost:5000', 'http://localhost:3000', 'https://hashtune.co'];
+const corsOrigin = isProduction
+  ? 'https://hashtune.co'
+  : [
+      'https://studio.apollographql.com',
+      'http://localhost:5000',
+      'http://localhost:3000',
+      'https://hashtune.co',
+    ];
 const corsOptions = {
   origin: corsOrigin,
   credentials: true,

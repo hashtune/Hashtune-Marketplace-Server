@@ -24,7 +24,7 @@ export const extractUserFromToken = (
   if (!rawHeaderToken) return null;
   return jwt.verify(
     rawHeaderToken,
-    process.env.SERVER_SECRET,
+    process.env.SERVER_SECRET ?? '',
     (err: any, data: any) => {
       if (!err && data.user.id) {
         return data.user;
