@@ -1,33 +1,21 @@
 import { ApolloServerPluginLandingPageDisabled } from 'apollo-server-core';
 import { ApolloServer } from 'apollo-server-express';
+import cookieParser from 'cookie-parser';
 import express from 'express';
 import depthLimit from 'graphql-depth-limit';
 import helmet from 'helmet';
 import { createServer } from 'http';
 import { createContext } from './context';
 import { schema } from './schema';
-const cors = require('cors');
-
-const cookieParser = require('cookie-parser');
 
 const { PORT = 5000 } = process.env;
-
 const app = express();
+const isProduction = process.env.STAGE === 'production';
 
 // TODO move to separate file ./auth/passport.c
 // TODO use this passport middleware in mutations
 // app.use(session({ secret: 'secret', resave: true, saveUninitialized: true }));
 app.use(cookieParser());
-
-app.use(
-  cors({
-    origin:
-      process.env.STAGE !== 'production'
-        ? 'http://localhost:3000'
-        : 'https://hashtune.co',
-    credentials: true,
-  })
-);
 
 app.use(express.json());
 
@@ -53,13 +41,16 @@ app.use(
 
 const server = createServer(app);
 
+const corsOrigin = isProduction
+  ? 'https://hashtune.co'
+  : [
+      'https://studio.apollographql.com',
+      'http://localhost:5000',
+      'http://localhost:3000',
+      'https://hashtune.co',
+    ];
 const corsOptions = {
-  origin: [
-    'https://studio.apollographql.com',
-    'http://localhost:5000',
-    'http://localhost:3000',
-    'https://hashtune.co',
-  ],
+  origin: corsOrigin,
   credentials: true,
 };
 
@@ -72,11 +63,11 @@ const corsOptions = {
 
 export const apollo = new ApolloServer({
   schema,
-  introspection: process.env.STAGE !== 'production',
+  introspection: !isProduction,
   apollo: {},
   context: createContext,
   validationRules: [depthLimit(5)],
-  plugins: [ApolloServerPluginLandingPageDisabled()],
+  plugins: isProduction ? [ApolloServerPluginLandingPageDisabled()] : [],
 });
 
 export async function main() {
@@ -88,4 +79,5 @@ export async function main() {
     );
   });
 }
+
 process.env.STAGE != 'test' && main();
