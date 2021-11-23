@@ -49,7 +49,7 @@ describe('Test users query', () => {
     expect(res).toMatchSnapshot();
   });
 
-  it.skip('should find a user by handle', async () => {
+  it('should find a user by handle', async () => {
     const res = await server.executeOperation({
       query: FIND_USER_QUERY,
       variables: { findUserHandle: global.testData.users[0].handle },
