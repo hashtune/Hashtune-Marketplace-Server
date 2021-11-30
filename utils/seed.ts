@@ -42,7 +42,7 @@ export default async function seed() {
         owned: {
           create: {
             description: 'song description',
-            handle: 'art 1',
+            handle: 'art1',
             txHash: 'abc123',
             pending: false,
             image: 'blahblah',

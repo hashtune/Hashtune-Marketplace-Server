@@ -674,7 +674,7 @@ export interface NexusGenArgTypes {
   Query: {
     findArtwork: {
       // args
-      id: string; // String!
+      handle: string; // String!
     };
     findUser: {
       // args
