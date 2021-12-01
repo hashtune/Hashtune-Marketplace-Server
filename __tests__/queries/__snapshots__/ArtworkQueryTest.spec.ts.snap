@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Test artwork queries should find an artwork by id 1`] = `
+exports[`Test artwork queries should find an artwork by handle 1`] = `
 Object {
   "data": Object {
     "findArtwork": Object {
@@ -39,7 +39,7 @@ Object {
           "saleType": "fixed",
         },
         Object {
-          "handle": "art 1",
+          "handle": "art1",
           "saleType": "auction",
         },
         Object {
@@ -71,7 +71,7 @@ Object {
 }
 `;
 
-exports[`Test artwork queries should not find an artwork by id and throw an error 1`] = `
+exports[`Test artwork queries should not find an artwork by handle and throw an error 1`] = `
 Object {
   "data": Object {
     "findArtwork": Object {
@@ -108,7 +108,7 @@ Object {
           "saleType": "fixed",
         },
         Object {
-          "handle": "art 1",
+          "handle": "art1",
           "saleType": "auction",
         },
         Object {
@@ -158,7 +158,7 @@ Object {
           "saleType": "auction",
         },
         Object {
-          "handle": "art 1",
+          "handle": "art1",
           "saleType": "auction",
         },
       ],
