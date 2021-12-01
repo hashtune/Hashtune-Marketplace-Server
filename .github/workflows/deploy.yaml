@@ -23,5 +23,5 @@ jobs:
             yarn prisma:deploy
             yarn prisma:generate
             npx tsc
-            pm2 start dist/graphql/server.js
+            pm2 start dist/graphql/server.js --name "server" -- start
             echo 'Succesfully deployed 🎉'
