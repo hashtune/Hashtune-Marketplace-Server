@@ -18,6 +18,7 @@
     "data:seed": "dotenv -e .env.test ts-node ./utils/executeSeed",
     "data:reset": "dotenv -e .env.test ts-node ./utils/executeReset",
     "prisma:migrate": "dotenv -e .env.local prisma migrate dev",
+    "prisma:deploy": "dotenv -e .env.local prisma migrate deploy",
     "ci:prisma:migrate": "prisma migrate dev",
     "ci:prisma:generate": "prisma generate",
     "prisma:generate": "dotenv -e .env.local prisma generate",

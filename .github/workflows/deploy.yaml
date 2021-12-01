@@ -19,8 +19,9 @@ jobs:
             git clone git@github.com:hashtune/Hashtune-Marketplace-Server.git
             cd Hashtune-Marketplace-Server
             yarn
+            pm2 delete server
+            yarn prisma:deploy
+            yarn prisma:generate
             npx tsc
-            pm2 kill
             pm2 start dist/graphql/server.js
             echo 'Succesfully deployed 🎉'
-            
