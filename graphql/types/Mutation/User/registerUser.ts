@@ -86,8 +86,9 @@ export const SignUp = extendType({
         publicKey: nonNull(stringArg()),
         typedData: nonNull(stringArg()),
       },
-      description: 'Returns cookie if signing',
-      resolve: async (_, args, { req, res }) => {
+      description:
+        'Returns cookie if signing, must be called after the user is created in the database. ',
+      resolve: async (_, args, ctx) => {
         // TODO proper errors
         const { signedMessage, publicKey, typedData } = args;
         // Extract public key
@@ -105,10 +106,27 @@ export const SignUp = extendType({
         if (extractedAddress !== publicKey) {
           throw new Error('Does not match');
         }
+        // check that the user was created in the db
+        const wallet = await ctx.prisma.wallet.findUnique({
+          where: {
+            publicKey: publicKey,
+          },
+          include: {
+            user: true,
+          },
+        });
+        if (!wallet.user) {
+          throw new Error('User was not created in the db');
+        }
         const token = jwt.sign(
           {
             user: {
-              id: extractedAddress,
+              id: wallet.user.id,
+              handle: wallet.user.handle,
+              image: wallet.user.image,
+              email: wallet.user.email,
+              isApprovedCreator: wallet.user.isApprovedCreator,
+              publicKey: extractedAddress,
             },
           },
           process.env.SERVER_SECRET ?? '',
@@ -116,7 +134,7 @@ export const SignUp = extendType({
             expiresIn: '1d',
           }
         );
-        req.res.cookie('jwt', token, {
+        ctx.req.res.cookie('jwt', token, {
           httpOnly: true,
           secure: false, // true in prod,
           sameSite: 'lax', // 'strict' in prod,
