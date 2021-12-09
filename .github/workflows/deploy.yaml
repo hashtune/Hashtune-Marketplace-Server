@@ -24,8 +24,8 @@ jobs:
             cd Hashtune-Marketplace-Server
             yarn
             pm2 delete server
-            yarn prisma:deploy
-            yarn prisma:generate
+            yarn production:prisma:deploy
+            yarn production:prisma:generate
             npx tsc
             pm2 start dist/graphql/server.js --name "server" -- start
             echo 'Succesfully deployed 🎉'
