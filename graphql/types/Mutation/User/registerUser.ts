@@ -122,6 +122,7 @@ export const SignUp = extendType({
           {
             user: {
               id: wallet.user.id,
+              fullName: wallet.user.fullName,
               handle: wallet.user.handle,
               image: wallet.user.image,
               email: wallet.user.email,
