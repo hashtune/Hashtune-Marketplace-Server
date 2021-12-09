@@ -24,7 +24,7 @@ jobs:
             cd Hashtune-Marketplace-Server
             yarn
             pm2 delete server
-            echo DATABASE_URL=${{secrets.DATABASE_URL}} \n SERVER_SECRET=${{secrets.SERVER_SECRET}} \n STAGE=production > .env.production
+            echo DATABASE_URL=${{secrets.DATABASE_URL}} \\nSERVER_SECRET=${{secrets.SERVER_SECRET}} \\nSTAGE=production > .env.production
             yarn production:prisma:deploy
             yarn production:prisma:generate
             npx tsc
