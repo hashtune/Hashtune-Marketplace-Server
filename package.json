@@ -22,6 +22,7 @@
     "ci:prisma:migrate": "prisma migrate dev",
     "ci:prisma:generate": "prisma generate",
     "prisma:generate": "dotenv -e .env.local prisma generate",
+    "prisma:studio": "dotenv -e .env.local prisma studio",
     "nexus:watch": "nodemon --exec 'yarn ts-node graphql/schema' --ext 'ts' --watch '*/graphql/**/*.ts' --ignore 'graphql/generated/schema.graphql'",
     "test:environment:docker": "yarn docker:up && yarn docker:test:run & yarn docker:down",
     "docker:up": "docker-compose up -d --build",
