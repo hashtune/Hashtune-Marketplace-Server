@@ -6,14 +6,18 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    env:
+      SERVER_SECRET: ${{secrets.SERVER_SECRET}}
+      STAGE: production
+      DATABASE_URL: ${{secrest.DATABASE_URL}}
     steps:
-      - name: Deploy to DigitalOcean  
+      - name: Deploy to DigitalOcean
         uses: appleboy/ssh-action@v0.1.4
         with:
           host: ${{secrets.SSH_HOST}}
           key: ${{secrets.SSH_KEY}}
           username: ${{ secrets.SSH_USERNAME }}
-     
+
           script: |
             rm -rf Hashtune-Marketplace-Server
             git clone git@github.com:hashtune/Hashtune-Marketplace-Server.git
