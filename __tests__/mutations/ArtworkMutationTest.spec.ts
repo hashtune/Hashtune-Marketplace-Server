@@ -4,7 +4,7 @@ import getGlobalData from '../../utils/getGlobalData';
 import reset from '../../utils/reset';
 import seed from '../../utils/seed';
 import server from '../server';
-describe('Test artwork mutations', () => {
+describe.skip('Test artwork mutations', () => {
   // Mock external service
   chain.checkSuccessLog = jest.fn();
   beforeAll(async () => {
