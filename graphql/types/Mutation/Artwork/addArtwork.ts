@@ -31,8 +31,9 @@ export const addArtwork = extendType({
       args: { InputType },
       resolve: async (_, args, ctx: Context) => {
         args = args.InputType;
+        const userId = ctx.user.id;
         const creatorData = await ctx.prisma.user.findUnique({
-          where: { id: args.creator },
+          where: { id: userId },
         });
         let pending = false;
         // TODO: Check that the creator creatorData.id is equal
@@ -81,8 +82,8 @@ export const addArtwork = extendType({
                   saleType: args.saleType,
                   price: args.salePrice || null,
                   description: args.description,
-                  currentOwner: { connect: { id: args.currentOwner } },
-                  creator: { connect: { id: args.creator } },
+                  currentOwner: { connect: { id: userId } },
+                  creator: { connect: { id: userId } },
                 },
               };
               artwork = await ctx.prisma.artwork.create(payload);
@@ -99,8 +100,8 @@ export const addArtwork = extendType({
                   saleType: args.saleType,
                   reservePrice: args.reservePrice || null,
                   description: args.description,
-                  currentOwner: { connect: { id: args.currentOwner } },
-                  creator: { connect: { id: args.creator } },
+                  currentOwner: { connect: { id: userId } },
+                  creator: { connect: { id: userId } },
                   auctions: {
                     createMany: {
                       data: [{}],
@@ -134,10 +135,11 @@ export const addArtwork = extendType({
               // May have worked on the chain and not in our database... Contact support in this case
               ClientErrorArgumentsConflict: {
                 message: `Argument conflict.`,
-                path: `${args.saleType == 'auction' && args.salePrice
-                  ? "Auction doesn't need a price arg"
-                  : 'Fixed sale requires a price arg and no reservePrice arg'
-                  }`,
+                path: `${
+                  args.saleType == 'auction' && args.salePrice
+                    ? "Auction doesn't need a price arg"
+                    : 'Fixed sale requires a price arg and no reservePrice arg'
+                }`,
               },
             };
           }
