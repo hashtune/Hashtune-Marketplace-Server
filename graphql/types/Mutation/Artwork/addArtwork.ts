@@ -31,7 +31,13 @@ export const addArtwork = extendType({
       args: { InputType },
       resolve: async (_, args, ctx: Context) => {
         args = args.InputType;
-        const userId = ctx.user.id;
+        const userId = ctx?.user?.id;
+        if (!userId)
+          return {
+            ClientErrorUserUnauthorized: {
+              message: 'Not approved or non-existing creator',
+            },
+          };
         const creatorData = await ctx.prisma.user.findUnique({
           where: { id: userId },
         });

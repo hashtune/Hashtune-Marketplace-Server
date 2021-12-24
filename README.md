@@ -3,6 +3,7 @@
 <div align="center">
 
 # **Hashtune Marketplace Server**
+
 </div>
   
 ## Architecture 🏛
@@ -55,7 +56,6 @@ You can now visit `http://localhost:5000/graphql` for the playground.
 
 ## Testing 🧪
 
-
 Different options are available for testing the server, you can run:
 
 - `yarn test:watch` To run API integration tests in watch mode while writing them;
@@ -63,6 +63,8 @@ Different options are available for testing the server, you can run:
 - `yarn test:api` To run API integration tests;
 
 - `yarn test:api -u` To update API integration test snapshots.
+
+Note that the dev server must be stopped in order to run the tests, and the database should be up.
 
 ---
 
@@ -74,7 +76,7 @@ Security is a top-level priority for us. To know more about all the security mea
 
 ## Types, Queries, and Mutations 🗂
 
-Data Types, Queries, and Mutations are defined in the `./graphql/types/` folder. Since we used a code-first approach, everything is defined with the nexus  library using `objectType` and `extendType`.
+Data Types, Queries, and Mutations are defined in the `./graphql/types/` folder. Since we used a code-first approach, everything is defined with the nexus library using `objectType` and `extendType`.
 
 ### Types
 
@@ -88,14 +90,14 @@ Data Types represent the models defined in the `schema.prisma` file.
 
 Defining the corresponding GraphQL Object Types, which contain identical informations that we have defined in our database schema
 
-| Name |
-|------|
-| Artwork |  
-| Auction | 
-| Bid | 
-| Errors|
-| User |
-| Wallet |
+| Name    |
+| ------- |
+| Artwork |
+| Auction |
+| Bid     |
+| Errors  |
+| User    |
+| Wallet  |
 
 ---
 
@@ -108,23 +110,23 @@ Error Types are currently used to give the client more information about what we
   
 <br>
 
-| Name | Properties |
-|----|---|
-| ClientErrorArgumentsConflict | `path`: String, `message`: String|
-| ClientErrorArtworkNotFound | `message`: String|
-| ClientErrorAuctionAlreadyExists | `message`: String|
-| ClientErrorArtworkNotAnAuction | `message`: String |
-| ClientErrorAuctionNotFound | `message`: String|
-| ClientErrorAuctionNotDeletable | `message`: String |
-| ClientErrorUserUnAuthorized | `message`: String|
-| ClientErrorUserNotFound | `message`: String|
-| ClientErrorJWTInvalid | `message`: String |
-| ClientErrorInvalidHandle| `message`: String|
-| ClientErrorHandleAlreadyExists | `message`: String |
-| ClientErrorUnkown | `message`: String|
-| externalChainError | `message`: String |  
-| externalChainErrorStillPending | `message`: String |
-  
+| Name                            | Properties                        |
+| ------------------------------- | --------------------------------- |
+| ClientErrorArgumentsConflict    | `path`: String, `message`: String |
+| ClientErrorArtworkNotFound      | `message`: String                 |
+| ClientErrorAuctionAlreadyExists | `message`: String                 |
+| ClientErrorArtworkNotAnAuction  | `message`: String                 |
+| ClientErrorAuctionNotFound      | `message`: String                 |
+| ClientErrorAuctionNotDeletable  | `message`: String                 |
+| ClientErrorUserUnAuthorized     | `message`: String                 |
+| ClientErrorUserNotFound         | `message`: String                 |
+| ClientErrorJWTInvalid           | `message`: String                 |
+| ClientErrorInvalidHandle        | `message`: String                 |
+| ClientErrorHandleAlreadyExists  | `message`: String                 |
+| ClientErrorUnkown               | `message`: String                 |
+| externalChainError              | `message`: String                 |
+| externalChainErrorStillPending  | `message`: String                 |
+
 </details>
 
 ---
@@ -133,31 +135,26 @@ Error Types are currently used to give the client more information about what we
 
 Return Types are used to wrap and return Data Types and Error Types.
 
-
-| Name | Type | Errors Number |
-|----|---|--|
-| ArtworkResult | Artworks: Artwork[] | 6 |
-| AuctionResult | Auctions: Auction[] | 7 |
-| UserResult | Users: User[] | 5 | 
-
+| Name          | Type                | Errors Number |
+| ------------- | ------------------- | ------------- |
+| ArtworkResult | Artworks: Artwork[] | 6             |
+| AuctionResult | Auctions: Auction[] | 7             |
+| UserResult    | Users: User[]       | 5             |
 
 ---
 
-### Queries 
+### Queries
 
 All the input mentioned inputs that are optional have `?` sign
 
-
-| Name  | Description | Input | Return value | 
-|--------|----|---|---|
-| FindArtwork | Find an artwork by its unique ID | `id` STRING | `ArtworkResult` |
-| FindUser | Finding a user by their handle or wallet public key | `handle` String?, `publikKey` String? |  `UserResult` |
+| Name         | Description                                                         | Input                                  | Return value    |
+| ------------ | ------------------------------------------------------------------- | -------------------------------------- | --------------- |
+| FindArtwork  | Find an artwork by its unique ID                                    | `id` STRING                            | `ArtworkResult` |
+| FindUser     | Finding a user by their handle or wallet public key                 | `handle` String?, `publikKey` String?  | `UserResult`    |
 | ListArtowrks | Finding artworks. Optionally filtered by their `saleType` or status | `auction` Boolean?, `listed` Boolean?, | `ArtworkResult` |
-| ListCreators | Returns users with the status of `approvedCreator` | N/A | `userResult` |
+| ListCreators | Returns users with the status of `approvedCreator`                  | N/A                                    | `userResult`    |
 
 You can find the most recent queries in the Apollo Server Sanbox as we add more
-
-
 
 ---
 
@@ -167,17 +164,16 @@ Mutation are used to perform operation on our GraphQl resources
 
 > Input types aren't listed in this table, you can find them in teh Apollo Sanbox
 
-| Name  | Description | Return Value|
-|--------|----|---|
-| AddArtwork | Creating an artwork | `ArtworkResult` |
-| UpdateArtwork | Updating an artwork's data | `ArtworkResult`|
-| AddAuction | Creating a new auction | `AuctionResult` |
+| Name          | Description                                | Return Value    |
+| ------------- | ------------------------------------------ | --------------- |
+| AddArtwork    | Creating an artwork                        | `ArtworkResult` |
+| UpdateArtwork | Updating an artwork's data                 | `ArtworkResult` |
+| AddAuction    | Creating a new auction                     | `AuctionResult` |
 | deleteAuction | Deletes an auction that has no active bids | `AuctionResult` |
-| registerUser | User registration | `UserResult` |
-| updateUser | Update a user's profile data | `UserResult` |
+| registerUser  | User registration                          | `UserResult`    |
+| updateUser    | Update a user's profile data               | `UserResult`    |
 
 You can find the most recent mutations in the Apollo Server Sanbox as we add more
-
 
 ---
 
@@ -192,6 +188,6 @@ You can find the most recent mutations in the Apollo Server Sanbox as we add mor
 
 ---
 
-## Contributions 
+## Contributions
 
 Please refer to the [Sprint Board](https://github.com/orgs/hashtune/projects/1) and the [Pull Requests History](https://github.com/hashtune/Hashtune-Marketplace-Server/pulls?q=is%3Apr) for more information about contribution history.

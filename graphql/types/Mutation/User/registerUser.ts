@@ -1,8 +1,9 @@
 import { recoverTypedSignature_v4 } from 'eth-sig-util';
-import jwt from 'jsonwebtoken';
 import { extendType, inputObjectType, nonNull, stringArg } from 'nexus';
+import forgeJWT from '../../../../utils/forgeJWT';
 import { validateHandle } from '../../../../utils/validateHandle';
 import { Context } from '../../../context';
+
 const InputType = inputObjectType({
   name: 'RegisterUserInput',
   description: 'Input for registering a new user',
@@ -118,23 +119,7 @@ export const SignUp = extendType({
         if (!wallet.user) {
           throw new Error('User was not created in the db');
         }
-        const token = jwt.sign(
-          {
-            user: {
-              id: wallet.user.id,
-              fullName: wallet.user.fullName,
-              handle: wallet.user.handle,
-              image: wallet.user.image,
-              email: wallet.user.email,
-              isApprovedCreator: wallet.user.isApprovedCreator,
-              publicKey: extractedAddress,
-            },
-          },
-          process.env.SERVER_SECRET ?? '',
-          {
-            expiresIn: '1d',
-          }
-        );
+        const token = await forgeJWT(wallet.user);
         ctx.req.res.cookie('jwt', token, {
           httpOnly: true,
           secure: false, // true in prod,
