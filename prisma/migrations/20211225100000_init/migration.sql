@@ -1,11 +1,14 @@
 -- CreateEnum
-CREATE TYPE "ModelKind" AS ENUM ('artwork', 'artworkMembership', 'user', 'wallet', 'auction', 'bid', 'sale');
+CREATE TYPE "ModelKind" AS ENUM ('artwork', 'artworkMembership', 'user', 'wallet', 'auction', 'bid', 'sale', 'event', 'eventData');
 
 -- CreateEnum
 CREATE TYPE "ArtworkRole" AS ENUM ('creator', 'feature', 'owner');
 
 -- CreateEnum
 CREATE TYPE "SaleType" AS ENUM ('auction', 'fixed');
+
+-- CreateEnum
+CREATE TYPE "EventType" AS ENUM ('owner_sale_created', 'owner_sale_ended', 'buyer_sale_created', 'owner_bid_received', 'buyer_bid_received', 'owner_bid_accepted', 'buyer_bid_accepted', 'buyer_bid_lost', 'owner_bid_automatically_accepted', 'buyer_bid_automatically_accepted', 'buyer_bid_automatically_lost', 'artist_sale_received_royalties', 'artist_auction_received_royalties', 'buyer_bid_exceeded');
 
 -- CreateTable
 CREATE TABLE "User" (
@@ -38,12 +41,39 @@ CREATE TABLE "Wallet" (
 );
 
 -- CreateTable
+CREATE TABLE "EventData" (
+    "kind" "ModelKind" NOT NULL DEFAULT E'eventData',
+    "id" TEXT NOT NULL,
+    "eventType" "EventType" NOT NULL,
+    "price" INTEGER NOT NULL,
+    "txHash" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+    "eventId" TEXT NOT NULL,
+
+    PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Event" (
+    "kind" "ModelKind" NOT NULL DEFAULT E'event',
+    "id" TEXT NOT NULL,
+    "artwork" TEXT NOT NULL,
+    "user" TEXT NOT NULL,
+    "version" BIGSERIAL NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "Artwork" (
     "kind" "ModelKind" NOT NULL DEFAULT E'artwork',
     "id" TEXT NOT NULL,
     "handle" TEXT NOT NULL,
     "txHash" TEXT NOT NULL,
-    "pending" BOOLEAN NOT NULL DEFAULT true,
+    "tokenId" TEXT,
     "title" TEXT NOT NULL,
     "image" TEXT NOT NULL,
     "description" TEXT NOT NULL,
@@ -123,6 +153,12 @@ CREATE UNIQUE INDEX "User.walletId_unique" ON "User"("walletId");
 CREATE UNIQUE INDEX "Wallet.publicKey_unique" ON "Wallet"("publicKey");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "EventData_eventId_unique" ON "EventData"("eventId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Event.id_version_unique" ON "Event"("id", "version");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "Artwork.handle_unique" ON "Artwork"("handle");
 
 -- CreateIndex
@@ -133,6 +169,15 @@ CREATE INDEX "_features_B_index" ON "_features"("B");
 
 -- AddForeignKey
 ALTER TABLE "User" ADD FOREIGN KEY ("walletId") REFERENCES "Wallet"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "EventData" ADD FOREIGN KEY ("eventId") REFERENCES "Event"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Event" ADD FOREIGN KEY ("artwork") REFERENCES "Artwork"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Event" ADD FOREIGN KEY ("user") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Artwork" ADD FOREIGN KEY ("ownerId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;

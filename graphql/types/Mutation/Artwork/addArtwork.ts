@@ -8,6 +8,7 @@ const InputType = inputObjectType({
   description: 'Artwork input',
   definition(t) {
     t.nonNull.string('txHash');
+    t.nonNull.string('tokenId');
     t.nonNull.string('handle');
     t.nonNull.string('title');
     t.nonNull.string('image');
@@ -41,7 +42,6 @@ export const addArtwork = extendType({
         const creatorData = await ctx.prisma.user.findUnique({
           where: { id: userId },
         });
-        let pending = false;
         // TODO: Check that the creator creatorData.id is equal
         // to the session ID otherwise someone can
         // go around our UI, pass someone elses id and create
@@ -69,11 +69,14 @@ export const addArtwork = extendType({
                 },
               };
             }
-            // The transaction is pending
             if (result === null) {
-              pending = true;
+              return {
+                ExternalChainErrorStillPending: {
+                  message:
+                    'Could not get the transaction receipt and status, we will try again for the next 24hours.',
+                },
+              };
             }
-            // Create the artwork ... pending if we could not get the txHash log
             let artwork;
             if (args.saleType === 'fixed') {
               const payload = {
@@ -81,9 +84,9 @@ export const addArtwork = extendType({
                   handle: args.handle,
                   title: args.title,
                   txHash: args.txHash,
+                  tokenId: args.tokenId,
                   image: args.image,
                   link: args.link,
-                  pending,
                   media: args.media,
                   saleType: args.saleType,
                   price: args.salePrice || null,
@@ -99,9 +102,9 @@ export const addArtwork = extendType({
                   handle: args.handle,
                   title: args.title,
                   txHash: args.txHash,
+                  tokenId: args.tokenId,
                   image: args.image,
                   link: args.link,
-                  pending,
                   media: args.media,
                   saleType: args.saleType,
                   reservePrice: args.reservePrice || null,
@@ -119,14 +122,6 @@ export const addArtwork = extendType({
             }
 
             if (artwork) {
-              if (result === null) {
-                return {
-                  ExternalChainErrorStillPending: {
-                    message:
-                      'Could not get the transaction receipt and status, we will try again for the next 24hours.',
-                  },
-                };
-              }
               return { Artworks: [artwork] };
             } else {
               // May have worked on the chain and not in our database... Contact support in this case

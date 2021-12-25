@@ -14,7 +14,7 @@ export const Artwork = objectType({
     t.string('title');
     t.string('image');
     t.string('txHash');
-    t.boolean('pending');
+    t.string('tokenId');
     t.string('description');
     t.boolean('listed');
     t.nullable.field('price', {

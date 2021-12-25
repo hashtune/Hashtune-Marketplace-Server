@@ -44,8 +44,8 @@ describe('Test artwork mutations', () => {
           title
           description
           saleType
-          txHash
-          pending
+          txHash    
+          tokenId      
           reservePrice
           price
           Auctions {
@@ -82,6 +82,7 @@ describe('Test artwork mutations', () => {
 
   const exampleArgs = {
     txHash: '123',
+    tokenId: 'abc',
     handle: 'something',
     title: 'strstrstr',
     image: 'Sun',

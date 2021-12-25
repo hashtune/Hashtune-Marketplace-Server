@@ -81,6 +81,7 @@ export interface NexusGenInputs {
     salePrice?: NexusGenScalars['BigInt'] | null; // BigInt
     saleType: string; // String!
     title: string; // String!
+    tokenId: string; // String!
     txHash: string; // String!
   }
   RegisterUserInput: { // input type
@@ -226,11 +227,11 @@ export interface NexusGenFieldTypes {
     latestAuction: NexusGenRootTypes['Auction'] | null; // Auction
     listed: boolean; // Boolean!
     owner: NexusGenRootTypes['User'] | null; // User
-    pending: boolean; // Boolean!
     price: NexusGenScalars['BigInt'] | null; // BigInt
     reservePrice: NexusGenScalars['BigInt'] | null; // BigInt
     saleType: string; // String!
     title: string; // String!
+    tokenId: string; // String!
     txHash: string; // String!
   }
   ArtworkResult: { // field return type
@@ -364,11 +365,11 @@ export interface NexusGenFieldTypeNames {
     latestAuction: 'Auction'
     listed: 'Boolean'
     owner: 'User'
-    pending: 'Boolean'
     price: 'BigInt'
     reservePrice: 'BigInt'
     saleType: 'String'
     title: 'String'
+    tokenId: 'String'
     txHash: 'String'
   }
   ArtworkResult: { // field return type name

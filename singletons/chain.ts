@@ -74,6 +74,10 @@ class Chain {
     }
     return log;
   }
+
+  /**
+   * @param
+   */
 }
 
 const chain = new Chain();
