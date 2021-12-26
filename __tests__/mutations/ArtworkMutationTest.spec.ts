@@ -5,11 +5,15 @@ import getGlobalData from '../../utils/getGlobalData';
 import reset from '../../utils/reset';
 import seed from '../../utils/seed';
 import server from '../server';
+let index = 20;
 describe('Test artwork mutations', () => {
   // Mock external service
-  chain.checkSuccessLog = jest.fn(
-    async () => await Promise.resolve({} as LogDescription)
-  );
+  chain.checkSuccessLog = jest.fn(async () => {
+    index++;
+    return await Promise.resolve({
+      args: [0, { _hex: index.toString() }],
+    } as unknown as LogDescription);
+  });
   // TODO move this setup to the globals object
   let user1;
   let user1Token;
@@ -82,7 +86,6 @@ describe('Test artwork mutations', () => {
 
   const exampleArgs = {
     txHash: '123',
-    tokenId: 'abc',
     handle: 'something',
     title: 'strstrstr',
     image: 'Sun',
