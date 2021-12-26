@@ -1,2 +1,3 @@
-export * from "./addArtwork";
-export * from "./updateArtwork";
+export * from './addArtwork';
+export * from './purchaseArtwork';
+export * from './updateArtwork';

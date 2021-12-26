@@ -14,7 +14,7 @@ export const Artwork = objectType({
     t.string('title');
     t.string('image');
     t.string('txHash');
-    t.boolean('pending');
+    t.string('tokenId');
     t.string('description');
     t.boolean('listed');
     t.nullable.field('price', {
@@ -112,6 +112,23 @@ export const Artwork = objectType({
         } else {
           throw new Error("Couldn't find user");
         }
+      },
+    });
+    t.list.field('events', {
+      type: 'Event',
+      async resolve(artwork, _, ctx: Context) {
+        const events = await ctx.prisma.event.findMany({
+          where: {
+            artwork: artwork.id,
+          },
+          orderBy: {
+            version: 'desc',
+          },
+        });
+        if (events) {
+          return events;
+        }
+        return [];
       },
     });
   },

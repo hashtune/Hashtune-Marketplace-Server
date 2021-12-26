@@ -31,10 +31,19 @@ export const addArtwork = extendType({
       args: { InputType },
       resolve: async (_, args, ctx: Context) => {
         args = args.InputType;
+        console.log(ctx);
+        const userId = ctx?.user?.id;
+        // TODO make sure the user exists in the database first of
+
+        if (!userId)
+          return {
+            ClientErrorUserUnauthorized: {
+              message: 'Not approved or non-existing creator',
+            },
+          };
         const creatorData = await ctx.prisma.user.findUnique({
-          where: { id: args.creator },
+          where: { id: userId },
         });
-        let pending = false;
         // TODO: Check that the creator creatorData.id is equal
         // to the session ID otherwise someone can
         // go around our UI, pass someone elses id and create
@@ -62,45 +71,51 @@ export const addArtwork = extendType({
                 },
               };
             }
-            // The transaction is pending
             if (result === null) {
-              pending = true;
-            }
-            // Create the artwork ... pending if we could not get the txHash log
-            let artwork;
-            if (args.saleType === 'fixed') {
-              const payload = {
-                data: {
-                  handle: args.handle,
-                  title: args.title,
-                  txHash: args.txHash,
-                  image: args.image,
-                  link: args.link,
-                  pending,
-                  media: args.media,
-                  saleType: args.saleType,
-                  price: args.salePrice || null,
-                  description: args.description,
-                  currentOwner: { connect: { id: args.currentOwner } },
-                  creator: { connect: { id: args.creator } },
+              return {
+                ExternalChainErrorStillPending: {
+                  message:
+                    'Could not get the transaction receipt and status, we will try again for the next 24hours.',
                 },
               };
-              artwork = await ctx.prisma.artwork.create(payload);
-            } else {
-              const payload = {
+            }
+            let artwork;
+            // We know the token id is at index 1 because of the shape of the event emitted.
+            const hex = result.args[1]['_hex'];
+            const tokenId = parseInt(hex, 16).toString();
+            let payload;
+            if (args.saleType === 'fixed') {
+              payload = {
                 data: {
                   handle: args.handle,
                   title: args.title,
                   txHash: args.txHash,
+                  tokenId: tokenId,
                   image: args.image,
                   link: args.link,
-                  pending,
+                  media: args.media,
+                  saleType: args.saleType,
+                  price: args.salePrice,
+                  description: args.description,
+                  currentOwner: { connect: { id: userId } },
+                  creator: { connect: { id: userId } },
+                },
+              };
+            } else {
+              payload = {
+                data: {
+                  handle: args.handle,
+                  title: args.title,
+                  txHash: args.txHash,
+                  tokenId: tokenId,
+                  image: args.image,
+                  link: args.link,
                   media: args.media,
                   saleType: args.saleType,
                   reservePrice: args.reservePrice || null,
                   description: args.description,
-                  currentOwner: { connect: { id: args.currentOwner } },
-                  creator: { connect: { id: args.creator } },
+                  currentOwner: { connect: { id: userId } },
+                  creator: { connect: { id: userId } },
                   auctions: {
                     createMany: {
                       data: [{}],
@@ -108,18 +123,25 @@ export const addArtwork = extendType({
                   },
                 },
               };
-              artwork = await ctx.prisma.artwork.create(payload);
             }
+            await ctx.prisma.$transaction(async prisma => {
+              artwork = await prisma.artwork.create(payload);
+              await prisma.event.create({
+                data: {
+                  artwork: artwork.id,
+                  user: ctx.user.id,
+                  eventData: {
+                    create: {
+                      price: args.salePrice ?? args.reservePrice ?? null,
+                      eventType: 'owner_sale_created',
+                      txHash: args.txHash,
+                    },
+                  },
+                },
+              });
+            });
 
             if (artwork) {
-              if (result === null) {
-                return {
-                  ExternalChainErrorStillPending: {
-                    message:
-                      'Could not get the transaction receipt and status, we will try again for the next 24hours.',
-                  },
-                };
-              }
               return { Artworks: [artwork] };
             } else {
               // May have worked on the chain and not in our database... Contact support in this case
@@ -134,10 +156,11 @@ export const addArtwork = extendType({
               // May have worked on the chain and not in our database... Contact support in this case
               ClientErrorArgumentsConflict: {
                 message: `Argument conflict.`,
-                path: `${args.saleType == 'auction' && args.salePrice
-                  ? "Auction doesn't need a price arg"
-                  : 'Fixed sale requires a price arg and no reservePrice arg'
-                  }`,
+                path: `${
+                  args.saleType == 'auction' && args.salePrice
+                    ? "Auction doesn't need a price arg"
+                    : 'Fixed sale requires a price arg and no reservePrice arg'
+                }`,
               },
             };
           }

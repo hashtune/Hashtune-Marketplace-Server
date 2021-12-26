@@ -25,52 +25,6 @@ Object {
 }
 `;
 
-exports[`Test artwork queries should never return a pending artwork in a findUnique or findMany query 1`] = `
-Object {
-  "data": Object {
-    "listArtworks": Object {
-      "Artworks": Array [
-        Object {
-          "handle": "4",
-          "saleType": "fixed",
-        },
-        Object {
-          "handle": "5",
-          "saleType": "fixed",
-        },
-        Object {
-          "handle": "art1",
-          "saleType": "auction",
-        },
-        Object {
-          "handle": "1",
-          "saleType": "auction",
-        },
-        Object {
-          "handle": "2",
-          "saleType": "auction",
-        },
-        Object {
-          "handle": "3",
-          "saleType": "auction",
-        },
-      ],
-      "ClientErrorArgumentsConflict": null,
-      "ClientErrorArtworkNotFound": null,
-      "ClientErrorUnknown": null,
-      "ClientErrorUserUnauthorized": null,
-    },
-  },
-  "errors": undefined,
-  "extensions": undefined,
-  "http": Object {
-    "headers": Headers {
-      Symbol(map): Object {},
-    },
-  },
-}
-`;
-
 exports[`Test artwork queries should not find an artwork by handle and throw an error 1`] = `
 Object {
   "data": Object {
@@ -108,7 +62,15 @@ Object {
           "saleType": "fixed",
         },
         Object {
+          "handle": "6",
+          "saleType": "fixed",
+        },
+        Object {
           "handle": "art1",
+          "saleType": "auction",
+        },
+        Object {
+          "handle": "3",
           "saleType": "auction",
         },
         Object {
@@ -117,10 +79,6 @@ Object {
         },
         Object {
           "handle": "2",
-          "saleType": "auction",
-        },
-        Object {
-          "handle": "3",
           "saleType": "auction",
         },
       ],
@@ -184,6 +142,10 @@ Object {
     "listArtworks": Object {
       "Artworks": Array [
         Object {
+          "handle": "6",
+          "saleType": "fixed",
+        },
+        Object {
           "handle": "5",
           "saleType": "fixed",
         },
@@ -213,6 +175,10 @@ Object {
   "data": Object {
     "listArtworks": Object {
       "Artworks": Array [
+        Object {
+          "handle": "6",
+          "saleType": "fixed",
+        },
         Object {
           "handle": "5",
           "saleType": "fixed",

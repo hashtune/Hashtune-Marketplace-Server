@@ -50,7 +50,6 @@ class Chain {
         let abi = [eventName];
         let interact = new ethers.utils.Interface(abi);
         // Transaction failed
-        console.log(receipt.status);
         if (receipt && receipt.status === 0) {
           return false;
         }
@@ -67,13 +66,19 @@ class Chain {
         }
       } catch (e) {
         if (tries === MAX_TRIES) {
-          // Transaction pending
+          // Transaction pending, we will fail anyways here
+          // show still pending to the user, then sync with chain
+          // and create the resource if necessary.
           return null;
         }
       }
     }
     return log;
   }
+
+  /**
+   * @param
+   */
 }
 
 const chain = new Chain();

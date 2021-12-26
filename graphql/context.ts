@@ -13,17 +13,18 @@ export async function createContext(req, res): Promise<Context> {
   return {
     res: res,
     req: req,
-    user: extractUserFromToken(req?.req?.cookies?.jwt),
+    user: extractUserFromToken(req?.req?.cookies?.jwt, req?.req?.headers?.jwt),
     prisma,
   };
 }
 
 export const extractUserFromToken = (
+  rawCookieToken: string | undefined,
   rawHeaderToken: string | undefined
 ): any | null => {
-  if (!rawHeaderToken) return null;
+  if (!rawHeaderToken && !rawCookieToken) return null;
   return jwt.verify(
-    rawHeaderToken,
+    rawCookieToken ?? rawHeaderToken,
     process.env.SERVER_SECRET ?? '',
     (err: any, data: any) => {
       if (!err && data.user.id) {

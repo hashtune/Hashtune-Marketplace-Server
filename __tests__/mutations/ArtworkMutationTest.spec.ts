@@ -1,16 +1,44 @@
+import { LogDescription } from 'ethers/lib/utils';
 import chain from '../../singletons/chain';
-import { prisma } from '../../singletons/prisma';
+import forgeJWT from '../../utils/forgeJWT';
 import getGlobalData from '../../utils/getGlobalData';
 import reset from '../../utils/reset';
 import seed from '../../utils/seed';
 import server from '../server';
+let index = 20;
 describe('Test artwork mutations', () => {
   // Mock external service
-  chain.checkSuccessLog = jest.fn();
+  chain.checkSuccessLog = jest.fn(async () => {
+    index++;
+    return await Promise.resolve({
+      args: [0, { _hex: index.toString() }],
+    } as unknown as LogDescription);
+  });
+  // TODO move this setup to the globals object
+  let user1;
+  let user1Token;
+  let user3;
+  let user3Token;
   beforeAll(async () => {
     await reset();
     await seed();
     global.testData = await getGlobalData();
+    user1 = global.testData.users.filter(u => u.handle === 'user1')[0];
+    user3 = global.testData.users.filter(u => u.handle === 'user3')[0];
+    user1Token = {
+      req: {
+        headers: {
+          jwt: await forgeJWT(user1),
+        },
+      },
+    };
+    user3Token = {
+      req: {
+        headers: {
+          jwt: await forgeJWT(user3),
+        },
+      },
+    };
   });
 
   const ADD_ARTWORK_MUTATION = `
@@ -20,8 +48,8 @@ describe('Test artwork mutations', () => {
           title
           description
           saleType
-          txHash
-          pending
+          txHash    
+          tokenId      
           reservePrice
           price
           Auctions {
@@ -47,6 +75,9 @@ describe('Test artwork mutations', () => {
         ClientErrorUnknown {
           message
         }
+        ExternalChainErrorStillPending {
+          message
+        }
         ExternalChainError {
           message
         }
@@ -64,111 +95,101 @@ describe('Test artwork mutations', () => {
   };
 
   it('should create an artwork', async () => {
-    const user1 = global.testData.users.filter(u => u.handle === 'user1')[0];
-    const res = await server.executeOperation({
-      query: ADD_ARTWORK_MUTATION,
-      variables: {
-        addArtworkInputType: {
-          ...exampleArgs,
-          handle: 'something1',
-          currentOwner: user1.id,
-          creator: user1.id,
-          saleType: 'auction',
-          reservePrice: 50,
+    const res = await server.executeOperation(
+      {
+        query: ADD_ARTWORK_MUTATION,
+        variables: {
+          addArtworkInputType: {
+            ...exampleArgs,
+            handle: 'something1',
+            currentOwner: user1.id,
+            creator: user1.id,
+            saleType: 'auction',
+            reservePrice: 50,
+          },
         },
       },
-    });
-    const artwork = await prisma.artwork.findUnique({
-      where: {
-        handle: 'something1',
-      },
-      include: { auctions: true },
-    });
-    if (!artwork) throw new Error('Error fetching the created artwork');
+      user1Token
+    );
     expect(res).toMatchSnapshot();
   });
 
   it('should create an artwork without an auction if fixed sale is specified', async () => {
-    const user1 = global.testData.users.filter(u => u.handle === 'user1')[0];
-    const res = await server.executeOperation({
-      query: ADD_ARTWORK_MUTATION,
-      variables: {
-        addArtworkInputType: {
-          ...exampleArgs,
-          handle: 'something2',
-          currentOwner: user1.id,
-          creator: user1.id,
-          saleType: 'fixed',
-          salePrice: 50,
+    const res = await server.executeOperation(
+      {
+        query: ADD_ARTWORK_MUTATION,
+        variables: {
+          addArtworkInputType: {
+            ...exampleArgs,
+            handle: 'something2',
+            currentOwner: user1.id,
+            creator: user1.id,
+            saleType: 'fixed',
+            salePrice: 50,
+          },
         },
       },
-    });
-    const artwork = await prisma.artwork.findUnique({
-      where: {
-        handle: 'something2',
-      },
-      include: { auctions: true },
-    });
-    if (!artwork) throw new Error('Error fetching the created artwork');
+      user1Token
+    );
     expect(res).toMatchSnapshot();
   });
 
   it('should create an artwork with no reserve price of auction is specified and reserve price is 0', async () => {
-    const user1 = global.testData.users.filter(u => u.handle === 'user1')[0];
-    const res = await server.executeOperation({
-      query: ADD_ARTWORK_MUTATION,
-      variables: {
-        addArtworkInputType: {
-          ...exampleArgs,
-          handle: 'something3',
-          currentOwner: user1.id,
-          creator: user1.id,
-          saleType: 'auction',
-          reservePrice: 0,
+    const res = await server.executeOperation(
+      {
+        query: ADD_ARTWORK_MUTATION,
+        variables: {
+          addArtworkInputType: {
+            ...exampleArgs,
+            handle: 'something3',
+            currentOwner: user1.id,
+            creator: user1.id,
+            saleType: 'auction',
+            reservePrice: 0,
+          },
         },
       },
-    });
-    const artwork = await prisma.artwork.findUnique({
-      where: {
-        handle: 'something3',
-      },
-      include: { auctions: true },
-    });
-    if (!artwork) throw new Error('Error fetching the created artwork');
+      user1Token
+    );
     expect(res).toMatchSnapshot();
   });
 
   it('should fail to create an artwork because the user is not an approved creator', async () => {
     const unapprovedCreator = global.testData.users[2];
-    const res = await server.executeOperation({
-      query: ADD_ARTWORK_MUTATION,
-      variables: {
-        addArtworkInputType: {
-          ...exampleArgs,
-          currentOwner: unapprovedCreator.id,
-          creator: unapprovedCreator.id,
-          saleType: 'auction',
-          reservePrice: 50,
+    const res = await server.executeOperation(
+      {
+        query: ADD_ARTWORK_MUTATION,
+        variables: {
+          addArtworkInputType: {
+            ...exampleArgs,
+            currentOwner: unapprovedCreator.id,
+            creator: unapprovedCreator.id,
+            saleType: 'auction',
+            reservePrice: 50,
+          },
         },
       },
-    });
+      user3Token
+    );
     expect(res).toMatchSnapshot();
   });
 
   it('should fail to create an artwork with fixed sale type and reserve price set', async () => {
-    const approvedCreator = global.testData.users[0];
-    const res = await server.executeOperation({
-      query: ADD_ARTWORK_MUTATION,
-      variables: {
-        addArtworkInputType: {
-          ...exampleArgs,
-          currentOwner: approvedCreator.id,
-          creator: approvedCreator.id,
-          saleType: 'fixed',
-          reservePrice: 50,
+    const res = await server.executeOperation(
+      {
+        query: ADD_ARTWORK_MUTATION,
+        variables: {
+          addArtworkInputType: {
+            ...exampleArgs,
+            currentOwner: user1.id,
+            creator: user1.id,
+            saleType: 'fixed',
+            reservePrice: 50,
+          },
         },
       },
-    });
+      user1Token
+    );
     expect(res).toMatchSnapshot();
   });
 });

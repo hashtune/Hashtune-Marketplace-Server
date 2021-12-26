@@ -9,6 +9,8 @@ export default async function reset() {
       'Bid',
       'User',
       'Wallet',
+      'Event',
+      'EventData',
     ];
     for (const model in models) {
       await prisma.$executeRaw(`DELETE FROM "${models[model]}";`);

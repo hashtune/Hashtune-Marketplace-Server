@@ -8,7 +8,13 @@ datasource db {
 
 generator client {
   provider = "prisma-client-js"
+  previewFeatures = ["interactiveTransactions"]
 }
+
+generator nexusPrisma {
+   provider = "nexus-prisma"
+}
+
 
 enum ModelKind {
   artwork
@@ -18,6 +24,8 @@ enum ModelKind {
   auction
   bid
   sale
+  event
+  eventData
 }
 
 enum ArtworkRole {
@@ -50,6 +58,7 @@ model User {
   owned             Artwork[] @relation("currentOwner")
   featuredOn        Artwork[] @relation("features")
   created           Artwork[] @relation("originalCreator")
+  events            Event[]   @relation("userEvent")
 }
 
 model Wallet {
@@ -62,12 +71,60 @@ model Wallet {
   user      User?
 }
 
+enum EventType {
+// TODO: Better name for first two 
+owner_sale_created 
+// Might not need this second event
+owner_sale_ended
+buyer_sale_created
+owner_bid_received
+buyer_bid_received
+owner_bid_accepted
+buyer_bid_accepted
+buyer_bid_lost
+owner_bid_automatically_accepted
+buyer_bid_automatically_accepted
+buyer_bid_automatically_lost
+buyer_bid_exceeded
+// These events not emitted from contract right now
+artist_sale_received_royalties
+artist_auction_received_royalties
+}
+
+
+model EventData {
+  kind              ModelKind @default(eventData)
+  id           String    @id @default(cuid())
+  eventType    EventType
+  price         BigInt?
+  txHash        String
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  eventId     String
+  event       Event @relation(fields: [eventId], references: [id] )       
+}
+
+model Event {
+    kind              ModelKind @default(event)
+    id           String    @id @default(cuid())
+    artwork      String
+    artworkEventId Artwork @relation(name: "artworkEvent", fields: [artwork], references: [id])
+    // TODO switch
+    user         String
+    userEventId User @relation(name: "userEvent", fields: [user], references: [id])
+    version    BigInt @default(autoincrement())
+    eventData   EventData?
+    createdAt    DateTime  @default(now())
+    updatedAt    DateTime  @updatedAt
+    @@unique([id, version])
+}
+
 model Artwork {
   kind         ModelKind @default(artwork)
   id           String    @id @default(cuid())
   handle       String    @unique
   txHash       String    
-  pending      Boolean   @default(true)
+  tokenId      String   @unique
   title        String
   image        String
   description  String
@@ -87,6 +144,7 @@ model Artwork {
   creator      User      @relation(name: "originalCreator", fields: [creatorId], references: [id])
   listed       Boolean   @default(true)
   streamCount  Int       @default(0)
+  events    Event[]   @relation("artworkEvent")
 }
 
 model Auction {

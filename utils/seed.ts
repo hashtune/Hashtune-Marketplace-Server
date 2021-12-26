@@ -1,6 +1,7 @@
 import cryptoRandomString from 'crypto-random-string';
 import { prisma } from '../singletons/prisma';
 
+// TODO add correct event emissions on each creation
 export default async function seed() {
   try {
     const generateWallet = async () => {
@@ -44,7 +45,7 @@ export default async function seed() {
             description: 'song description',
             handle: 'art1',
             txHash: 'abc123',
-            pending: false,
+            tokenId: '1',
             image: 'blahblah',
             link: 'blahb1lah',
             title: 'amazingsongT1itle',
@@ -85,7 +86,7 @@ export default async function seed() {
         description: 'song description',
         handle: '1',
         txHash: 'abc123',
-        pending: false,
+        tokenId: '2',
         image: 'blahblah',
         link: 'blahblah',
         title: 'amazingsongTitle',
@@ -109,7 +110,7 @@ export default async function seed() {
         description: 'song description',
         handle: '2',
         txHash: 'abc123',
-        pending: false,
+        tokenId: '3',
         image: 'nothing',
         link: 'blahblah',
         title: 'amazingsongTitle',
@@ -140,7 +141,7 @@ export default async function seed() {
         description: 'song description',
         handle: '3',
         txHash: 'abc123',
-        pending: false,
+        tokenId: '4',
         image: 'blahblah2',
         link: 'blahblah',
         title: 'amazingsongTitle',
@@ -172,7 +173,7 @@ export default async function seed() {
         description: 'song description2',
         handle: '4',
         txHash: 'abc123',
-        pending: false,
+        tokenId: '5',
         image: 'blahblah2',
         link: 'blahblah2',
         title: 'amazingsongTitle2',
@@ -207,7 +208,7 @@ export default async function seed() {
         image: 'blahblah2',
         link: 'blahblah',
         txHash: 'abc123',
-        pending: false,
+        tokenId: '6',
         title: 'amazingsongTitle',
         media: [{ title: 'amazingsongTitle', media: 'lala' }],
         saleType: 'fixed',
@@ -241,7 +242,8 @@ export default async function seed() {
         image: 'blahblah2',
         link: 'blahblah',
         txHash: 'abc123',
-        title: 'pending',
+        tokenId: '7',
+        title: 'test',
         media: [{ title: 'amazingsongTitle', media: 'lala' }],
         saleType: 'fixed',
         price: 100,
