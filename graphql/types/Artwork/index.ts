@@ -114,6 +114,23 @@ export const Artwork = objectType({
         }
       },
     });
+    t.list.field('events', {
+      type: 'Event',
+      async resolve(artwork, _, ctx: Context) {
+        const events = await ctx.prisma.event.findMany({
+          where: {
+            artwork: artwork.id,
+          },
+          orderBy: {
+            version: 'desc',
+          },
+        });
+        if (events) {
+          return events;
+        }
+        return [];
+      },
+    });
   },
 });
 

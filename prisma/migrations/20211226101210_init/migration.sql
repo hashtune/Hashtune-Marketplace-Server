@@ -8,7 +8,7 @@ CREATE TYPE "ArtworkRole" AS ENUM ('creator', 'feature', 'owner');
 CREATE TYPE "SaleType" AS ENUM ('auction', 'fixed');
 
 -- CreateEnum
-CREATE TYPE "EventType" AS ENUM ('owner_sale_created', 'owner_sale_ended', 'buyer_sale_created', 'owner_bid_received', 'buyer_bid_received', 'owner_bid_accepted', 'buyer_bid_accepted', 'buyer_bid_lost', 'owner_bid_automatically_accepted', 'buyer_bid_automatically_accepted', 'buyer_bid_automatically_lost', 'artist_sale_received_royalties', 'artist_auction_received_royalties', 'buyer_bid_exceeded');
+CREATE TYPE "EventType" AS ENUM ('owner_sale_created', 'owner_sale_ended', 'buyer_sale_created', 'owner_bid_received', 'buyer_bid_received', 'owner_bid_accepted', 'buyer_bid_accepted', 'buyer_bid_lost', 'owner_bid_automatically_accepted', 'buyer_bid_automatically_accepted', 'buyer_bid_automatically_lost', 'buyer_bid_exceeded', 'artist_sale_received_royalties', 'artist_auction_received_royalties');
 
 -- CreateTable
 CREATE TABLE "User" (
@@ -45,7 +45,7 @@ CREATE TABLE "EventData" (
     "kind" "ModelKind" NOT NULL DEFAULT E'eventData',
     "id" TEXT NOT NULL,
     "eventType" "EventType" NOT NULL,
-    "price" INTEGER NOT NULL,
+    "price" BIGINT,
     "txHash" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
@@ -73,7 +73,7 @@ CREATE TABLE "Artwork" (
     "id" TEXT NOT NULL,
     "handle" TEXT NOT NULL,
     "txHash" TEXT NOT NULL,
-    "tokenId" TEXT,
+    "tokenId" TEXT NOT NULL,
     "title" TEXT NOT NULL,
     "image" TEXT NOT NULL,
     "description" TEXT NOT NULL,
@@ -160,6 +160,9 @@ CREATE UNIQUE INDEX "Event.id_version_unique" ON "Event"("id", "version");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Artwork.handle_unique" ON "Artwork"("handle");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Artwork.tokenId_unique" ON "Artwork"("tokenId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "_features_AB_unique" ON "_features"("A", "B");

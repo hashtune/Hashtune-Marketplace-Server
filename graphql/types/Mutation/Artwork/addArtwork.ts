@@ -8,7 +8,6 @@ const InputType = inputObjectType({
   description: 'Artwork input',
   definition(t) {
     t.nonNull.string('txHash');
-    t.nonNull.string('tokenId');
     t.nonNull.string('handle');
     t.nonNull.string('title');
     t.nonNull.string('image');
@@ -32,7 +31,10 @@ export const addArtwork = extendType({
       args: { InputType },
       resolve: async (_, args, ctx: Context) => {
         args = args.InputType;
+        console.log(ctx);
         const userId = ctx?.user?.id;
+        // TODO make sure the user exists in the database first of
+
         if (!userId)
           return {
             ClientErrorUserUnauthorized: {
@@ -78,31 +80,34 @@ export const addArtwork = extendType({
               };
             }
             let artwork;
+            // We know the token id is at index 1 because of the shape of the event emitted.
+            const hex = result.args[1]['_hex'];
+            const tokenId = parseInt(hex, 16).toString();
+            let payload;
             if (args.saleType === 'fixed') {
-              const payload = {
+              payload = {
                 data: {
                   handle: args.handle,
                   title: args.title,
                   txHash: args.txHash,
-                  tokenId: args.tokenId,
+                  tokenId: tokenId,
                   image: args.image,
                   link: args.link,
                   media: args.media,
                   saleType: args.saleType,
-                  price: args.salePrice || null,
+                  price: args.salePrice,
                   description: args.description,
                   currentOwner: { connect: { id: userId } },
                   creator: { connect: { id: userId } },
                 },
               };
-              artwork = await ctx.prisma.artwork.create(payload);
             } else {
-              const payload = {
+              payload = {
                 data: {
                   handle: args.handle,
                   title: args.title,
                   txHash: args.txHash,
-                  tokenId: args.tokenId,
+                  tokenId: tokenId,
                   image: args.image,
                   link: args.link,
                   media: args.media,
@@ -118,8 +123,23 @@ export const addArtwork = extendType({
                   },
                 },
               };
-              artwork = await ctx.prisma.artwork.create(payload);
             }
+            await ctx.prisma.$transaction(async prisma => {
+              artwork = await prisma.artwork.create(payload);
+              await prisma.event.create({
+                data: {
+                  artwork: artwork.id,
+                  user: ctx.user.id,
+                  eventData: {
+                    create: {
+                      price: args.salePrice ?? args.reservePrice ?? null,
+                      eventType: 'owner_sale_created',
+                      txHash: args.txHash,
+                    },
+                  },
+                },
+              });
+            });
 
             if (artwork) {
               return { Artworks: [artwork] };
