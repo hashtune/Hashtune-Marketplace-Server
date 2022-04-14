@@ -7,13 +7,15 @@ jobs:
   build-image:
     name: Build docker image
     runs-on: ubuntu-latest
+    env:
+      IMAGE_NAME: hashtune-server
     steps:
       - name: Checkout
         uses: actions/checkout@v2
 
       - name: Build Docker Image
         run: docker build -t $IMAGE_NAME:latest .
-  
+
   push-image:
     name: Push image to artifact registry
     needs: build-image
@@ -22,6 +24,7 @@ jobs:
       IMAGE_NAME: hashtune-server
       PROJECT_ID: se36-cloud-computing
 
+    steps:
       - name: Checkout
         uses: actions/checkout@v2
 
@@ -35,7 +38,7 @@ jobs:
         id: assign_image_tag
         run: |
           bash ./assign_image_tag.sh -v minor
-      
+
       - name: Configure Docker Client
         run: |-
           gcloud auth configure-docker --quiet
@@ -73,7 +76,7 @@ jobs:
 
   #     - uses: actions/setup-node@v1
   #       with:
-  #         node-version: '12.x'  
+  #         node-version: '12.x'
 
   #     - name: Database Migration
   #       env:
