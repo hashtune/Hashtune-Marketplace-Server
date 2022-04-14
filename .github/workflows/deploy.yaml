@@ -4,7 +4,7 @@ on:
     branches: [main, build/deployment-config]
 
 jobs:
-    migrate:
+  migrate:
     name: migrate db
     runs-on: ubuntu-latest
     env:
@@ -97,5 +97,3 @@ jobs:
           region: europe-west1
           flags: --allow-unauthenticated
           credentials: ${{ secrets.SERVICE_ACCOUNT_KEY }}
-
-
