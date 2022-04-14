@@ -35,7 +35,7 @@ jobs:
           DATABASE_URL: ${{secrets.DATABASE_URL}}
         run: |
           yarn install --frozen-lockfile
-          cd ./cloud-cloud_sql_proxy
+          cd ./cloud_sql_proxy
           yarn prisma migrate deploy
           yarn prisma generate
 
