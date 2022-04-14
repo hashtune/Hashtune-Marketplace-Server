@@ -6,7 +6,6 @@ on:
 jobs:
   build-and-push-image:
     name: Push image to artifact registry
-    needs: build-image
     runs-on: ubuntu-latest
     env:
       IMAGE_NAME: hashtune-server
