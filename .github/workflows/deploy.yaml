@@ -60,7 +60,7 @@ jobs:
         uses: google-github-actions/deploy-cloudrun@v0
         with:
           service: hashtune-server
-          image: europe-west1-docker.pkg.dev/$PROJECT_ID/hashtune/$IMAGE_NAME:latest
+          image: europe-west1-docker.pkg.dev/se36-cloud-computing/hashtune/hashtune-server:latest
           region: europe-west1
           flags: --allow-unauthenticated
           credentials: ${{ secrets.SERVICE_ACCOUNT_KEY }}
