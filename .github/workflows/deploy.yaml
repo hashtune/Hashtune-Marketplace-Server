@@ -14,11 +14,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - uses: GoogleCloudPlatform/github-actions/setup-gcloud@main
+      - uses: google-github-actions/setup-gcloud@main
         with:
-          project_id: ${{ env.PROJECT_ID }}
           service_account_key: ${{ secrets.SERVICE_ACCOUNT_KEY }}
+          project_id: ${{ env.PROJECT_ID }}
           export_default_credentials: true
+
       - name: Get Cloud SQL Proxy
         run: |
           wget https://dl.google.com/cloudsql/cloud_sql_proxy.linux.amd64 -O cloud_sql_proxy
@@ -27,11 +28,6 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: '12.x'
-
-      - uses: mattes/gce-cloudsql-proxy-action@v1
-        with:
-          instance: se36-cloud-computing:europe-west1:prod-db
-          creds: ${{ secrets.SERVICE_ACCOUNT_KEY }}
 
       - name: Build Docker Image
         run: docker build -t $IMAGE_NAME:latest .
