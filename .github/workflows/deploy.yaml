@@ -23,7 +23,7 @@ jobs:
       - name: Build Docker Image
         run: docker build -t $IMAGE_NAME:latest .
         env:
-          DATABASE_URL: ${{ env.DATABASE_URL }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
       - name: Automatic Tagging of Releases
         id: assign_image_tag
