@@ -4,19 +4,7 @@ on:
     branches: [main, build/deployment-config]
 
 jobs:
-  build-image:
-    name: Build docker image
-    runs-on: ubuntu-latest
-    env:
-      IMAGE_NAME: hashtune-server
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Build Docker Image
-        run: docker build -t $IMAGE_NAME:latest .
-
-  push-image:
+  build-and-push-image:
     name: Push image to artifact registry
     needs: build-image
     runs-on: ubuntu-latest
@@ -33,6 +21,9 @@ jobs:
           service_account_key: ${{ secrets.SERVICE_ACCOUNT_KEY }}
           project_id: ${{ env.PROJECT_ID }}
           export_default_credentials: true
+
+      - name: Build Docker Image
+        run: docker build -t $IMAGE_NAME:latest .
 
       - name: Tag Image
         id: assign_image_tag
