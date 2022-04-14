@@ -29,8 +29,8 @@ COPY SongOrAlbumNFT.json ./SongOrAlbumNFT.json
 
 RUN yarn install --frozen-lockfile 
 
-RUN yarn production:prisma:deploy
-RUN yarn production:prisma:generate
+RUN yarn prisma migrate deploy
+RUN yarn prisma generate
 
 EXPOSE 5000
 
