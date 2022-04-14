@@ -23,7 +23,7 @@ jobs:
 
       - name: Get Cloud SQL Proxy
         run: |
-          mkdir cloud_sql_proxy
+          ls
           wget https://dl.google.com/cloudsql/cloud_sql_proxy.linux.amd64 -O cloud_sql_proxy
           chmod +x cloud_sql_proxy
 
@@ -36,9 +36,8 @@ jobs:
           DATABASE_URL: ${{secrets.DATABASE_URL}}
         run: |
           yarn install --frozen-lockfile
-          cd ./cloud_sql_proxy
-          yarn prisma migrate deploy
-          yarn prisma generate
+          ./cloud_sql_proxy yarn prisma migrate deploy
+          ./cloud_sql_proxy yarn prisma generate
 
   build-and-push-image:
     name: Build and push image to artifact registry
