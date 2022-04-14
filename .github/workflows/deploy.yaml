@@ -31,9 +31,13 @@ jobs:
           bash ./assign_image_tag.sh -v minor
 
       - name: Database Migration
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
         env:
           DATABASE_URL: ${{secrets.DATABASE_URL}}
         run: |
+          yarn install --frozen-lockfile
           yarn prisma migrate deploy
           yarn prisma generate
 
