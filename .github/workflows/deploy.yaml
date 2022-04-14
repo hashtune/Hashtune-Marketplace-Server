@@ -1,7 +1,7 @@
 name: Build Container and Deploy
 on:
   push:
-    branches: [main]
+    branches: [main, build/deployment-config]
 
 jobs:
   build-push-gcr:
