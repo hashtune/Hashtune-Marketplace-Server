@@ -30,6 +30,12 @@ jobs:
         run: |
           bash ./assign_image_tag.sh -v minor
 
+      - name: Database Migration
+        with:
+          script: |
+            yarn production:prisma:deploy
+            yarn production:prisma:generate
+
       - name: Configure Docker Client
         run: |-
           gcloud auth configure-docker --quiet
