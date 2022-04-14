@@ -1,31 +1,43 @@
-name: Hashtune Server Deployment
+name: Build Container and Deploy
 on:
   push:
     branches: [main]
 
 jobs:
-  deploy:
+  build-push-gcr:
+    name: Build container and push to artifact registry
     runs-on: ubuntu-latest
     env:
-      SERVER_SECRET: ${{secrets.SERVER_SECRET}}
-      STAGE: production
-      DATABASE_URL: ${{secrets.DATABASE_URL}}
+      IMAGE_NAME: hashtune-server
+      PROJECT_ID: se36-cloud-computing
     steps:
-      - name: Deploy to DigitalOcean
-        uses: appleboy/ssh-action@v0.1.4
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - uses: google-github-actions/setup-gcloud@master
         with:
-          host: ${{secrets.SSH_HOST}}
-          key: ${{secrets.SSH_KEY}}
-          username: ${{ secrets.SSH_USERNAME }}
-          script: |
-            rm -rf Hashtune-Marketplace-Server
-            git clone git@github.com:hashtune/Hashtune-Marketplace-Server.git
-            cd Hashtune-Marketplace-Server
-            yarn
-            pm2 delete server
-            echo -e "DATABASE_URL=${{secrets.DATABASE_URL}}\nSERVER_SECRET=${{secrets.SERVER_SECRET}}\nSTAGE=production" > .env.production
-            yarn production:prisma:deploy
-            yarn production:prisma:generate
-            npx tsc
-            STAGE=production SERVER_SECRET=${{secrets.SERVER_SECRET}} pm2 start dist/graphql/server.js --name "server" -- start
-            echo 'Succesfully deployed 🎉'
+          service_account_key: ${{ secrets.SERVICE_ACCOUNT_KEY }}
+          project_id: ${{ env.PROJECT_ID }}
+          export_default_credentials: true
+
+      - name: Build Docker Image
+        run: docker build -t $IMAGE_NAME:latest .
+
+      - name: Automatic Tagging of Releases
+        id: assign_image_tag
+        run: |
+          bash ./assign_image_tag.sh -v minor
+
+      - name: Configure Docker Client
+        run: |-
+          gcloud auth configure-docker --quiet
+          gcloud auth configure-docker europe-west1-docker.pkg.dev --quiet
+
+      - name: Push Docker Image to Artifact Registry
+        env:
+          GIT_TAG: ${{ steps.assign_image_tag.outputs.git-tag }}
+        run: |-
+          docker tag $IMAGE_NAME:latest europe-west1-docker.pkg.dev/$PROJECT_ID/images/$IMAGE_NAME:latest
+          docker tag $IMAGE_NAME:latest europe-west1-docker.pkg.dev/$PROJECT_ID/images/$IMAGE_NAME:$GIT_TAG
+          docker push europe-west1-docker.pkg.dev/$PROJECT_ID/images/$IMAGE_NAME:latest
+          docker push europe-west1-docker.pkg.dev/$PROJECT_ID/images/$IMAGE_NAME:$GIT_TAG
