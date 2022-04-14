@@ -17,8 +17,6 @@ COPY singletons ./singletons
 
 COPY utils ./utils
 
-COPY .env ./.env
-
 COPY .prettierrc ./.prettierrc
 
 COPY constants.ts ./constants.ts
