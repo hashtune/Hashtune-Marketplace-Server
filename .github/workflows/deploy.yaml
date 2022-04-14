@@ -26,7 +26,7 @@ jobs:
 
       - uses: mattes/gce-cloudsql-proxy-action@v1
         with:
-          connection_name: se36-cloud-computing:europe-west-1:prod-db
+          instance: se36-cloud-computing:europe-west1:prod-db
           creds: ${{ secrets.SERVICE_ACCOUNT_KEY }}
 
       - name: Build Docker Image
