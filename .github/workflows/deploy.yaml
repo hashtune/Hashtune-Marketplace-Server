@@ -35,8 +35,7 @@ jobs:
           DATABASE_URL: ${{secrets.DATABASE_URL}}
         run: |
           yarn install --frozen-lockfile
-          ./cloud_sql_proxy -instances=se36-cloud-computing:europe-west1:prod-db yarn prisma migrate deploy
-          ./cloud_sql_proxy -instances=se36-cloud-computing:europe-west1:prod-db yarn prisma generate
+          ./cloud_sql_proxy -dir=/cloudsql -instances=se36-cloud-computing:europe-west1:prod-db=tcp:5432 && yarn prisma migrate deploy && yarn prisma generate
 
   build-and-push-image:
     name: Build and push image to artifact registry
