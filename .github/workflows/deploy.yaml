@@ -4,8 +4,44 @@ on:
     branches: [main, build/deployment-config]
 
 jobs:
+    migrate:
+    name: migrate db
+    runs-on: ubuntu-latest
+    env:
+      IMAGE_NAME: hashtune-server
+      PROJECT_ID: se36-cloud-computing
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - uses: google-github-actions/setup-gcloud@main
+        with:
+          service_account_key: ${{ secrets.SERVICE_ACCOUNT_KEY }}
+          project_id: ${{ env.PROJECT_ID }}
+          export_default_credentials: true
+
+      - name: Get Cloud SQL Proxy
+        run: |
+          wget https://dl.google.com/cloudsql/cloud_sql_proxy.linux.amd64 -O cloud_sql_proxy
+          chmod +x cloud_sql_proxy
+
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+
+      - name: Database Migration
+        env:
+          DATABASE_URL: ${{secrets.DATABASE_URL}}
+        run: |
+          yarn install --frozen-lockfile
+          cd ./cloud-cloud_sql_proxy
+          yarn prisma migrate deploy
+          yarn prisma generate
+
   build-and-push-image:
     name: Build and push image to artifact registry
+    needs: migrate
     runs-on: ubuntu-latest
     env:
       IMAGE_NAME: hashtune-server
@@ -47,9 +83,6 @@ jobs:
     name: Deploy Image to cloud run
     needs: build-and-push-image
     runs-on: ubuntu-latest
-    env:
-      IMAGE_NAME: hashtune-server
-      PROJECT_ID: se36-cloud-computing
 
     steps:
       - name: Checkout
@@ -65,35 +98,4 @@ jobs:
           flags: --allow-unauthenticated
           credentials: ${{ secrets.SERVICE_ACCOUNT_KEY }}
 
-  # migrate:
-  #   name: migrate db
-  #   runs-on: ubuntu-latest
-  #   env:
-  #     IMAGE_NAME: hashtune-server
-  #     PROJECT_ID: se36-cloud-computing
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v2
 
-  #     - uses: google-github-actions/setup-gcloud@main
-  #       with:
-  #         service_account_key: ${{ secrets.SERVICE_ACCOUNT_KEY }}
-  #         project_id: ${{ env.PROJECT_ID }}
-  #         export_default_credentials: true
-
-  #     - uses: mattes/gce-cloudsql-proxy-action@v1
-  #       with:
-  #         creds: ${{ secrets.SERVICE_ACCOUNT_KEY }}
-  #         instance: se36-cloud-computing:europe-west1:prod-db
-
-  #     - uses: actions/setup-node@v1
-  #       with:
-  #         node-version: '12.x'
-
-  #     - name: Database Migration
-  #       env:
-  #         DATABASE_URL: ${{secrets.DATABASE_URL}}
-  #       run: |
-  #         yarn install --frozen-lockfile
-  #         yarn prisma migrate deploy
-  #         yarn prisma generate
