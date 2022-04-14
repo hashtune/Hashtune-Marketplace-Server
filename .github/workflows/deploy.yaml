@@ -20,6 +20,10 @@ jobs:
           project_id: ${{ env.PROJECT_ID }}
           export_default_credentials: true
 
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+
       - name: Build Docker Image
         run: docker build -t $IMAGE_NAME:latest .
         env:
@@ -31,9 +35,6 @@ jobs:
           bash ./assign_image_tag.sh -v minor
 
       - name: Database Migration
-      - uses: actions/setup-node@v1
-        with:
-          node-version: '12.x'
         env:
           DATABASE_URL: ${{secrets.DATABASE_URL}}
         run: |
