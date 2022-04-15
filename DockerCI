@@ -30,5 +30,7 @@ RUN yarn install --frozen-lockfile
 RUN yarn prisma generate
 RUN yarn prisma migrate
 
+RUN yarn test:api
+
 RUN yarn build
 CMD [ "yarn", "start" ]

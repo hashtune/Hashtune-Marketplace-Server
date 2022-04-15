@@ -17,6 +17,6 @@ jobs:
           cache: 'yarn'
       - run: yarn docker:up
       - run: yarn install
-      - run: yarn ci:prisma:migrate
-      - run: yarn ci:prisma:generate
-      - run: yarn test:api
+      # - run: yarn ci:prisma:migrate
+      # - run: yarn ci:prisma:generate
+      # - run: yarn test:api
