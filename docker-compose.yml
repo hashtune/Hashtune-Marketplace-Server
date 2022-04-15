@@ -4,7 +4,7 @@ services:
   postgres:
     build:
       context: .
-      dockerfile: Dockerfile_X
+      dockerfile: DockerCI
     image: postgres
     container_name: hashtune
     restart: always
