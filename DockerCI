@@ -15,7 +15,15 @@ COPY tsconfig.prod.json /app/tsconfig.prod.json
 
 COPY prisma /app/prisma
 
-COPY utils ./app/utils
+COPY utils /app/utils
+
+COPY .prettierrc /app/prettierrc
+
+COPY constants.ts /app/constants.ts
+
+COPY singletons /app/singletons
+
+COPY SongOrAlbumNFT.json /app/SongOrAlbumNFT.json
 
 RUN yarn install --frozen-lockfile 
 
