@@ -7,7 +7,7 @@ COPY package*.json yarn.lock /app/
 COPY .env.test /app/.env.test
 
 # copy source files
-COPY src /app/src
+COPY graphql /app/graphql
 
 COPY tsconfig.json /app/tsconfig.json
 
