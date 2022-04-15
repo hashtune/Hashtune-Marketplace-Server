@@ -17,6 +17,8 @@ COPY prisma /app/prisma
 
 COPY utils /app/utils
 
+COPY __tests__ /app/__tests__
+
 COPY .prettierrc /app/prettierrc
 
 COPY constants.ts /app/constants.ts
