@@ -1,0 +1,40 @@
+FROM node:14.19-alpine AS base
+WORKDIR /app
+RUN apk update && apk add bash
+
+COPY package*.json yarn.lock /app/
+
+COPY .env.test /app/.env.test
+
+# copy source files
+COPY graphql /app/graphql
+
+COPY tsconfig.json /app/tsconfig.json
+
+COPY tsconfig.prod.json /app/tsconfig.prod.json
+
+COPY prisma /app/prisma
+
+COPY utils /app/utils
+
+COPY __tests__ /app/__tests__
+
+COPY .prettierrc /app/prettierrc
+
+COPY constants.ts /app/constants.ts
+
+COPY singletons /app/singletons
+
+COPY SongOrAlbumNFT.json /app/SongOrAlbumNFT.json
+
+COPY jest.config.ts /app/jest.config.ts
+
+RUN yarn install --frozen-lockfile 
+
+RUN yarn prisma generate
+RUN yarn prisma migrate
+
+RUN yarn jest --config /app/jest.config.ts --runInBand --force-exit
+
+RUN yarn build
+CMD [ "yarn", "start" ]

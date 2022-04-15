@@ -2,6 +2,9 @@ version: '3.8'
 services:
   # postgresql://hashtune:hashtune@localhost:5439
   postgres:
+    build:
+      context: .
+      dockerfile: DockerCI
     image: postgres
     container_name: hashtune
     restart: always

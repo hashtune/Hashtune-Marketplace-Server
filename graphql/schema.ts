@@ -4,7 +4,7 @@ import * as path from 'path';
 import * as types from './types';
 
 export const schema = makeSchema({
-  prettierConfig: process.env.STAGE != 'test' ? path.join(__dirname, '../.prettierrc') : undefined,
+  prettierConfig: process.env.STAGE != 'test' ? path.join(process.cwd(), '/.prettierrc') : undefined,
   types: [types, NexusPrismaScalarTypes],
   features: {
     abstractTypeStrategies: {
@@ -23,7 +23,7 @@ export const schema = makeSchema({
   },
   contextType: {
     export: 'Context',
-    module: path.join(__dirname, '/context.ts'),
+    module: path.join(process.cwd(), '/graphql/context.ts'),
   },
   sourceTypes: {
     modules: [{ module: '.prisma/client', alias: 'PrismaClient' }],
