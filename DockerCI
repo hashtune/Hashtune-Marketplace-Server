@@ -25,12 +25,14 @@ COPY singletons /app/singletons
 
 COPY SongOrAlbumNFT.json /app/SongOrAlbumNFT.json
 
+COPY jest.config.json /app/jest.config.json
+
 RUN yarn install --frozen-lockfile 
 
 RUN yarn prisma generate
 RUN yarn prisma migrate
 
-RUN yarn test:api
+RUN yarn jest --config /app/jest.config.ts --runInBand --force-exit
 
 RUN yarn build
 CMD [ "yarn", "start" ]
