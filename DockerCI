@@ -25,7 +25,7 @@ COPY singletons /app/singletons
 
 COPY SongOrAlbumNFT.json /app/SongOrAlbumNFT.json
 
-COPY jest.config.json /app/jest.config.json
+COPY jest.config.ts /app/jest.config.ts
 
 RUN yarn install --frozen-lockfile 
 
