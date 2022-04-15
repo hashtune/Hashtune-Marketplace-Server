@@ -13,13 +13,9 @@ COPY tsconfig.json /app/tsconfig.json
 
 COPY tsconfig.prod.json /app/tsconfig.prod.json
 
-COPY jest.config.js /app/jest.config.js
-
-COPY bin /app/bin
-
 COPY prisma /app/prisma
 
-COPY codegen.yml /app/codegen.yml
+COPY utils ./app/utils
 
 RUN yarn install --frozen-lockfile 
 
