@@ -1,7 +1,7 @@
 name: Build Container and Deploy
 on:
   push:
-    branches: [main, build/deployment-config]
+    branches: [main]
 
 jobs:
   build-and-push-image:
