@@ -1,6 +1,8 @@
 version: '3.8'
 services:
   # postgresql://hashtune:hashtune@localhost:5439
+  build:
+    dockerfile: Dockerfile_X
   postgres:
     image: postgres
     container_name: hashtune
