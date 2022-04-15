@@ -3,6 +3,7 @@ services:
   # postgresql://hashtune:hashtune@localhost:5439
   postgres:
     build:
+      context: .
       dockerfile: Dockerfile_X
     image: postgres
     container_name: hashtune
