@@ -30,22 +30,13 @@ jobs:
           node-version: 14.x
           cache: 'yarn'
 
-      - name: Test connection
-        run: |
-          apt-get update
-          apt-get install --yes postgresql-client
-      - name: Query database
-        run: psql -h postgres -d postgres -U hashtune -c 'SELECT 1;'
-        env:
-          PGPASSWORD: hashtune
-
       - run: yarn install
       - run: yarn ci:prisma:migrate
         env:
-          DATABASE_URL: postgresql://hashtune:hashtune@localhost:5432
+          DATABASE_URL: postgresql://hashtune:hashtune@postgres:5432/postgres
       - run: yarn ci:prisma:generate
         env:
-          DATABASE_URL: postgresql://hashtune:hashtune@localhost:5432
+          DATABASE_URL: postgresql://hashtune:hashtune@postgres:5432/postgres
       - run: yarn test:api
         env:
-          DATABASE_URL: postgresql://hashtune:hashtune@localhost:5432
+          DATABASE_URL: postgresql://hashtune:hashtune@postgres:5432/postgres
