@@ -15,6 +15,7 @@ jobs:
           POSTGRES_PASSWORD: hashtune
           POSTGRES_PORT: 5432
           POSTGRES_USER: hashtune
+          DATABASE_URL: postgresql://hashtune:hashtune@localhost:5432
         ports:
           - 5432:5432
         options: >-
@@ -23,11 +24,6 @@ jobs:
           --health-timeout 5s
           --health-retries 5
 
-  test_pull_request:
-    runs-on: ubuntu-latest
-    timeout-minutes: 7
-    env:
-      DATABASE_URL: postgresql://hashtune:hashtune@localhost:5432
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
