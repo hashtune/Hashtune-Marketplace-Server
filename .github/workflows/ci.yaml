@@ -15,7 +15,6 @@ jobs:
           POSTGRES_PASSWORD: hashtune
           POSTGRES_PORT: 5432
           POSTGRES_USER: hashtune
-          DATABASE_URL: postgresql://hashtune:hashtune@localhost:5432
         ports:
           - 5432:5432
         options: >-
@@ -32,5 +31,11 @@ jobs:
           cache: 'yarn'
       - run: yarn install
       - run: yarn ci:prisma:migrate
+        env:
+          DATABASE_URL: postgresql://hashtune:hashtune@localhost:5432
       - run: yarn ci:prisma:generate
+        env:
+          DATABASE_URL: postgresql://hashtune:hashtune@localhost:5432
       - run: yarn test:api
+        env:
+          DATABASE_URL: postgresql://hashtune:hashtune@localhost:5432
