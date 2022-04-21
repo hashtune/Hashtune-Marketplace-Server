@@ -1,4 +1,4 @@
-import cron from "node-cron";
+import cron from 'node-cron';
 import { createEvent } from '../constants';
 import chain from '../singletons/chain';
 import { prisma } from '../singletons/prisma';
