@@ -1,4 +1,3 @@
-//@ts-ignore
 class customReporter {
   errorsDetected = false;
   _globalConfig;
