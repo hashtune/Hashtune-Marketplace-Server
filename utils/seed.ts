@@ -80,7 +80,7 @@ export default async function seed() {
 
     if (!user1 || !user2 || !user3) throw new Error('no Userss');
 
-    const one = await prisma.artwork.create({
+    const _one = await prisma.artwork.create({
       data: {
         description: 'song description',
         handle: '1',
@@ -104,7 +104,7 @@ export default async function seed() {
         },
       },
     });
-    const two = await prisma.artwork.create({
+    const _two = await prisma.artwork.create({
       data: {
         description: 'song description',
         handle: '2',
@@ -167,7 +167,7 @@ export default async function seed() {
         auctions: true,
       },
     });
-    const four = await prisma.artwork.create({
+    const _four = await prisma.artwork.create({
       data: {
         description: 'song description2',
         handle: '4',
@@ -191,7 +191,7 @@ export default async function seed() {
         },
       },
     });
-    const five = await prisma.bid.createMany({
+    const _five = await prisma.bid.createMany({
       data: [
         {
           auctionId: three.auctions[0].id,
@@ -200,7 +200,7 @@ export default async function seed() {
         },
       ],
     });
-    const six = await prisma.artwork.create({
+    const _six = await prisma.artwork.create({
       data: {
         description: 'song description',
         handle: '5',
@@ -234,7 +234,7 @@ export default async function seed() {
         },
       },
     });
-    const seven = await prisma.artwork.create({
+    const _seven = await prisma.artwork.create({
       data: {
         description: 'song description',
         handle: '6',
