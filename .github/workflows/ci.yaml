@@ -16,14 +16,15 @@ jobs:
           cache: 'yarn'
       - name: Install Node.js dependencies
         run: yarn install
-      - run: npm run format-check
       - run: yarn format-check
       - run: yarn lint
 
 
   tests:
+    needs: [lint]
     runs-on: ubuntu-latest
     container: node:latest
+    name: Tests
     services:
       postgres:
         image: postgres:latest

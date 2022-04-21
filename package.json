@@ -15,7 +15,7 @@
     "test:unit": "dotenv -e .env.test jest unit",
     "test:watch": "dotenv -e .env.test jest --watch",
     "test:api": "dotenv -e .env.test -- jest --config ./jest.config.ts --runInBand --force-exit",
-    "lint:fix": "eslint --fix .",
+    "lint:fix": "eslint --fix . ",
     "lint": "eslint .",
     "format": "prettier --write **/*.ts",
     "format-check": "prettier --check **/*.ts",
