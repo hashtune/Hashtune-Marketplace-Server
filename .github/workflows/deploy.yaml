@@ -41,6 +41,7 @@ jobs:
           DATABASE_URL: postgresql://hashtune:hashtune@postgres:5432/postgres
 
   build-and-push-image:
+    needs: tests
     name: Build and push image to artifact registry
     runs-on: ubuntu-latest
     env:
