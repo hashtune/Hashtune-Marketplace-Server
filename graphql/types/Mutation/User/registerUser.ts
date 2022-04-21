@@ -92,7 +92,7 @@ export const SignUp = extendType({
         // TODO proper errors
         const { signedMessage, publicKey, typedData } = args;
         // Extract public key
-        let extractedAddress: string = '';
+        let extractedAddress = '';
         try {
           extractedAddress = recoverTypedSignature_v4({
             data: JSON.parse(typedData),

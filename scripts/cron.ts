@@ -1,7 +1,7 @@
+import cron from 'node-cron';
 import { createEvent } from '../constants';
 import chain from '../singletons/chain';
 import { prisma } from '../singletons/prisma';
-const cron = require('node-cron');
 
 // We should make a back up before running the cron
 cron.schedule('*/59 * * * *', async () => {
