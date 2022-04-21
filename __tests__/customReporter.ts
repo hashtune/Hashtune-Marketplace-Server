@@ -1,3 +1,4 @@
+//@ts-ignore
 class customReporter {
   errorsDetected = false;
   _globalConfig;
@@ -19,5 +20,4 @@ class customReporter {
   }
 }
 
-export { };
 module.exports = customReporter;
