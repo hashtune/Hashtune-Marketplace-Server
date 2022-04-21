@@ -19,6 +19,8 @@ app.use(cookieParser());
 
 app.use(express.json());
 
+app.get(/^\/(?!graphql\/?$)/, (req, res) => { res.status(301).redirect("/graphql")})
+
 export const secret = process.env.SERVER_SECRET ?? '';
 
 app.use(
