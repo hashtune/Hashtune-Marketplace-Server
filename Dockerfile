@@ -27,7 +27,7 @@ COPY tsconfig.prod.json ./tsconfig.prod.json
 
 COPY SongOrAlbumNFT.json ./SongOrAlbumNFT.json
 
-RUN yarn install --frozen-lockfile 
+RUN yarn install
 
 EXPOSE 5000
 
