@@ -19,5 +19,5 @@ class customReporter {
   }
 }
 
-export { };
+export {};
 module.exports = customReporter;

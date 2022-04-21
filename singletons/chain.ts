@@ -59,7 +59,7 @@ class Chain {
             try {
               log = interact.parseLog(receipt.logs[i]);
             } catch (e) {
-              console.log(e)
+              console.log(e);
             }
           });
           if (log) {
