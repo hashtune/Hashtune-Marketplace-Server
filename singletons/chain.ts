@@ -38,27 +38,29 @@ class Chain {
   ): Promise<LogDescription | false | null> {
     let log: LogDescription | false | null = null;
     let tries = 0;
-    let interval = 5000;
-    let MAX_TRIES = 6; // Intervals of 5s, fail after 30s
+    const interval = 5000;
+    const MAX_TRIES = 6; // Intervals of 5s, fail after 30s
 
     while (!log && tries < MAX_TRIES) {
       tries++;
       // wait
       await sleep(interval);
       try {
-        let receipt = await this.ethersProvider.getTransactionReceipt(txHash);
-        let abi = [eventName];
-        let interact = new ethers.utils.Interface(abi);
+        const receipt = await this.ethersProvider.getTransactionReceipt(txHash);
+        const abi = [eventName];
+        const interact = new ethers.utils.Interface(abi);
         // Transaction failed
         console.log(receipt.status);
         if (receipt && receipt.status === 0) {
           return false;
         }
         if (receipt) {
-          receipt.logs.forEach((el, i) => {
+          receipt.logs.forEach((_, i) => {
             try {
               log = interact.parseLog(receipt.logs[i]);
-            } catch (e) {}
+            } catch (e) {
+              console.log(e)
+            }
           });
           if (log) {
             // Transaction successful
