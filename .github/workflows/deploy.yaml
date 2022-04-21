@@ -4,12 +4,7 @@ on:
     branches: [main]
 
 jobs:
-name: Build Container and Deploy
-on:
-  push:
-    branches: [main]
 
-jobs:
   tests:
     runs-on: ubuntu-latest
     container: node:latest
@@ -45,99 +40,6 @@ jobs:
       - run: yarn test:api
         env:
           DATABASE_URL: postgresql://hashtune:hashtune@postgres:5432/postgres
-
-  build-and-push-image:
-    needs: [tests]
-    name: Build and push image to artifact registry
-    runs-on: ubuntu-latest
-    env:
-      IMAGE_NAME: hashtune-server
-      PROJECT_ID: se36-cloud-computing
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - uses: google-github-actions/setup-gcloud@main
-        with:
-          service_account_key: ${{ secrets.SERVICE_ACCOUNT_KEY }}
-          project_id: ${{ env.PROJECT_ID }}
-          export_default_credentials: true
-
-      - name: Build Docker Image
-        run: docker build -t $IMAGE_NAME:latest .
-
-      - name: Tag Image
-        id: assign_image_tag
-        run: |
-          bash ./assign_image_tag.sh -v minor
-
-      - name: Configure Docker Client
-        run: |-
-          gcloud auth configure-docker --quiet
-          gcloud auth configure-docker europe-west1-docker.pkg.dev --quiet
-
-      - name: Push Docker Image to Artifact Registry
-        env:
-          GIT_TAG: ${{ steps.assign_image_tag.outputs.git-tag }}
-        run: |-
-          docker tag $IMAGE_NAME:latest europe-west1-docker.pkg.dev/$PROJECT_ID/hashtune/$IMAGE_NAME:latest
-          docker tag $IMAGE_NAME:latest europe-west1-docker.pkg.dev/$PROJECT_ID/hashtune/$IMAGE_NAME:$GIT_TAG
-          docker push europe-west1-docker.pkg.dev/$PROJECT_ID/hashtune/$IMAGE_NAME:latest
-          docker push europe-west1-docker.pkg.dev/$PROJECT_ID/hashtune/$IMAGE_NAME:$GIT_TAG
-
-  migrate:
-    name: migrate db
-    needs: build-and-push-image
-    runs-on: ubuntu-latest
-    env:
-      IMAGE_NAME: hashtune-server
-      PROJECT_ID: se36-cloud-computing
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - uses: google-github-actions/setup-gcloud@v0
-        with:
-          service_account_key: ${{ secrets.SERVICE_ACCOUNT_KEY }}
-          project_id: ${{ env.PROJECT_ID }}
-          export_default_credentials: true
-
-      - name: Get Cloud SQL Proxy
-        run: |
-          wget https://dl.google.com/cloudsql/cloud_sql_proxy.linux.amd64 -O cloud_sql_proxy
-          chmod +x cloud_sql_proxy
-
-      - uses: actions/setup-node@v1
-        with:
-          node-version: '12.x'
-
-      - name: Database Migration
-        env:
-          DATABASE_URL: ${{secrets.DATABASE_URL}}
-        run: |
-          yarn install --frozen-lockfile
-          ./cloud_sql_proxy -dir=/cloudsql -instances=se36-cloud-computing:europe-west1:prod-db=tcp:5432 & sleep 10s && yarn prisma migrate deploy && yarn prisma generate
-
-  deploy-image:
-    name: Deploy Image to cloud run
-    needs: migrate
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Deploy to Google Cloud Run
-        id: deploy-run
-        uses: google-github-actions/deploy-cloudrun@v0
-        with:
-          service: hashtune-server
-          image: europe-west1-docker.pkg.dev/se36-cloud-computing/hashtune/hashtune-server:latest
-          region: europe-west1
-          flags: --allow-unauthenticated
-          credentials: ${{ secrets.SERVICE_ACCOUNT_KEY }}
 
   build-and-push-image:
     name: Build and push image to artifact registry
