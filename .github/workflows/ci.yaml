@@ -2,8 +2,7 @@ name: Hashtune's Server Testing CI pipeline
 
 on:
   push:
-    branches-ignore:
-      - main
+    branches-ignore: [main, dev]
 
 jobs:
   lint:
