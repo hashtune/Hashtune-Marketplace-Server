@@ -76,7 +76,7 @@ jobs:
 
   deploy-image:
     name: Deploy Image to staging on Cloud Run
-    needs: migrate
+    needs: migrate-staging
     runs-on: ubuntu-latest
 
     steps:
