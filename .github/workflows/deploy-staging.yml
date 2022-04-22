@@ -1,10 +1,48 @@
-name: Deploy to Staging
+name: Build Container and Deploy to Staging
 on:
   push:
+    branches: [dev]
 
 jobs:
-  migrate:
-    name: migrate db
+  tests:
+    runs-on: ubuntu-latest
+    container: node:latest
+    name: Tests
+    services:
+      postgres:
+        image: postgres:latest
+        env:
+          POSTGRES_PASSWORD: hashtune
+          POSTGRES_PORT: 5432
+          POSTGRES_USER: hashtune
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 14.x
+          cache: 'yarn'
+      - run: yarn install
+      - run: yarn ci:prisma:migrate
+        env:
+          DATABASE_URL: postgresql://hashtune:hashtune@postgres:5432/postgres
+      - run: yarn ci:prisma:generate
+        env:
+          DATABASE_URL: postgresql://hashtune:hashtune@postgres:5432/postgres
+      - run: yarn test:api
+        env:
+          DATABASE_URL: postgresql://hashtune:hashtune@postgres:5432/postgres
+
+  migrate-staging:
+    name: Migrate Staging DB
+    needs: tests
     runs-on: ubuntu-latest
     env:
       IMAGE_NAME: hashtune-server-staging
@@ -36,21 +74,21 @@ jobs:
           yarn install
           ./cloud_sql_proxy -dir=/cloudsql -instances=se36-cloud-computing:europe-west1:staging-db=tcp:5432 & sleep 10s && yarn prisma migrate deploy && yarn prisma generate
 
-  # deploy-image:
-  #   name: Deploy Image to cloud run
-  #   needs: migrate
-  #   runs-on: ubuntu-latest
+  deploy-image:
+    name: Deploy Image to staging on Cloud Run
+    needs: migrate
+    runs-on: ubuntu-latest
 
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v2
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
 
-  #     - name: Deploy to Google Cloud Run
-  #       id: deploy-run
-  #       uses: google-github-actions/deploy-cloudrun@v0
-  #       with:
-  #         service: hashtune-server-staging
-  #         image: europe-west1-docker.pkg.dev/se36-cloud-computing/hashtune/hashtune-server:latest
-  #         region: europe-west1
-  #         flags: --allow-unauthenticated
-  #         credentials: ${{ secrets.SERVICE_ACCOUNT_KEY }}
+      - name: Deploy to Google Cloud Run
+        id: deploy-run
+        uses: google-github-actions/deploy-cloudrun@v0
+        with:
+          service: hashtune-server-staging
+          image: europe-west1-docker.pkg.dev/se36-cloud-computing/hashtune/hashtune-server:latest
+          region: europe-west1
+          flags: --allow-unauthenticated
+          credentials: ${{ secrets.SERVICE_ACCOUNT_KEY }}
