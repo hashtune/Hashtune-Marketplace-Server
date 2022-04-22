@@ -113,7 +113,7 @@ jobs:
           ./cloud_sql_proxy -dir=/cloudsql -instances=se36-cloud-computing:europe-west1:staging-db=tcp:5432 & sleep 10s && yarn prisma migrate deploy && yarn prisma generate
 
   deploy-image:
-    name: Deploy Image to staging on Cloud Run
+    name: Deploy Latest Image to Staging on Cloud Run
     needs: migrate-staging
     runs-on: ubuntu-latest
 

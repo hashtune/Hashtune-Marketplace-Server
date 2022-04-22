@@ -23,7 +23,7 @@ jobs:
     needs: [lint]
     runs-on: ubuntu-latest
     container: node:latest
-    name: Tests
+    name: Run Tests
     services:
       postgres:
         image: postgres:latest

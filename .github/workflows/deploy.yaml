@@ -5,7 +5,7 @@ on:
 
 jobs:
   migrate:
-    name: migrate db
+    name: Migrate Production DB
     runs-on: ubuntu-latest
     env:
       IMAGE_NAME: hashtune-server
@@ -38,7 +38,7 @@ jobs:
           ./cloud_sql_proxy -dir=/cloudsql -instances=se36-cloud-computing:europe-west1:prod-db=tcp:5432 & sleep 10s && yarn prisma migrate deploy && yarn prisma generate
 
   deploy-image:
-    name: Deploy Image to cloud run
+    name: Deploy Latest Image to Production on Cloud Run
     needs: migrate
     runs-on: ubuntu-latest
 
