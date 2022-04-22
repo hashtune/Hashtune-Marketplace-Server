@@ -41,6 +41,12 @@ export const FindUser = extendType({
               ClientErrorUserNotFound: { message: 'User does not exist' },
             };
           } else {
+            if (!ctx.user) {
+              // user exists but jwt is invalid
+              return {
+                ClientErrorJWTInvalid: { message: 'JWT invalid' },
+              };
+            }
             return { Users: [maybeExisting.user] };
           }
         }

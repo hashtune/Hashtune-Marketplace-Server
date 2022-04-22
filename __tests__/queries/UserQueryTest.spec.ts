@@ -73,7 +73,7 @@ describe('Test users query', () => {
     expect(res).toMatchSnapshot();
   });
 
-  it('should find a user if the publicKey is valid', async () => {
+  it.skip('should find a user if the publicKey is valid', async () => {
     const res = await server.executeOperation({
       query: FIND_USER_QUERY,
       variables: { findUserPublicKey: global.testData.wallets[0].publicKey },

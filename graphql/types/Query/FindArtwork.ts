@@ -6,16 +6,18 @@ export const FindArtwork = extendType({
   definition(t) {
     t.field('findArtwork', {
       type: 'ArtworkResult',
-      description: 'Find an artwork by id',
-      args: { id: nonNull(stringArg()) },
+      description: 'Find an artwork by handle',
+      args: { handle: nonNull(stringArg()) },
       resolve: async (_, args, ctx: Context) => {
         const res = await ctx.prisma.artwork.findUnique({
-          where: { id: args.id },
+          where: { handle: args.handle },
         });
         if (res) {
           return { Artworks: [res] };
         } else {
-          return { ClientErrorArtworkNotFound: { message: "Couldn't find artwork" } }
+          return {
+            ClientErrorArtworkNotFound: { message: "Couldn't find artwork" },
+          };
         }
       },
     });

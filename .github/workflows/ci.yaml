@@ -1,22 +1,57 @@
 name: Hashtune's Server Testing CI pipeline
 
 on:
-  pull_request: {}
+  push:
+    branches-ignore: [main, dev]
 
 jobs:
-  test_pull_request:
+  lint:
     runs-on: ubuntu-latest
-    timeout-minutes: 7
-    env:
-      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+    name: Lint Code
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
         with:
           node-version: 14.x
           cache: 'yarn'
-      - run: yarn docker:up
+      - name: Install Node.js dependencies
+        run: yarn install
+      - run: yarn format-check
+      - run: yarn lint
+
+  tests:
+    needs: [lint]
+    runs-on: ubuntu-latest
+    container: node:latest
+    name: Tests
+    services:
+      postgres:
+        image: postgres:latest
+        env:
+          POSTGRES_PASSWORD: hashtune
+          POSTGRES_PORT: 5432
+          POSTGRES_USER: hashtune
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 14.x
+          cache: 'yarn'
       - run: yarn install
       - run: yarn ci:prisma:migrate
+        env:
+          DATABASE_URL: postgresql://hashtune:hashtune@postgres:5432/postgres
       - run: yarn ci:prisma:generate
+        env:
+          DATABASE_URL: postgresql://hashtune:hashtune@postgres:5432/postgres
       - run: yarn test:api
+        env:
+          DATABASE_URL: postgresql://hashtune:hashtune@postgres:5432/postgres

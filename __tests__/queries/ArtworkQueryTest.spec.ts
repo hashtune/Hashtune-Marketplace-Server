@@ -35,8 +35,8 @@ describe('Test artwork queries', () => {
 `;
 
   const FIND_ARTWORK_QUERY = `
-    query Query($findArtworkId: String!) {
-      findArtwork(id: $findArtworkId) {
+    query Query($findArtworkHandle: String!) {
+      findArtwork(handle: $findArtworkHandle) {
         Artworks {
           title
         }
@@ -95,18 +95,18 @@ describe('Test artwork queries', () => {
     expect(res).toMatchSnapshot();
   });
 
-  it('should find an artwork by id', async () => {
+  it('should find an artwork by handle', async () => {
     const res = await server.executeOperation({
       query: FIND_ARTWORK_QUERY,
-      variables: { findArtworkId: global.testData.artworks[0].id },
+      variables: { findArtworkHandle: global.testData.artworks[0].handle },
     });
     expect(res).toMatchSnapshot();
   });
 
-  it('should not find an artwork by id and throw an error', async () => {
+  it('should not find an artwork by handle and throw an error', async () => {
     const res = await server.executeOperation({
       query: FIND_ARTWORK_QUERY,
-      variables: { findArtworkId: 'abc' },
+      variables: { findArtworkHandle: 'abc' },
     });
     expect(res).toMatchSnapshot();
   });

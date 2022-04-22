@@ -1,7 +1,8 @@
-import { extendType, inputObjectType } from 'nexus';
+import { recoverTypedSignature_v4 } from 'eth-sig-util';
+import jwt from 'jsonwebtoken';
+import { extendType, inputObjectType, nonNull, stringArg } from 'nexus';
 import { validateHandle } from '../../../../utils/validateHandle';
 import { Context } from '../../../context';
-
 const InputType = inputObjectType({
   name: 'RegisterUserInput',
   description: 'Input for registering a new user',
@@ -70,6 +71,76 @@ export const registerUser = extendType({
             ClientErrorUnknown: { message: 'Error while creating the user' },
           };
         }
+      },
+    });
+  },
+});
+
+export const SignUp = extendType({
+  type: 'Mutation',
+  definition(t) {
+    t.field('cookie', {
+      type: 'String',
+      args: {
+        signedMessage: nonNull(stringArg()),
+        publicKey: nonNull(stringArg()),
+        typedData: nonNull(stringArg()),
+      },
+      description:
+        'Returns cookie if signing, must be called after the user is created in the database. ',
+      resolve: async (_, args, ctx) => {
+        // TODO proper errors
+        const { signedMessage, publicKey, typedData } = args;
+        // Extract public key
+        let extractedAddress = '';
+        try {
+          extractedAddress = recoverTypedSignature_v4({
+            data: JSON.parse(typedData),
+            sig: signedMessage,
+          });
+        } catch (e) {
+          console.log(e);
+          throw new Error('Issue recovering signature');
+        }
+
+        if (extractedAddress !== publicKey) {
+          throw new Error('Does not match');
+        }
+        // check that the user was created in the db
+        const wallet = await ctx.prisma.wallet.findUnique({
+          where: {
+            publicKey: publicKey,
+          },
+          include: {
+            user: true,
+          },
+        });
+        if (!wallet.user) {
+          throw new Error('User was not created in the db');
+        }
+        const token = jwt.sign(
+          {
+            user: {
+              id: wallet.user.id,
+              fullName: wallet.user.fullName,
+              handle: wallet.user.handle,
+              image: wallet.user.image,
+              email: wallet.user.email,
+              isApprovedCreator: wallet.user.isApprovedCreator,
+              publicKey: extractedAddress,
+            },
+          },
+          process.env.SERVER_SECRET ?? '',
+          {
+            expiresIn: '1d',
+          }
+        );
+        ctx.req.res.cookie('jwt', token, {
+          httpOnly: true,
+          secure: false, // true in prod,
+          sameSite: 'lax', // 'strict' in prod,
+        });
+        return token;
       },
     });
   },

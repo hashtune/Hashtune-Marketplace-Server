@@ -1,25 +1,57 @@
-name: Hashtune Server Deployment
+name: Deploy to Production
 on:
   push:
     branches: [main]
 
 jobs:
-  deploy:
+  migrate:
+    name: migrate db
     runs-on: ubuntu-latest
+    env:
+      IMAGE_NAME: hashtune-server
+      PROJECT_ID: se36-cloud-computing
+
     steps:
-      - name: Deploy to DigitalOcean  
-        uses: appleboy/ssh-action@v0.1.2
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - uses: google-github-actions/setup-gcloud@v0
         with:
-          host: ${{secrets.SSH_HOST}}
-          key: ${{secrets.SSH_KEY}}
-          username: ${{ secrets.SSH_USERNAME }}
-     
-          script: |
-            rm -rf Hashtune-Marketplace-Server
-            git clone git@github.com:hashtune/Hashtune-Marketplace-Server.git
-            cd Hashtune-Marketplace-Server
-            yarn
-            npx tsc
-            pm2 kill
-            pm2 start dist/graphql/server.js
-            echo 'Succesfully deployed 🎉'
+          service_account_key: ${{ secrets.SERVICE_ACCOUNT_KEY }}
+          project_id: ${{ env.PROJECT_ID }}
+          export_default_credentials: true
+
+      - name: Get Cloud SQL Proxy
+        run: |
+          wget https://dl.google.com/cloudsql/cloud_sql_proxy.linux.amd64 -O cloud_sql_proxy
+          chmod +x cloud_sql_proxy
+
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+
+      - name: Database Migration
+        env:
+          DATABASE_URL: ${{secrets.DATABASE_URL}}
+        run: |
+          yarn install
+          ./cloud_sql_proxy -dir=/cloudsql -instances=se36-cloud-computing:europe-west1:prod-db=tcp:5432 & sleep 10s && yarn prisma migrate deploy && yarn prisma generate
+
+  deploy-image:
+    name: Deploy Image to cloud run
+    needs: migrate
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Deploy to Google Cloud Run
+        id: deploy-run
+        uses: google-github-actions/deploy-cloudrun@v0
+        with:
+          service: hashtune-server
+          image: europe-west1-docker.pkg.dev/se36-cloud-computing/hashtune/hashtune-server:latest
+          region: europe-west1
+          flags: --allow-unauthenticated
+          credentials: ${{ secrets.SERVICE_ACCOUNT_KEY }}
