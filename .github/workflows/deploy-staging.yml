@@ -32,13 +32,13 @@ jobs:
       - run: yarn install
       - run: yarn ci:prisma:migrate
         env:
-          DATABASE_URL: postgresql://$POSTGRES_USER:$POSTGRES_PASSWORD@postgres:5432/postgres
+          DATABASE_URL: postgresql://hashtune:hashtune@postgres:5432/postgres
       - run: yarn ci:prisma:generate
         env:
-          DATABASE_URL: postgresql://$POSTGRES_USER:$POSTGRES_PASSWORD@postgres:5432/postgres
+          DATABASE_URL: postgresql://hashtune:hashtune@postgres:5432/postgres
       - run: yarn test:api
         env:
-          DATABASE_URL: postgresql://$POSTGRES_USER:$POSTGRES_PASSWORD@postgres:5432/postgres
+          DATABASE_URL: postgresql://hashtune:hashtune@postgres:5432/postgres
 
   build-and-push-image:
     needs: tests
