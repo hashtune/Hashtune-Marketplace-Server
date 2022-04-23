@@ -12,9 +12,9 @@ jobs:
       postgres:
         image: postgres:latest
         env:
-          POSTGRES_PASSWORD: hashtune
+          POSTGRES_PASSWORD: ${{secrets.TEST_DB_PASSWORD}}
           POSTGRES_PORT: 5432
-          POSTGRES_USER: hashtune
+          POSTGRES_USER: ${{ secrets.TEST_DB_USER }}
         ports:
           - 5432:5432
         options: >-
@@ -32,13 +32,13 @@ jobs:
       - run: yarn install
       - run: yarn ci:prisma:migrate
         env:
-          DATABASE_URL: postgresql://hashtune:hashtune@postgres:5432/postgres
+          DATABASE_URL: postgresql://$POSTGRES_USER:$POSTGRES_PASSWORD@postgres:5432/postgres
       - run: yarn ci:prisma:generate
         env:
-          DATABASE_URL: postgresql://hashtune:hashtune@postgres:5432/postgres
+          DATABASE_URL: postgresql://$POSTGRES_USER:$POSTGRES_PASSWORD@postgres:5432/postgres
       - run: yarn test:api
         env:
-          DATABASE_URL: postgresql://hashtune:hashtune@postgres:5432/postgres
+          DATABASE_URL: postgresql://$POSTGRES_USER:$POSTGRES_PASSWORD@postgres:5432/postgres
 
   build-and-push-image:
     needs: tests
