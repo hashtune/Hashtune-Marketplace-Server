@@ -2,8 +2,7 @@ name: Hashtune's Server Testing CI pipeline
 
 on:
   push:
-    branches-ignore:
-      - main
+    branches-ignore: [main, dev]
 
 jobs:
   lint:
@@ -24,7 +23,7 @@ jobs:
     needs: [lint]
     runs-on: ubuntu-latest
     container: node:latest
-    name: Tests
+    name: Run Tests
     services:
       postgres:
         image: postgres:latest

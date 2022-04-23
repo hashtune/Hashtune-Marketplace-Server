@@ -27,13 +27,18 @@ CURRENT_VERSION_PARTS=(${CURRENT_VERSION//./ })
 VNUM1=${CURRENT_VERSION_PARTS[0]}
 VNUM2=${CURRENT_VERSION_PARTS[1]}
 VNUM3=${CURRENT_VERSION_PARTS[2]}
+VMAX=9
+VMIN=0
 
-if [[ $VERSION == 'major' ]]
+if [[ $VERSION == 'major' || $VNUM2 -gt $VMAX ]]
 then
   VNUM1=v$((VNUM1+1))
-elif [[ $VERSION == 'minor' ]]
+  VNUM2=$VMIN
+  VNUM3=$VMIN
+elif [[ $VERSION == 'minor' || $VNUM3 -gt $VMAX ]]
 then
   VNUM2=$((VNUM2+1))
+  VNUM3=$VMIN
 elif [[ $VERSION == 'patch' ]]
 then
   VNUM3=$((VNUM3+1))
