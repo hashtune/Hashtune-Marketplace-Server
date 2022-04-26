@@ -1,7 +1,7 @@
 # Diagrams
 
 ### Production and Staging CD Diagrams
-![](assets/CD.jpg)
+![](./CD.jpg)
 
 ---
 
