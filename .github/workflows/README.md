@@ -1,8 +1,2 @@
-# Diagrams
-
-### Production and Staging CD Diagrams
-![](./CD.jpg)
-
----
-
-### Production and Staging CI Diagrams
+### Continues Delivery and Integration Digrams
+![](ci-cd.jpeg)
