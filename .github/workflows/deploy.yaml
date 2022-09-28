@@ -25,7 +25,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v3.5.0
         with:
           node-version: 14.x
           cache: 'yarn'
@@ -63,7 +63,7 @@ jobs:
           wget https://dl.google.com/cloudsql/cloud_sql_proxy.linux.amd64 -O cloud_sql_proxy
           chmod +x cloud_sql_proxy
 
-      - uses: actions/setup-node@v1
+      - uses: actions/setup-node@v3.5.0
         with:
           node-version: '12.x'
 
